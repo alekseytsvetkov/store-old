@@ -1,5 +1,5 @@
-import { createTRPCContext } from '@store/api/src/trpc';
-import { appRouter } from '@store/api/src/root';
+import { createTRPCContext } from '@store/api/trpc';
+import { appRouter } from '@store/api/root';
 import { createNextApiHandler } from "@trpc/server/adapters/next";
 
 
