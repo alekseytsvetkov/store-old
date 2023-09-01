@@ -1,0 +1,17 @@
+{
+  "name": "@store/tsconfig",
+  "version": "0.0.0",
+  "private": true,
+  "main": "index.js",
+  "files": [
+    "base.json",
+    "nextjs.json",
+    "react-library.json"
+  ],
+  "devDependencies": {
+    "@vercel/spaces": "https://spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701"
+  },
+  "scripts": {
+    "conformance": "spaces conformance"
+  }
+}

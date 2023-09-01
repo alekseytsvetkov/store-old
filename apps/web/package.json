@@ -1,0 +1,46 @@
+{
+  "name": "web",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "dotenv -e ../../.env next dev -- -p 3000",
+    "build": "dotenv -e ../../.env next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "browser": {
+    "crypto": false,
+    "stream": false
+  },
+  "dependencies": {
+    "@store/api": "workspace:*",
+    "@store/auth": "workspace:*",
+    "@store/db": "workspace:*",
+    "@store/lint": "workspace:*",
+    "@store/ui": "workspace:*",
+    "@tanstack/react-query": "^4.33.0",
+    "@tanstack/react-query-devtools": "^4.33.0",
+    "@tanstack/react-query-next-experimental": "5.0.0-alpha.80",
+    "@vercel/analytics": "^1.0.2",
+    "@vercel/edge-config": "^0.2.1",
+    "@vercel/toolbar": "^0.1.1",
+    "superjson": "1.12.4",
+    "next": "^13.4.19",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@next/eslint-plugin-next": "^13.4.19",
+    "@store/tsconfig": "workspace:*",
+    "@tailwindcss/container-queries": "^0.1.1",
+    "@tailwindcss/typography": "^0.5.9",
+    "@types/node": "^18.11.17",
+    "@types/react": "^18.2.5",
+    "@types/react-dom": "^18.2.4",
+    "autoprefixer": "^10.4.13",
+    "dotenv": "^16.3.1",
+    "postcss": "^8.4.20",
+    "tailwindcss": "^3.2.4",
+    "typescript": "^5.1.6"
+  }
+}
