@@ -4,6 +4,24 @@
   "private": true,
   "description": "Shared tRPC library for Store",
   "version": "1.0.0",
+  "exports": {
+    "./router": "./src/router/index.ts",
+    "./root": "./src/root.ts",
+    "./trpc": "./src/trpc.ts"
+  },
+  "typesVersions": {
+    "*": {
+      "router": [
+        "./src/router/index.ts"
+      ],
+      "root": [
+        "./src/root.ts"
+      ],
+      "trpc": [
+        "./src/trpc.ts"
+      ]
+    }
+  },
   "scripts": {
     "lint": "eslint . --ext .ts,.tsx",
     "lint:fix": "eslint . --ext .ts,.tsx --fix"
@@ -12,11 +30,11 @@
     "@store/auth": "workspace:*",
     "@store/db": "workspace:*",
     "@tanstack/react-query": "^4.33.0",
-    "@trpc/client": "^10.13.0",
-    "@trpc/next": "^10.13.0",
-    "@trpc/react-query": "^10.13.0",
-    "@trpc/server": "^10.13.0",
-    "superjson": "1.9.1",
+    "@trpc/client": "^10.34.0",
+    "@trpc/next": "^10.34.0",
+    "@trpc/react-query": "^10.34.0",
+    "@trpc/server": "^10.34.0",
+    "superjson": "1.12.4",
     "zod": "^3.20.2"
   },
   "devDependencies": {
