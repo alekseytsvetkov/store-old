@@ -1,12 +1,14 @@
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, Button, Input, Label } from "@store/ui";
+import Link from "next/link";
 
 interface EmptyPlaceholderProps {
   name: string;
   title: string,
   description: string;
+  link: string;
 }
 
-export function EmptyPlaceholder({ name, title, description }: EmptyPlaceholderProps) {
+export function EmptyPlaceholder({ name, title, description, link }: EmptyPlaceholderProps) {
   return (
     <div className="flex h-[450px] shrink-0 items-center justify-center rounded-md border border-dashed">
       <div className="mx-auto flex max-w-[420px] flex-col items-center justify-center text-center">
@@ -29,9 +31,11 @@ export function EmptyPlaceholder({ name, title, description }: EmptyPlaceholderP
         <p className="mb-4 mt-2 text-sm text-muted-foreground">
           {description}
         </p>
-        <Button size="sm" className="relative">
-          Add {name}
-        </Button>
+        <Link href={link}>
+          <Button size="sm" className="relative">
+            Добавить {name}
+          </Button>
+        </Link>
       </div>
     </div>
   )

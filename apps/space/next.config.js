@@ -1,5 +1,7 @@
+const { i18n } = require('./next-i18next.config')
+
 /** @type {import("next").NextConfig} */
-const nextConfig = {
+const config = {
   webpack: (config) => {
     config.module.rules.push({
       test: /\.md$/,
@@ -26,11 +28,16 @@ const nextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'cdn.discordapp.com'
+      },
+      {
+        protocol: 'https',
         hostname: 'uploadthing.com',
       },
     ],
   },
+  i18n,
   swcMinify: true,
 };
 
-export default nextConfig;
+module.exports = config

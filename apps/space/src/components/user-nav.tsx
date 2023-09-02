@@ -35,7 +35,7 @@ export function UserNav() {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-8 w-8">
-            <AvatarImage src="https://cal.com/base-rskish/avatar.png" alt={session.user.name ?? "user"} height={8} width={8}/>
+            <AvatarImage src={session.user.image ?? "https://cal.com/base-rskish/avatar.png"} alt={session.user.name ?? "user"} height={8} width={8}/>
             <AvatarFallback>{session.user.name}</AvatarFallback>
           </Avatar>
         </Button>

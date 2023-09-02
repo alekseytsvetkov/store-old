@@ -8,6 +8,7 @@ import { Search } from "./search"
 import { Sidebar } from "./sidebar"
 import { UserNav } from "./user-nav"
 import Link from "next/link"
+import { LanguageSwitcher } from "./language-switcher"
 
 interface MainLayoutProps {
   children: React.ReactNode
@@ -27,9 +28,10 @@ export default function MainLayout({ children }: MainLayoutProps) {
             <Link href="/">
               <div className="text-sm font-medium hover:cursor-pointer">Space</div>
             </Link>
-            <MainNav className="mx-6" />
+            {/* <MainNav className="mx-6" /> */}
             <div className="ml-auto flex items-center space-x-4">
               <Search />
+              <LanguageSwitcher />
               <ModeToggle />
               <UserNav />
             </div>

@@ -1,5 +1,5 @@
 /** @type {import("next").NextConfig} */
-const nextConfig = {
+const config = {
   webpack: (config) => {
     config.module.rules.push({
       test: /\.md$/,
@@ -26,6 +26,10 @@ const nextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'cdn.discordapp.com'
+      },
+      {
+        protocol: 'https',
         hostname: 'uploadthing.com',
       },
     ],
@@ -33,4 +37,4 @@ const nextConfig = {
   swcMinify: true,
 };
 
-export default nextConfig;
+module.exports = config

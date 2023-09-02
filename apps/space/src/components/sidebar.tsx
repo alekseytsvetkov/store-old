@@ -41,8 +41,8 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
             Discover
           </h2> */}
           <div className="space-y-1">
-            {PATHS.map(item => <Link href={item.url}>
-              <Button variant={router.pathname == item.url ? "secondary" : "ghost"} className="w-full justify-start">
+            {PATHS.map(item => <Link href={item.url} key={item.url}>
+              <Button variant={router.pathname.split("/")[1] == item.url.split("/")[1] ? "secondary" : "ghost"} className="w-full justify-start">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"

@@ -1,5 +1,5 @@
 /** @type {import("next").NextConfig} */
-const nextConfig = {
+const config = {
   webpack: (config) => {
     config.module.rules.push({
       test: /\.md$/,
@@ -33,4 +33,4 @@ const nextConfig = {
   swcMinify: true,
 };
 
-export default nextConfig;
+module.exports = config

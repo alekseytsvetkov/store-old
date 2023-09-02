@@ -12,3 +12,4 @@ export * from './components/ui/input';
 export * from './components/ui/calendar';
 export * from './components/ui/separator';
 export * from './components/ui/scroll-area';
+export * from './components/ui/textarea';

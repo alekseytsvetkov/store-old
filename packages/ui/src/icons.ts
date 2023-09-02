@@ -1,6 +1,7 @@
 export {
   AlertCircle,
   ArrowUp,
+  ArrowLeft,
   Binary,
   Bookmark,
   Calendar,
