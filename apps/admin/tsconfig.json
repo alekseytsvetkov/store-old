@@ -19,7 +19,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "next.config.js",
-    "postcss.config.cjs",
+    "postcss.config.cjs", "next-i18next.config.js",
   ],
   "exclude": ["node_modules", ".next", "public"]
 }

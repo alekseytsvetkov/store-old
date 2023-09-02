@@ -1,3 +1,5 @@
+const { i18n } = require('./next-i18next.config')
+
 /** @type {import("next").NextConfig} */
 const config = {
   webpack: (config) => {
@@ -26,10 +28,15 @@ const config = {
       },
       {
         protocol: 'https',
+        hostname: 'cdn.discordapp.com'
+      },
+      {
+        protocol: 'https',
         hostname: 'uploadthing.com',
       },
     ],
   },
+  i18n,
   swcMinify: true,
 };
 
