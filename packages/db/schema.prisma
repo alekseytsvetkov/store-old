@@ -29,6 +29,18 @@ enum ProductStatus {
   ARCHIVE
 }
 
+enum FilterType {
+  RADIO
+  DROPDOWN
+  CHECKBOX
+}
+
+enum SectionStatus {
+  ACTIVE
+  DRAFT
+  ARCHIVE
+}
+
 // Necessary for Next auth
 model Account {
   id                String  @id @default(cuid())
@@ -94,11 +106,64 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model Service {
+model Section {
   id String @id @default(uuid())
 
-  name String @unique
+  name        String  @unique
+  description String?
+  cover       String?
+
+  categories Category[] // Divine Orbs / Chaos Orbs
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Category {
+  id String @id @default(uuid())
+
+  name        String // Divine Orbs
+  description String?
+  image       String?
+
+  sectionId String
+  section   Section @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+
+  filters Filter[] // PLATFORM / DIFFICULTY / LEAGUE / ADDITIONAL OPTIONS
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([sectionId])
+}
+
+model Filter {
+  id String @id @default(uuid())
+
+  name String // DIFFICULTY
+  type FilterType // RADIO
+
+  options FilterOption[] // SOFTCORE / HARDCORE
+
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([categoryId])
+}
+
+model FilterOption {
+  id String @id @default(uuid())
+
+  label String // SOFTCORE
+
+  filterId String
+  filter   Filter @relation(fields: [filterId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([filterId])
 }

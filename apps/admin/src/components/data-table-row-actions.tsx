@@ -2,7 +2,7 @@
 
 import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 import { type Row } from "@tanstack/react-table"
-import { serviceSchema } from "./data/schema"
+import { sectionSchema } from "./data/schema"
 import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuTrigger, useToast } from "@store/ui"
 import { api } from "@/utils/api"
 import { useRouter } from "next/router"
@@ -14,17 +14,17 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
-  const service = serviceSchema.parse(row.original)
+  const section = sectionSchema.parse(row.original)
 
   const { toast } = useToast()
   const router = useRouter();
-  const {mutateAsync, isError, isLoading} = api.service.delete.useMutation({
+  const {mutateAsync, isError, isLoading} = api.section.delete.useMutation({
     async onSuccess() {
-      await utils.service.list.invalidate()
+      await utils.section.list.invalidate()
     },
     onError() {
       toast({
-        title: "К сожалению не удалось удалить сервис",
+        title: "К сожалению не удалось удалить секцию",
       })
     }
   })
@@ -32,17 +32,17 @@ export function DataTableRowActions<TData>({
   const utils = api.useContext();
 
   const handleEdit = async () => {
-    router.push(`/services/edit/${service.id}`)
+    router.push(`/sections/edit/${section.id}`)
   }
 
   const handleDelete = async () => {
     router.reload(); // TODO: idc why invalidate not working
-    const result = await mutateAsync({id: service.id})
+    const result = await mutateAsync({id: section.id})
 
     if(result && !isError && !isLoading) {
       toast({
         title: "Поздравляем!",
-        description: `Вы успешно удалили сервис: ${service.name}`
+        description: `Вы успешно удалили секцию: ${section.name}`
       })
     }
   }

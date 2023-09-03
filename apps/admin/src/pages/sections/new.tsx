@@ -1,72 +1,71 @@
-import { Button, Card, CardContent, Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage, Input, Label, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, useToast } from "@store/ui";
+import { Button, Card, CardContent, Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage, Input, useToast } from "@store/ui";
 import { ArrowLeft, Loader2 } from "@store/ui/icons";
 import Link from "next/link";
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useFieldArray, useForm } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { api } from "@/utils/api";
 import { useRouter } from "next/router";
-import { getHTTPStatusCodeFromError } from "@trpc/server/http";
 
-const serviceFormSchema = z.object({
+const sectionFormSchema = z.object({
   name: z
     .string()
     .min(1, {
-      message: "Service name must be at least 1 characters.",
+      message: "Section name must be at least 1 characters.",
     })
     .max(32, {
-      message: "Service name must not be longer than 32 characters.",
+      message: "Section name must not be longer than 32 characters.",
     }),
 })
 
-type ServiceFormValues = z.infer<typeof serviceFormSchema>
+type SectionFormValues = z.infer<typeof sectionFormSchema>
 
-const defaultValues: Partial<ServiceFormValues> = {
+const defaultValues: Partial<SectionFormValues> = {
   name: "",
 }
 
-export default function NewService() {
+export default function NewSection() {
   const { t } = useTranslation('common')
   const { toast } = useToast()
   const router = useRouter();
 
   const utils = api.useContext();
 
-  const {mutateAsync, isError, isLoading, error} = api.service.create.useMutation({
+  const {mutateAsync, isError, isLoading, error} = api.section.create.useMutation({
     async onSuccess() {
-      await utils.service.list.invalidate()
+      await utils.section.list.invalidate()
     },
     onError() {
       toast({
-        title: "К сожалению не удалось создать сервис",
+        title: "К сожалению не удалось создать секцию",
       })
     }
   })
 
-  const form = useForm<ServiceFormValues>({
-    resolver: zodResolver(serviceFormSchema),
+  const form = useForm<SectionFormValues>({
+    resolver: zodResolver(sectionFormSchema),
     defaultValues,
     mode: "onChange",
   })
 
-  async function onSubmit(data: ServiceFormValues) {
+  async function onSubmit(data: SectionFormValues) {
     try {
       await mutateAsync({
         name: data.name,
       })
 
       if(!isLoading && !isError) {
-        router.push('/services');
+        router.push('/sections');
 
         return toast({
           title: "Поздравляем!",
-          description: `Вы успешно добавили сервис: ${data.name}`
+          description: `Вы успешно добавили секцию: ${data.name}`
         })
       }
     } catch (cause) {
-      console.error({ cause }, 'Failed to add service');
+      console.error({ cause }, 'Failed to add section');
     }
   }
 
@@ -76,13 +75,13 @@ export default function NewService() {
         <div className="grid grid-cols-6 gap-4">
           <div className="col-start-2 col-span-4 flex justify-between flex-col">
             <div className="space-y-1 flex flex-row items-center mb-6">
-              <Link href="/services">
+              <Link href="/sections">
                 <div className="mr-2 mt-1 p-1 hover:bg-accent rounded-md">
                   <ArrowLeft className="h-5 w-5" />
                 </div>
               </Link>
               <h2 className="text-lg font-semibold tracking-tight">
-                {t('add')} {t('service')}
+                {t('add')} {t('section_2')}
               </h2>
             </div>
             <div className="grid grid-cols-4 gap-6">
@@ -96,7 +95,7 @@ export default function NewService() {
                         <FormItem>
                           <FormLabel>Название</FormLabel>
                           <FormControl>
-                            <Input placeholder="Аккаунты" {...field} />
+                            <Input placeholder="Path of Exile" {...field} />
                           </FormControl>
                           <FormDescription>
                             Тут будет описание поля Название

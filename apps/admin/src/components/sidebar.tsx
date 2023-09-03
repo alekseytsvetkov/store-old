@@ -16,8 +16,8 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
       name: "Пользователи"
     },
     {
-      url: "/services",
-      name: "Сервисы"
+      url: "/sections",
+      name: "Секции"
     },
   ]
 

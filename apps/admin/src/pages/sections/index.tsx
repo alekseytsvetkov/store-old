@@ -7,10 +7,10 @@ import { columns } from "@/components/columns";
 import { Loader2 } from "@store/ui/icons";
 import Link from "next/link";
 
-export default function Services() {
+export default function Sections() {
   const { t } = useTranslation('common')
 
-  const { data, isLoading, status } = api.service.list.useQuery({
+  const { data, isLoading, status } = api.section.list.useQuery({
     limit: 10,
   });
 
@@ -19,12 +19,12 @@ export default function Services() {
       <div className="flex items-center justify-between">
         <div className="space-y-1">
           <h2 className="text-2xl font-semibold tracking-tight">
-            {t('services-capitalized')}
+            {t('sections-capitalized')}
           </h2>
         </div>
-        <Link href="/services/new">
+        <Link href="/sections/new">
           <Button size="sm" className="relative">
-            {t('add')} {t('service')}
+            {t('add')} {t('section_2')}
           </Button>
         </Link>
       </div>
@@ -34,7 +34,7 @@ export default function Services() {
       ) : data?.items ? (
         <DataTable data={data.items} columns={columns} />
       ) : (
-        <EmptyPlaceholder name={t('service')} title={t('empty_list_title')} description={`${t('add_your_first')} ${t('service')}`} link="/services/new" />
+        <EmptyPlaceholder name={t('section')} title={t('empty_list_title')} description={`${t('add_your_first')} ${t('section')}`} link="/sections/new" />
       )}
     </>
   )

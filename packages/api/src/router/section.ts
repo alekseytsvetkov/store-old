@@ -8,7 +8,7 @@ import {
 import { prisma } from "@store/db"
 import { TRPCError } from "@trpc/server";
 
-export const serviceRouter = createTRPCRouter({
+export const sectionRouter = createTRPCRouter({
   list: publicProcedure
     .input(
       z.object({
@@ -26,7 +26,7 @@ export const serviceRouter = createTRPCRouter({
       const limit = input.limit ?? 50;
       const { cursor } = input;
 
-      const items = await prisma.service.findMany({
+      const items = await prisma.section.findMany({
         // get an extra item at the end which we'll use as next cursor
         take: limit + 1,
         where: {},
@@ -61,16 +61,16 @@ export const serviceRouter = createTRPCRouter({
     )
     .query(async ({ input }) => {
       const { id } = input;
-      const service = await prisma.service.findUnique({
+      const section = await prisma.section.findUnique({
         where: { id },
       });
-      if (!service) {
+      if (!section) {
         throw new TRPCError({
           code: 'NOT_FOUND',
-          message: `No service with id '${id}'`,
+          message: `No section with id '${id}'`,
         });
       }
-      return service;
+      return section;
     }),
   create: protectedProcedure
     .input(
@@ -80,10 +80,10 @@ export const serviceRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ input }) => {
-      const service = await prisma.service.create({
+      const section = await prisma.section.create({
         data: input,
       });
-      return service;
+      return section;
     }),
   update: protectedProcedure
     .input(
@@ -94,11 +94,11 @@ export const serviceRouter = createTRPCRouter({
     )
     .mutation(async ({ input }) => {
       const { id, name } = input;
-      const service = await prisma.service.update({
+      const section = await prisma.section.update({
         where: { id },
         data: { name }
       })
-      return service;
+      return section;
     }),
   delete: protectedProcedure
     .input(
@@ -108,9 +108,9 @@ export const serviceRouter = createTRPCRouter({
     )
     .mutation(async ({ input }) => {
       const { id } = input;
-      const service = await prisma.service.delete({
+      const section = await prisma.section.delete({
         where: { id }
       })
-      return service;
+      return section;
     }),
 });

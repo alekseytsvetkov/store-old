@@ -1,8 +1,9 @@
 {
-  "services-capitalized": "Services",
-  "services": "services",
-  "service-capitalized": "Service",
-  "service": "service",
+  "sections-capitalized": "Sections",
+  "sections": "sections",
+  "section-capitalized": "Section",
+  "section": "section",
+  "section_2": "section",
   "add_your_first": "Add your first",
   "empty_list_title": "There's nothing on the list yet",
   "add": "Add",

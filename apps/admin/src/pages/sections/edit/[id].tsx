@@ -10,26 +10,26 @@ import { api } from "@/utils/api";
 import { useRouter } from "next/router";
 import type { GetStaticPaths, GetStaticPropsContext, InferGetStaticPropsType } from "next";
 import { createServerSideHelpers } from '@trpc/react-query/server';
-import { serviceRouter } from "@store/api/router";
+import { sectionRouter } from "@store/api/router";
 import superjson from 'superjson';
 import { useEffect, useMemo, useState } from "react";
 
-const serviceFormSchema = z.object({
+const sectionFormSchema = z.object({
   name: z
     .string()
     .min(1, {
-      message: "Service name must be at least 1 characters.",
+      message: "Section name must be at least 1 characters.",
     })
     .max(32, {
-      message: "Service name must not be longer than 32 characters.",
+      message: "Section name must not be longer than 32 characters.",
     }),
 })
 
-type ServiceFormValues = z.infer<typeof serviceFormSchema>
+type SectionFormValues = z.infer<typeof sectionFormSchema>
 
 
 
-export default function EditService(props: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function EditSection(props: InferGetStaticPropsType<typeof getStaticProps>) {
   const { t } = useTranslation('common')
   const { toast } = useToast()
 
@@ -39,23 +39,23 @@ export default function EditService(props: InferGetStaticPropsType<typeof getSta
 
   const { id } = props;
 
-  const {data, isLoading, isError} = api.service.byId.useQuery({
+  const {data, isLoading, isError} = api.section.byId.useQuery({
     id
   })
 
-  const {mutateAsync, isLoading: isUpdateLoading} = api.service.update.useMutation({
+  const {mutateAsync, isLoading: isUpdateLoading} = api.section.update.useMutation({
     async onSuccess() {
-      await utils.service.list.invalidate()
+      await utils.section.list.invalidate()
     },
     onError() {
       toast({
-        title: "К сожалению не удалось обновить сервис",
+        title: "К сожалению не удалось обновить секцию",
       })
     }
   })
 
-  const form = useForm<ServiceFormValues>({
-    resolver: zodResolver(serviceFormSchema),
+  const form = useForm<SectionFormValues>({
+    resolver: zodResolver(sectionFormSchema),
     defaultValues: useMemo(() => {
       return {
         name: data?.name
@@ -68,7 +68,7 @@ export default function EditService(props: InferGetStaticPropsType<typeof getSta
     form.reset(data);
   }, [data]);
 
-  async function onSubmit(data: ServiceFormValues) {
+  async function onSubmit(data: SectionFormValues) {
     try {
       await mutateAsync({
         id,
@@ -76,15 +76,15 @@ export default function EditService(props: InferGetStaticPropsType<typeof getSta
       })
 
       if(!isLoading && !isError) {
-        router.push('/services');
+        router.push('/sections');
 
         return toast({
           title: "Поздравляем!",
-          description: `Вы успешно обновили сервис: ${data.name}`
+          description: `Вы успешно обновили секцию: ${data.name}`
         })
       }
     } catch (cause) {
-      console.error({ cause }, 'Failed to add service');
+      console.error({ cause }, 'Failed to add section');
     }
   }
 
@@ -93,13 +93,13 @@ export default function EditService(props: InferGetStaticPropsType<typeof getSta
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <div className="flex justify-between flex-col">
             <div className="space-y-1 flex flex-row items-center mb-6">
-              <Link href="/services">
+              <Link href="/sections">
                 <div className="mr-2 mt-1 p-1 hover:bg-accent rounded-md">
                   <ArrowLeft className="h-5 w-5" />
                 </div>
               </Link>
               <h2 className="text-lg font-semibold tracking-tight">
-                {t('update')} {t('service')}{data?.name && `: ${data.name}`}
+                {t('update')} {t('section_2')}{data?.name && `: ${data.name}`}
               </h2>
             </div>
             {isError ? <div>{t('not-found')}</div> : isLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : <div className="grid grid-cols-4 gap-6">
@@ -113,7 +113,7 @@ export default function EditService(props: InferGetStaticPropsType<typeof getSta
                       <FormItem>
                         <FormLabel>Название</FormLabel>
                         <FormControl>
-                          <Input placeholder="Аккаунты" {...field} />
+                          <Input placeholder="Path of Exile" {...field} />
                         </FormControl>
                         <FormDescription>
                           Тут будет описание поля Название
@@ -153,7 +153,7 @@ export default function EditService(props: InferGetStaticPropsType<typeof getSta
 
 export async function getStaticProps(context: GetStaticPropsContext<{ id: string }>) {
   const helpers = createServerSideHelpers({
-    router: serviceRouter,
+    router: sectionRouter,
     ctx: {},
     transformer: superjson, // optional - adds superjson serialization
   });
