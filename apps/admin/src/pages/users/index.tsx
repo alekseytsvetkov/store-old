@@ -1,16 +1,15 @@
 import { DataTable, EmptyPlaceholder } from "@/components";
-import { Button, Separator } from "@store/ui";
+import { Separator } from "@store/ui";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
 import { api } from "@/utils/api";
 import { columns } from "@/components/columns";
 import { Loader2 } from "@store/ui/icons";
-import Link from "next/link";
 
-export default function Services() {
+export default function Users() {
   const { t } = useTranslation('common')
 
-  const { data, isLoading, status } = api.service.list.useQuery({
+  const { data, isLoading, status } = api.user.list.useQuery({
     limit: 10,
   });
 
@@ -19,14 +18,9 @@ export default function Services() {
       <div className="flex items-center justify-between">
         <div className="space-y-1">
           <h2 className="text-2xl font-semibold tracking-tight">
-            {t('services-capitalized')}
+            {t('users-capitalized')}
           </h2>
         </div>
-        <Link href="/services/new">
-          <Button size="sm" className="relative">
-            {t('add')} {t('service')}
-          </Button>
-        </Link>
       </div>
       <Separator className="my-4" />
       {status === 'loading' || isLoading ? (
@@ -34,7 +28,7 @@ export default function Services() {
       ) : data?.items ? (
         <DataTable data={data.items} columns={columns} />
       ) : (
-        <EmptyPlaceholder name={t('service')} title={t('empty_list_title')} description={`${t('add_your_first')} ${t('service')}`} link="/services/new" />
+        <EmptyPlaceholder name={t('user')} title={t('empty_list_title')} description={`${t('add_your_first')} ${t('user')}`} link="/user/new" />
       )}
     </>
   )

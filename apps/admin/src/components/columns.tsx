@@ -33,7 +33,7 @@ export const columns: ColumnDef<Service>[] = [
   {
     accessorKey: "id",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="id" />
+      <DataTableColumnHeader column={column} title="ID" />
     ),
     cell: ({ row }) => <div className="w-[80px]">{row.getValue("id")}</div>,
     enableSorting: false,
@@ -48,6 +48,11 @@ export const columns: ColumnDef<Service>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => <DataTableRowActions row={row} />,
+    header: ({ column }) => (
+      <div className="flex justify-end">
+        <DataTableColumnHeader column={column} title="Actions" />
+      </div>
+    ),
+    cell: ({ row }) => <div className="flex justify-end"><DataTableRowActions row={row} /></div>,
   },
 ]

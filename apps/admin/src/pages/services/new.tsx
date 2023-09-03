@@ -1,5 +1,5 @@
 import { Button, Card, CardContent, Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage, Input, Label, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, useToast } from "@store/ui";
-import { ArrowLeft } from "@store/ui/icons";
+import { ArrowLeft, Loader2 } from "@store/ui/icons";
 import Link from "next/link";
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
@@ -8,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useFieldArray, useForm } from "react-hook-form"
 import { api } from "@/utils/api";
 import { useRouter } from "next/router";
+import { getHTTPStatusCodeFromError } from "@trpc/server/http";
 
 const serviceFormSchema = z.object({
   name: z
@@ -31,7 +32,18 @@ export default function NewService() {
   const { toast } = useToast()
   const router = useRouter();
 
-  const { data, mutate, error } = api.service.add.useMutation()
+  const utils = api.useContext();
+
+  const {mutateAsync, isError, isLoading, error} = api.service.create.useMutation({
+    async onSuccess() {
+      await utils.service.list.invalidate()
+    },
+    onError() {
+      toast({
+        title: "К сожалению не удалось создать сервис",
+      })
+    }
+  })
 
   const form = useForm<ServiceFormValues>({
     resolver: zodResolver(serviceFormSchema),
@@ -39,22 +51,24 @@ export default function NewService() {
     mode: "onChange",
   })
 
-  function onSubmit(data: ServiceFormValues) {
-    mutate({
-      name: data.name
-    })
-
-    if(!error) {
-      router.push('/services');
-
-      toast({
-        title: "Поздравляем!",
-        description: `Вы успешно добавили сервис: ${data.name}`
+  async function onSubmit(data: ServiceFormValues) {
+    try {
+      await mutateAsync({
+        name: data.name,
       })
+
+      if(!isLoading && !isError) {
+        router.push('/services');
+
+        return toast({
+          title: "Поздравляем!",
+          description: `Вы успешно добавили сервис: ${data.name}`
+        })
+      }
+    } catch (cause) {
+      console.error({ cause }, 'Failed to add service');
     }
   }
-
-  console.log("data after mutate", data)
 
   return (
     <Form {...form}>
@@ -92,7 +106,9 @@ export default function NewService() {
                       )}
                     />
                   </div>
-                  <Button variant="outline" type="submit">{t('add')}</Button>
+                  <Button variant="outline" type="submit">
+                    {!isLoading ? t('add') : <Loader2 className="h-5 w-5 animate-spin" />}
+                  </Button>
                 </CardContent>
               </Card>
               {/* <Card className="col-span-1">

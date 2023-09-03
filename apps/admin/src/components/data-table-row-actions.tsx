@@ -2,11 +2,10 @@
 
 import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 import { type Row } from "@tanstack/react-table"
-
-
-import { labels } from "./data/data"
 import { serviceSchema } from "./data/schema"
-import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from "@store/ui"
+import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuTrigger, useToast } from "@store/ui"
+import { api } from "@/utils/api"
+import { useRouter } from "next/router"
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>
@@ -16,6 +15,37 @@ export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
   const service = serviceSchema.parse(row.original)
+
+  const { toast } = useToast()
+  const router = useRouter();
+  const {mutateAsync, isError, isLoading} = api.service.delete.useMutation({
+    async onSuccess() {
+      await utils.service.list.invalidate()
+    },
+    onError() {
+      toast({
+        title: "К сожалению не удалось удалить сервис",
+      })
+    }
+  })
+
+  const utils = api.useContext();
+
+  const handleEdit = async () => {
+    router.push(`/services/edit/${service.id}`)
+  }
+
+  const handleDelete = async () => {
+    router.reload(); // TODO: idc why invalidate not working
+    const result = await mutateAsync({id: service.id})
+
+    if(result && !isError && !isLoading) {
+      toast({
+        title: "Поздравляем!",
+        description: `Вы успешно удалили сервис: ${service.name}`
+      })
+    }
+  }
 
   return (
     <DropdownMenu>
@@ -29,24 +59,9 @@ export function DataTableRowActions<TData>({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
-        <DropdownMenuItem>Edit</DropdownMenuItem>
-        <DropdownMenuItem>Make a copy</DropdownMenuItem>
-        <DropdownMenuItem>Favorite</DropdownMenuItem>
+        <DropdownMenuItem className="hover:cursor-pointer" onClick={handleEdit}>Edit</DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuSub>
-          <DropdownMenuSubTrigger>Labels</DropdownMenuSubTrigger>
-          <DropdownMenuSubContent>
-            <DropdownMenuRadioGroup value={service.name}>
-              {labels.map((label) => (
-                <DropdownMenuRadioItem key={label.value} value={label.value}>
-                  {label.label}
-                </DropdownMenuRadioItem>
-              ))}
-            </DropdownMenuRadioGroup>
-          </DropdownMenuSubContent>
-        </DropdownMenuSub>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem className="hover:cursor-pointer" onClick={handleDelete}>
           Delete
           <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
         </DropdownMenuItem>

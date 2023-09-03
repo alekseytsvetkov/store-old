@@ -8,7 +8,7 @@ import {
 import { prisma } from "@store/db"
 import { TRPCError } from "@trpc/server";
 
-export const serviceRouter = createTRPCRouter({
+export const userRouter = createTRPCRouter({
   list: publicProcedure
     .input(
       z.object({
@@ -26,7 +26,7 @@ export const serviceRouter = createTRPCRouter({
       const limit = input.limit ?? 50;
       const { cursor } = input;
 
-      const items = await prisma.service.findMany({
+      const items = await prisma.user.findMany({
         // get an extra item at the end which we'll use as next cursor
         take: limit + 1,
         where: {},
@@ -61,29 +61,16 @@ export const serviceRouter = createTRPCRouter({
     )
     .query(async ({ input }) => {
       const { id } = input;
-      const service = await prisma.service.findUnique({
+      const user = await prisma.user.findUnique({
         where: { id },
       });
-      if (!service) {
+      if (!user) {
         throw new TRPCError({
           code: 'NOT_FOUND',
-          message: `No service with id '${id}'`,
+          message: `No user with id '${id}'`,
         });
       }
-      return service;
-    }),
-  create: protectedProcedure
-    .input(
-      z.object({
-        id: z.string().uuid().optional(),
-        name: z.string().min(1).max(32),
-      }),
-    )
-    .mutation(async ({ input }) => {
-      const service = await prisma.service.create({
-        data: input,
-      });
-      return service;
+      return user;
     }),
   update: protectedProcedure
     .input(
@@ -94,11 +81,11 @@ export const serviceRouter = createTRPCRouter({
     )
     .mutation(async ({ input }) => {
       const { id, name } = input;
-      const service = await prisma.service.update({
+      const user = await prisma.user.update({
         where: { id },
         data: { name }
       })
-      return service;
+      return user;
     }),
   delete: protectedProcedure
     .input(
@@ -108,9 +95,9 @@ export const serviceRouter = createTRPCRouter({
     )
     .mutation(async ({ input }) => {
       const { id } = input;
-      const service = await prisma.service.delete({
+      const user = await prisma.user.delete({
         where: { id }
       })
-      return service;
+      return user;
     }),
 });
