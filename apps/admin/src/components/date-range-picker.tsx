@@ -3,7 +3,7 @@
 import * as React from "react"
 import { CalendarIcon } from "@radix-ui/react-icons"
 import { addDays, format } from "date-fns"
-import { DateRange } from "react-day-picker"
+import { type DateRange } from "react-day-picker"
 import { Button, Popover, PopoverTrigger, PopoverContent, Calendar } from "@store/ui"
 import { cn } from "@store/ui/cn"
 
