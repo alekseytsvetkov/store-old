@@ -1,4 +1,4 @@
-import { Button, Card, CardContent, Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage, Input, useToast } from "@store/ui";
+import { Button, Card, CardContent, Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage, Input, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, useToast } from "@store/ui";
 import { ArrowLeft, Loader2 } from "@store/ui/icons";
 import Link from "next/link";
 import { useTranslation } from 'next-i18next'
@@ -10,24 +10,27 @@ import { api } from "@/utils/api";
 import { useRouter } from "next/router";
 import type { GetStaticPaths, GetStaticPropsContext, InferGetStaticPropsType } from "next";
 import { createServerSideHelpers } from '@trpc/react-query/server';
-import { sectionRouter } from "@store/api/router";
+import { categoryRouter } from "@store/api/router";
 import superjson from 'superjson';
 import { useEffect, useMemo } from "react";
 
-const sectionFormSchema = z.object({
+const categoryFormSchema = z.object({
   name: z
     .string()
     .min(1, {
-      message: "Section name must be at least 1 characters.",
+      message: "Category name must be at least 1 characters.",
     })
     .max(32, {
-      message: "Section name must not be longer than 32 characters.",
+      message: "Category name must not be longer than 32 characters.",
     }),
+  sectionId: z.string().uuid(),
 })
 
-type SectionFormValues = z.infer<typeof sectionFormSchema>
+type CategoryFormValues = z.infer<typeof categoryFormSchema>
 
-export default function EditSection(props: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function EditCategory(props: InferGetStaticPropsType<typeof getStaticProps>) {
+  const { id } = props;
+
   const { t } = useTranslation('common')
   const { toast } = useToast()
 
@@ -35,46 +38,53 @@ export default function EditSection(props: InferGetStaticPropsType<typeof getSta
 
   const utils = api.useContext();
 
-  const { id } = props;
+  const {data: sections, isLoading: isSectionsLoading, isError: isSectionsError} = api.section.list.useQuery({
+    limit: 10
+  })
 
-  const {data, isLoading, isError} = api.section.byId.useQuery({
+  const {data, isLoading, isError} = api.category.byId.useQuery({
     id
   })
 
-  const {mutateAsync, isLoading: isUpdateLoading} = api.section.update.useMutation({
+  const {mutateAsync, isLoading: isUpdateLoading} = api.category.update.useMutation({
     async onSuccess() {
-      await utils.section.list.invalidate()
+      await utils.category.list.invalidate()
     },
     onError() {
       toast({
-        title: "К сожалению не удалось обновить секцию",
+        title: "К сожалению не удалось обновить категорию",
       })
     }
   })
 
-  const form = useForm<SectionFormValues>({
-    resolver: zodResolver(sectionFormSchema),
+  const form = useForm<CategoryFormValues>({
+    resolver: zodResolver(categoryFormSchema),
     defaultValues: useMemo(() => {
       return {
-        name: data?.name
+        name: data?.name,
+        sectionId: data?.sectionId
       }
     }, [data]),
     mode: "onChange",
   })
 
   useEffect(() => {
-    form.reset(data);
+    form.reset({
+      name: data?.name,
+      sectionId: data?.sectionId
+    });
   }, [data]);
 
-  async function onSubmit(data: SectionFormValues) {
+  async function onSubmit(data: CategoryFormValues) {
     try {
       await mutateAsync({
         id,
         name: data.name,
+        sectionId: data.sectionId
       })
 
       if(!isLoading && !isError) {
-        router.push('/sections');
+        router.push('/categories');
 
         return toast({
           title: "Поздравляем!",
@@ -82,28 +92,52 @@ export default function EditSection(props: InferGetStaticPropsType<typeof getSta
         })
       }
     } catch (cause) {
-      console.error({ cause }, 'Failed to add section');
+      console.error({ cause }, 'Failed to add category');
     }
   }
 
-  return (
+  return isLoading || isSectionsLoading ? (
+    <Loader2 className="h-5 w-5 animate-spin" />
+  ) : (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <div className="flex justify-between flex-col">
             <div className="space-y-1 flex flex-row items-center mb-6">
-              <Link href="/sections">
+              <Link href="/categories">
                 <div className="mr-2 mt-1 p-1 hover:bg-accent rounded-md">
                   <ArrowLeft className="h-5 w-5" />
                 </div>
               </Link>
               <h2 className="text-lg font-semibold tracking-tight">
-                {t('update')} {t('section_2')}{data?.name && `: ${data.name}`}
+                {t('update')} {t('category_2')}{data?.name && `: ${data.name}`}
               </h2>
             </div>
             {isError ? <div>{t('not-found')}</div> : isLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : <div className="grid grid-cols-4 gap-6">
             <Card className="col-span-4">
               <CardContent className="grid gap-6 p-6">
                 <div className="grid gap-2">
+                  <FormField
+                    control={form.control}
+                    name="sectionId"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>{t('section-capitalized')}</FormLabel>
+                        <Select onValueChange={field.onChange} defaultValue={data.sectionId ?? field.value}>
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select a section to display" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {sections?.items.map(section => (
+                              <SelectItem key={section.id} value={section.id}>{section.name}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                   <FormField
                     control={form.control}
                     name="name"
@@ -134,7 +168,7 @@ export default function EditSection(props: InferGetStaticPropsType<typeof getSta
 
 export async function getStaticProps(context: GetStaticPropsContext<{ id: string, locale: string }>) {
   const helpers = createServerSideHelpers({
-    router: sectionRouter,
+    router: categoryRouter,
     ctx: {},
     transformer: superjson, // optional - adds superjson serialization
   });

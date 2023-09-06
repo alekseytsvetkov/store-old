@@ -4,8 +4,14 @@
   "section-capitalized": "Section",
   "section": "section",
   "section_2": "section",
+  "categories-capitalized": "Categories",
+  "category_2": "category",
+  "users-capitalized": "Users",
+  "products-capitalized": "Products",
+  "product": "product",
   "add_your_first": "Add your first",
   "empty_list_title": "There's nothing on the list yet",
   "add": "Add",
-  "update": "Update"
+  "update": "Update",
+  "search_input": "Search..."
 }

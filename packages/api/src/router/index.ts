@@ -1,3 +1,5 @@
 export * from './auth'
 export * from './user'
 export * from './section'
+export * from './category'
+export * from './product'

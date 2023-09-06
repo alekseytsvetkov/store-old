@@ -1,5 +1,6 @@
-import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, Button, Input, Label } from "@store/ui";
+import { Button } from "@store/ui";
 import Link from "next/link";
+import { useTranslation } from 'next-i18next'
 
 interface EmptyPlaceholderProps {
   name: string;
@@ -9,6 +10,8 @@ interface EmptyPlaceholderProps {
 }
 
 export function EmptyPlaceholder({ name, title, description, link }: EmptyPlaceholderProps) {
+  const { t } = useTranslation('common')
+
   return (
     <div className="flex h-[450px] shrink-0 items-center justify-center rounded-md border border-dashed">
       <div className="mx-auto flex max-w-[420px] flex-col items-center justify-center text-center">
@@ -33,7 +36,7 @@ export function EmptyPlaceholder({ name, title, description, link }: EmptyPlaceh
         </p>
         <Link href={link}>
           <Button size="sm" className="relative">
-            Добавить {name}
+            {t('add')} {name}
           </Button>
         </Link>
       </div>

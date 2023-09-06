@@ -1,4 +1,4 @@
-import { Button, Card, CardContent, Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage, Input, useToast } from "@store/ui";
+import { Button, Card, CardContent, Form, FormControl,  FormField, FormItem, FormLabel, FormMessage, Input, useToast } from "@store/ui";
 import { ArrowLeft, Loader2 } from "@store/ui/icons";
 import Link from "next/link";
 import { useTranslation } from 'next-i18next'
@@ -53,7 +53,7 @@ export default function NewSection() {
   async function onSubmit(data: SectionFormValues) {
     try {
       await mutateAsync({
-        name: data.name,
+        name: data.name
       })
 
       if(!isLoading && !isError) {
@@ -97,35 +97,18 @@ export default function NewSection() {
                           <FormControl>
                             <Input placeholder="Path of Exile" {...field} />
                           </FormControl>
-                          <FormDescription>
-                            Тут будет описание поля Название
-                          </FormDescription>
                           <FormMessage />
                         </FormItem>
                       )}
                     />
                   </div>
-                  <Button variant="outline" type="submit">
-                    {!isLoading ? t('add') : <Loader2 className="h-5 w-5 animate-spin" />}
-                  </Button>
                 </CardContent>
               </Card>
-              {/* <Card className="col-span-1">
-                <CardContent className="grid gap-6 p-6">
-                  <div className="grid gap-2">
-                  <Label htmlFor="area">Статус</Label>
-                  <Select defaultValue="active">
-                    <SelectTrigger id="area">
-                      <SelectValue placeholder="Select" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="active">Активен</SelectItem>
-                      <SelectItem value="draft">Черновик</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  </div>
-                </CardContent>
-              </Card> */}
+              <div className="col-span-4 flex justify-end">
+                <Button variant="outline" type="submit">
+                  {!isLoading ? t('add') : <Loader2 className="h-5 w-5 animate-spin" />}
+                </Button>
+              </div>
             </div>
           </div>
         </div>
@@ -134,7 +117,7 @@ export default function NewSection() {
   )
 }
 
-export async function getStaticProps({ locale }) {
+export async function getStaticProps({ locale } : { locale: string }) {
   return {
     props: {
       ...(await serverSideTranslations(locale, [

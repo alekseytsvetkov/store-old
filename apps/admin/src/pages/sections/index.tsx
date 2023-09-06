@@ -3,7 +3,7 @@ import { Button, Separator } from "@store/ui";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
 import { api } from "@/utils/api";
-import { columns } from "@/components/columns";
+import { sectionsColumns } from "@/components/columns";
 import { Loader2 } from "@store/ui/icons";
 import Link from "next/link";
 
@@ -32,7 +32,7 @@ export default function Sections() {
       {status === 'loading' || isLoading ? (
         <Loader2 className="h-5 w-5 animate-spin" />
       ) : data?.items ? (
-        <DataTable data={data.items} columns={columns} />
+        <DataTable data={data.items} columns={sectionsColumns} />
       ) : (
         <EmptyPlaceholder name={t('section')} title={t('empty_list_title')} description={`${t('add_your_first')} ${t('section')}`} link="/sections/new" />
       )}
@@ -40,7 +40,7 @@ export default function Sections() {
   )
 }
 
-export async function getStaticProps({ locale }) {
+export async function getStaticProps({ locale } : { locale: string }) {
   return {
     props: {
       ...(await serverSideTranslations(locale, [

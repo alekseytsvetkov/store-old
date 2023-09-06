@@ -19,6 +19,10 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
       url: "/sections",
       name: "Секции"
     },
+    {
+      url: "/categories",
+      name: "Категории"
+    },
   ]
 
   return (

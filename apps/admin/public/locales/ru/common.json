@@ -4,8 +4,14 @@
   "section-capitalized": "Секция",
   "section": "секция",
   "section_2": "секцию",
+  "categories-capitalized": "Категории",
+  "category_2": "категорию",
+  "users-capitalized": "Пользователи",
+  "products-capitalized": "Товары",
+  "product": "товар",
   "add_your_first": "Добавьте свой первый",
   "empty_list_title": "В списке пока ничего нет",
   "add": "Добавить",
-  "update": "Обновить"
+  "update": "Обновить",
+  "search_input": "Поиск..."
 }

@@ -131,6 +131,8 @@ model Category {
 
   filters Filter[] // PLATFORM / DIFFICULTY / LEAGUE / ADDITIONAL OPTIONS
 
+  products Product[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -166,4 +168,20 @@ model FilterOption {
   updatedAt DateTime @updatedAt
 
   @@index([filterId])
+}
+
+model Product {
+  id String @id @default(uuid())
+
+  name        String  @unique
+  description String?
+  image       String?
+
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([categoryId])
 }

@@ -2,6 +2,7 @@ import { api } from "@/utils/api";
 import { Button, Card, CardContent, CardDescription, CardHeader, CardTitle, Tabs, TabsContent, TabsList, TabsTrigger } from '@store/ui'
 import Image from "next/image"
 import { CalendarDateRangePicker,  Overview, RecentSales } from "@/components";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 export default function Home() {
 
@@ -26,9 +27,9 @@ export default function Home() {
         />
       </div>
       <div className="hidden flex-col md:flex">
-        <div className="flex-1 space-y-4 p-8 pt-6">
+        <div className="flex-1 space-y-4">
           <div className="flex items-center justify-between space-y-2">
-            <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
+            <h2 className="text-2xl font-bold tracking-tight">Dashboard</h2>
             <div className="flex items-center space-x-2">
               <CalendarDateRangePicker />
               <Button>Download</Button>
@@ -178,4 +179,14 @@ export default function Home() {
       </div>
     </div>
   );
+}
+
+export async function getStaticProps({ locale } : { locale: string }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, [
+        'common',
+      ])),
+    },
+  }
 }

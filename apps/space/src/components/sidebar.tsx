@@ -12,25 +12,9 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
       name: "Аналитика"
     },
     {
-      url: "/orders",
-      name: "Продажи"
-    },
-    {
       url: "/products",
       name: "Товары"
     },
-    {
-      url: "/customers",
-      name: "Клиенты"
-    },
-    {
-      url: "/marketing",
-      name: "Маркетинг"
-    },
-    {
-      url: "/discounts",
-      name: "Скидки"
-    }
   ]
 
   return (

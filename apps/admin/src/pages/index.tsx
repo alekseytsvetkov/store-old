@@ -2,6 +2,7 @@ import { api } from "@/utils/api";
 import { Button, Card, CardContent, CardDescription, CardHeader, CardTitle, Tabs, TabsContent, TabsList, TabsTrigger } from '@store/ui'
 import Image from "next/image"
 import { CalendarDateRangePicker,  Overview, RecentSales } from "@/components";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 export default function Home() {
 
@@ -178,4 +179,14 @@ export default function Home() {
       </div>
     </div>
   );
+}
+
+export async function getStaticProps({ locale } : { locale: string }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, [
+        'common',
+      ])),
+    },
+  }
 }

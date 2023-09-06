@@ -8,7 +8,7 @@ import {
 import { prisma } from "@store/db"
 import { TRPCError } from "@trpc/server";
 
-export const sectionRouter = createTRPCRouter({
+export const categoryRouter = createTRPCRouter({
   list: publicProcedure
     .input(
       z.object({
@@ -26,7 +26,7 @@ export const sectionRouter = createTRPCRouter({
       const limit = input.limit ?? 50;
       const { cursor } = input;
 
-      const items = await prisma.section.findMany({
+      const items = await prisma.category.findMany({
         // get an extra item at the end which we'll use as next cursor
         take: limit + 1,
         where: {},
@@ -39,7 +39,7 @@ export const sectionRouter = createTRPCRouter({
           createdAt: 'desc',
         },
         include: {
-          categories: true
+          section: true
         }
       });
       let nextCursor: typeof cursor | undefined = undefined;
@@ -64,51 +64,89 @@ export const sectionRouter = createTRPCRouter({
     )
     .query(async ({ input }) => {
       const { id } = input;
-      const section = await prisma.section.findUnique({
+      const category = await prisma.category.findUnique({
         where: { id },
         include: {
-          categories: true
+          section: true
         }
       });
-      if (!section) {
+      if (!category) {
         throw new TRPCError({
           code: 'NOT_FOUND',
-          message: `No section with id '${id}'`,
+          message: `No category with id '${id}'`,
         });
       }
-      return section;
+      return category;
+    }),
+  bySectionId: publicProcedure
+    .input(
+      z.object({
+        sectionId: z.string(),
+      }),
+    )
+    .query(async ({ input }) => {
+      const { sectionId } = input;
+      const categories = await prisma.category.findMany({
+        where: { sectionId },
+      });
+      if (!categories) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: `No one category with sectionId '${sectionId}'`,
+        });
+      }
+      return categories;
     }),
   create: protectedProcedure
     .input(
       z.object({
         id: z.string().uuid().optional(),
-        name: z.string().min(1).max(32)
+        name: z.string().min(1).max(32),
+        sectionId: z.string().uuid()
       }),
     )
     .mutation(async ({ input }) => {
-      const { name } = input;
-      const section = await prisma.section.create({
+      const { name, sectionId } = input;
+      const category = await prisma.category.create({
         data: {
-          name
+          name,
+          section: {
+            connect: {
+              id: sectionId
+            }
+          }
+        },
+        include: {
+          section: true
         }
       });
-
-      return section;
+      return category;
     }),
   update: protectedProcedure
     .input(
       z.object({
         id: z.string(),
         name: z.string(),
+        sectionId: z.string().uuid(),
       }),
     )
     .mutation(async ({ input }) => {
-      const { id, name } = input;
-      const section = await prisma.section.update({
+      const { id, name, sectionId } = input;
+      const category = await prisma.category.update({
         where: { id },
-        data: { name }
+        data: {
+          name,
+          section: {
+            connect: {
+              id: sectionId
+            }
+          }
+        },
+        include: {
+          section: true
+        }
       })
-      return section;
+      return category;
     }),
   delete: protectedProcedure
     .input(
@@ -118,9 +156,9 @@ export const sectionRouter = createTRPCRouter({
     )
     .mutation(async ({ input }) => {
       const { id } = input;
-      const section = await prisma.section.delete({
+      const category = await prisma.category.delete({
         where: { id }
       })
-      return section;
+      return category;
     }),
 });
