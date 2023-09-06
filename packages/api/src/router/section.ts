@@ -42,11 +42,11 @@ export const sectionRouter = createTRPCRouter({
           categories: true
         }
       });
-      let nextCursor: typeof cursor | undefined = undefined;
+      let nextCursor: typeof cursor | undefined;
       if (items.length > limit) {
         // Remove the last item and use it as next cursor
 
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+         
         const nextItem = items.pop()!;
         nextCursor = nextItem.id;
       }

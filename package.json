@@ -24,7 +24,8 @@
     "typecheck": "turbo typecheck --continue"
   },
   "dependencies": {
-    "@vercel/spaces": "https://spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701"
+    "@vercel/spaces": "https://spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701",
+    "pnpm": "^8.7.4"
   },
   "devDependencies": {
     "@vercel/spaces": "https://spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701",
