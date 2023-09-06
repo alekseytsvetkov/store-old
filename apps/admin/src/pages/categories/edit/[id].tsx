@@ -169,6 +169,7 @@ export default function EditCategory(props: InferGetStaticPropsType<typeof getSt
 export async function getStaticProps(context: GetStaticPropsContext<{ id: string, locale: string }>) {
   const helpers = createServerSideHelpers({
     router: categoryRouter,
+    // @ts-ignore
     ctx: {},
     transformer: superjson, // optional - adds superjson serialization
   });
@@ -180,6 +181,7 @@ export async function getStaticProps(context: GetStaticPropsContext<{ id: string
     props: {
       trpcState: helpers.dehydrate(),
       id,
+      // @ts-ignore
       ...(await serverSideTranslations(context.locale, [
         'common',
       ])),

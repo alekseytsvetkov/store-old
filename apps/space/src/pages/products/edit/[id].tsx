@@ -210,6 +210,7 @@ export default function EditProduct(props: InferGetStaticPropsType<typeof getSta
 export async function getStaticProps(context: GetStaticPropsContext<{ id: string, locale: string }>) {
   const helpers = createServerSideHelpers({
     router: productRouter,
+    // @ts-ignore
     ctx: {},
     transformer: superjson, // optional - adds superjson serialization
   });
@@ -221,6 +222,7 @@ export async function getStaticProps(context: GetStaticPropsContext<{ id: string
     props: {
       trpcState: helpers.dehydrate(),
       id,
+      // @ts-ignore
       ...(await serverSideTranslations(context.locale, [
         'common',
       ])),
