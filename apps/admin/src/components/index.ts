@@ -1,5 +1,4 @@
 export * from './main-nav'
-export * from './team-switcher'
 export * from './user-nav'
 export * from './search'
 export * from './overview'
