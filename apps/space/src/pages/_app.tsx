@@ -12,7 +12,6 @@ import "@/styles/globals.css";
 
 import { Inter } from 'next/font/google';
 import MainLayout from "@/components/layout";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const inter = Inter({ subsets: ['latin'] });
 

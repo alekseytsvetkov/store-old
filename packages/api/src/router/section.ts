@@ -46,7 +46,7 @@ export const sectionRouter = createTRPCRouter({
       if (items.length > limit) {
         // Remove the last item and use it as next cursor
 
-         
+
         const nextItem = items.pop()!;
         nextCursor = nextItem.id;
       }
@@ -59,7 +59,7 @@ export const sectionRouter = createTRPCRouter({
   byId: publicProcedure
     .input(
       z.object({
-        id: z.string(),
+        id: z.string().uuid(),
       }),
     )
     .query(async ({ input }) => {
@@ -82,14 +82,16 @@ export const sectionRouter = createTRPCRouter({
     .input(
       z.object({
         id: z.string().uuid().optional(),
-        name: z.string().min(1).max(32)
+        name: z.string().min(1).max(32),
+        shortName: z.string().min(1).max(32)
       }),
     )
     .mutation(async ({ input }) => {
-      const { name } = input;
+      const { name, shortName } = input;
       const section = await prisma.section.create({
         data: {
-          name
+          name,
+          shortName
         }
       });
 
@@ -98,22 +100,26 @@ export const sectionRouter = createTRPCRouter({
   update: protectedProcedure
     .input(
       z.object({
-        id: z.string(),
-        name: z.string(),
+        id: z.string().uuid().optional(),
+        name: z.string().min(1).max(32),
+        shortName: z.string().min(1).max(32)
       }),
     )
     .mutation(async ({ input }) => {
-      const { id, name } = input;
+      const { id, name, shortName } = input;
       const section = await prisma.section.update({
         where: { id },
-        data: { name }
+        data: {
+          name,
+          shortName
+        }
       })
       return section;
     }),
   delete: protectedProcedure
     .input(
       z.object({
-        id: z.string(),
+        id: z.string().uuid(),
       }),
     )
     .mutation(async ({ input }) => {

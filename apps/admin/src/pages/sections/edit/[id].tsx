@@ -23,6 +23,13 @@ const sectionFormSchema = z.object({
     .max(32, {
       message: "Section name must not be longer than 32 characters.",
     }),
+  shortName: z.string()
+    .min(1, {
+      message: "Section short name must be at least 1 characters.",
+    })
+    .max(32, {
+      message: "Section short must not be longer than 32 characters.",
+    }),
 })
 
 type SectionFormValues = z.infer<typeof sectionFormSchema>
@@ -56,7 +63,8 @@ export default function EditSection(props: InferGetStaticPropsType<typeof getSta
     resolver: zodResolver(sectionFormSchema),
     defaultValues: useMemo(() => {
       return {
-        name: data?.name
+        name: data?.name,
+        shortName: data?.shortName
       }
     }, [data]),
     mode: "onChange",
@@ -71,6 +79,7 @@ export default function EditSection(props: InferGetStaticPropsType<typeof getSta
       await mutateAsync({
         id,
         name: data.name,
+        shortName: data.shortName
       })
 
       if(!isLoading && !isError) {
@@ -112,6 +121,19 @@ export default function EditSection(props: InferGetStaticPropsType<typeof getSta
                         <FormLabel>Название</FormLabel>
                         <FormControl>
                           <Input placeholder="Path of Exile" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="shortName"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Короткое название</FormLabel>
+                        <FormControl>
+                          <Input placeholder="poe" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>

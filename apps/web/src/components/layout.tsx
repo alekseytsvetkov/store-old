@@ -1,14 +1,7 @@
-// import { PlusCircledIcon } from "@radix-ui/react-icons"
-// import { Tabs, TabsList, TabsTrigger, TabsContent, Separator, ScrollArea, ScrollBar } from "@store/ui"
-// import { Button } from "react-day-picker"
 import Head from "next/head"
-import { MainNav } from "./main-nav"
-import { ModeToggle } from "./mode-toggle"
-import { Search } from "./search"
 import { Sidebar } from "./sidebar"
-import { UserNav } from "./user-nav"
 import Link from "next/link"
-import { LanguageSwitcher } from "./language-switcher"
+import { ModeToggle } from "./mode-toggle"
 
 interface MainLayoutProps {
   children: React.ReactNode
@@ -18,7 +11,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
   return (
     <>
       <Head>
-        <title>Admin</title>
+        <title>Space</title>
         <meta name="description" content="" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -26,13 +19,10 @@ export default function MainLayout({ children }: MainLayoutProps) {
         <div className="border-b">
           <div className="flex h-16 items-center px-4 text-slate-800 dark:text-slate-300">
             <Link href="/">
-              <div className="text-sm font-medium hover:cursor-pointer">Admin</div>
+              <div className="text-sm font-medium hover:cursor-pointer">Store</div>
             </Link>
             <div className="ml-auto flex items-center space-x-4">
-              <Search />
-              <LanguageSwitcher />
               <ModeToggle />
-              <UserNav />
             </div>
           </div>
         </div>

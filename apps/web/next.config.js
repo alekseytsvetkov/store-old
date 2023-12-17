@@ -32,6 +32,10 @@ const config = {
         protocol: 'https',
         hostname: 'uploadthing.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'web.poecdn.com'
+      },
     ],
   },
   swcMinify: true,

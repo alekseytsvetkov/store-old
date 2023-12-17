@@ -18,12 +18,20 @@ const sectionFormSchema = z.object({
     .max(32, {
       message: "Section name must not be longer than 32 characters.",
     }),
+  shortName: z.string()
+    .min(1, {
+      message: "Section short name must be at least 1 characters.",
+    })
+    .max(32, {
+      message: "Section short must not be longer than 32 characters.",
+    }),
 })
 
 type SectionFormValues = z.infer<typeof sectionFormSchema>
 
 const defaultValues: Partial<SectionFormValues> = {
   name: "",
+  shortName: "",
 }
 
 export default function NewSection() {
@@ -53,7 +61,8 @@ export default function NewSection() {
   async function onSubmit(data: SectionFormValues) {
     try {
       await mutateAsync({
-        name: data.name
+        name: data.name,
+        shortName: data.shortName
       })
 
       if(!isLoading && !isError) {
@@ -96,6 +105,19 @@ export default function NewSection() {
                           <FormLabel>Название</FormLabel>
                           <FormControl>
                             <Input placeholder="Path of Exile" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="shortName"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Короткое название</FormLabel>
+                          <FormControl>
+                            <Input placeholder="poe" {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>

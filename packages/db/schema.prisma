@@ -110,7 +110,9 @@ model Section {
   id String @id @default(uuid())
 
   name        String  @unique
+  shortName   String  @unique
   description String?
+  icon        String?
   cover       String?
 
   categories Category[] // Divine Orbs / Chaos Orbs
