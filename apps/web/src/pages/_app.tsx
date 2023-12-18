@@ -10,10 +10,7 @@ import { api } from "@/utils/api";
 
 import "@/styles/globals.css";
 
-import { Inter } from 'next/font/google';
 import MainLayout from "@/components/layout";
-
-const inter = Inter({ subsets: ['latin'] });
 
 const queryClient = new QueryClient();
 
@@ -26,12 +23,10 @@ const MyApp: AppType<{ session: Session | null }> = ({
       <QueryClientProvider client={queryClient}>
         <SessionProvider session={session}>
           <ThemeProvider attribute="class">
-            <div className={`${inter.className} flex flex-col h-screen`}>
-              <MainLayout>
-                <Component {...pageProps} />
-                <Toaster />
-              </MainLayout>
-            </div>
+            <MainLayout>
+              <Component {...pageProps} />
+              <Toaster />
+            </MainLayout>
           </ThemeProvider>
         </SessionProvider>
       </QueryClientProvider>

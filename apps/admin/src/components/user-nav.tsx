@@ -2,7 +2,7 @@ import { Avatar, AvatarFallback, AvatarImage, Button, DropdownMenu, DropdownMenu
 import { useState } from "react"
 import { signIn, signOut, useSession } from "@store/auth/react"
 import { RoleTypes } from '@store/db/types';
-import { Loader2, LogIn, User } from '@store/ui/icons';
+import { Loader2, LogIn } from '@store/ui/icons';
 import { cn } from "@store/ui/cn";
 
 export function UserNav() {

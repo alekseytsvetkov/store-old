@@ -36,6 +36,10 @@ const config = {
         protocol: 'https',
         hostname: 'web.poecdn.com'
       },
+      {
+        protocol: 'https',
+        hostname: 'placehold.co'
+      },
     ],
   },
   swcMinify: true,

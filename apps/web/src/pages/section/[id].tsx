@@ -1,4 +1,3 @@
-
 import Head from "next/head";
 
 import { api } from "@/utils/api";

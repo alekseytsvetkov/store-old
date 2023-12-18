@@ -1,23 +1,25 @@
-import Head from "next/head"
-import { Sidebar } from "./sidebar"
-import Link from "next/link"
-import { ModeToggle } from "./mode-toggle"
+import Head from "next/head";
+import Link from "next/link";
+import { ModeToggle } from "./mode-toggle";
+import { Inter } from 'next/font/google';
 
 interface MainLayoutProps {
   children: React.ReactNode
 }
 
+const inter = Inter({ subsets: ['latin'] });
+
 export default function MainLayout({ children }: MainLayoutProps) {
   return (
-    <>
+    <div className={`${inter.className} flex flex-col h-screen`}>
       <Head>
         <title>Space</title>
         <meta name="description" content="" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="bg-background h-screen">
-        <div className="border-b">
-          <div className="flex h-16 items-center px-4 text-slate-800 dark:text-slate-300">
+        <header className="border-b w-full">
+          <div className="flex h-16 items-center px-4 text-slate-800 dark:text-slate-300 text-sm font-medium container">
             <Link href="/">
               <div className="text-sm font-medium hover:cursor-pointer">Store</div>
             </Link>
@@ -25,18 +27,13 @@ export default function MainLayout({ children }: MainLayoutProps) {
               <ModeToggle />
             </div>
           </div>
-        </div>
-        <div className="flex flex-1 h-[calc(100%-65px)]">
-        <Sidebar className="hidden lg:block relative w-56" />
-        <div className="flex w-0 flex-1 flex-col lg:border-l">
-        <div className="h-full px-4 py-6 lg:px-8 grid grid-cols-6">
-          <div className="col-start-2 col-span-4">
+        </header>
+        <main className="flex flex-1 h-[calc(100%-65px)]">
+          <div className="flex w-0 flex-1 flex-col container">
             {children}
           </div>
-        </div>
-        </div>
-        </div>
+        </main>
       </div>
-    </>
+    </div>
   )
 }

@@ -44,4 +44,6 @@ export {
   User,
   X,
   RotateCcw,
+  MoreHorizontal,
+  Star
 } from 'lucide-react';
