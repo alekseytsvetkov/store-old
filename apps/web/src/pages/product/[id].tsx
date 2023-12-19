@@ -70,9 +70,10 @@ export default function Product() {
             <p className="pb-4 text-lg font-medium">Total price</p>
             <p className="font-medium">1 200 ₽</p>
             <div className="flex flex-col py-4">
-              <Button variant="secondary" className="mb-4 w-full">
+              {/* TODO: implement later */}
+              {/* <Button variant="secondary" className="mb-4 w-full">
                 <span className="font-medium">Add to cart</span>
-              </Button>
+              </Button> */}
               <Button className="w-full">
                 <span className="font-medium">Buy now</span>
               </Button>
