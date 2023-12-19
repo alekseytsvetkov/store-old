@@ -1,16 +1,7 @@
 import Head from 'next/head';
 import Image from 'next/image';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-} from '@store/ui';
-import { Star } from '@store/ui/icons';
-import { MarketPreview, ProductPreview } from '@/components';
+import { Button } from '@store/ui';
+import { MarketPreview, ProductPreview, ReviewPreview, ReviewsViewer } from '@/components';
 import Link from 'next/link';
 
 export default function Product() {
@@ -84,7 +75,7 @@ export default function Product() {
         <div className="pb-4">
           <div className="flex flex-row items-start justify-between pb-4">
             <p className="text-lg font-medium">Ratings and Reviews</p>
-            <p className="text-sm font-medium">See All</p>
+            <ReviewsViewer />
           </div>
           <div className="flex flex-row items-end">
             <div className="flex flex-row items-end pr-4">
@@ -95,25 +86,7 @@ export default function Product() {
           </div>
           <div className="grid gap-3 py-4 md:grid-cols-3">
             {new Array(3).fill('').map((_, index) => (
-              <Card>
-                <CardHeader>
-                  <div className="flex flex-row py-2">
-                    <Star fill="white" size={14} className="mr-0.5" />
-                    <Star fill="white" size={14} className="mr-0.5" />
-                    <Star fill="white" size={14} className="mr-0.5" />
-                    <Star fill="white" size={14} className="mr-0.5" />
-                    <Star fill="white" size={14} className="mr-0.5" />
-                  </div>
-                  <p className="text-sm text-gray-400">base, 05/26/2013</p>
-                </CardHeader>
-                <CardContent>
-                  <p className="line-clamp-3">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Inventore ipsum aut
-                    natus obcaecati, alias aliquid asperiores nesciunt assumenda maiores eos ea et
-                    ex unde repellat, voluptatem necessitatibus quibusdam pariatur! Iure?
-                  </p>
-                </CardContent>
-              </Card>
+              <ReviewPreview />
             ))}
           </div>
         </div>
