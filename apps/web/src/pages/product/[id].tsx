@@ -1,8 +1,16 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import { Button } from '@store/ui';
-import { MarketPreview, ProductPreview, ReviewPreview, ReviewsViewer } from '@/components';
+import {
+  MarketPreview,
+  PaymentMethodSwitcher,
+  ProductPreview,
+  ReviewPreview,
+  ReviewsViewer,
+} from '@/components';
 import Link from 'next/link';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import type { GetStaticPaths } from 'next';
 
 export default function Product() {
   return (
@@ -58,14 +66,15 @@ export default function Product() {
                 image="https://placehold.co/80x80"
               />
             </Link>
-            <p className="pb-4 text-lg font-medium">Total price</p>
-            <p className="font-medium">1 200 ₽</p>
-            <div className="flex flex-col py-4">
+            <p className="py-2 text-sm">Payment method</p>
+            <PaymentMethodSwitcher />
+            <p className="pt-6 font-medium">Total price: 1 200 ₽</p>
+            <div className="flex flex-col">
               {/* TODO: implement later */}
               {/* <Button variant="secondary" className="mb-4 w-full">
                 <span className="font-medium">Add to cart</span>
               </Button> */}
-              <Button className="w-full">
+              <Button className="my-6 w-full">
                 <span className="font-medium">Buy now</span>
               </Button>
             </div>
@@ -108,3 +117,18 @@ export default function Product() {
     </>
   );
 }
+
+export async function getStaticProps({ locale }: { locale: string }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common'])),
+    },
+  };
+}
+
+export const getStaticPaths: GetStaticPaths<{ id: string }> = async () => {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  };
+};

@@ -1,16 +1,16 @@
-import { type Session } from "next-auth";
-import { SessionProvider } from "next-auth/react";
-import { type AppType } from "next/app";
+import { type Session } from 'next-auth';
+import { SessionProvider } from 'next-auth/react';
+import { type AppType } from 'next/app';
 import { ThemeProvider } from 'next-themes';
-import { appWithTranslation } from 'next-i18next'
-import { Toaster } from "@store/ui"
+import { appWithTranslation } from 'next-i18next';
+import { Toaster } from '@store/ui';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import { api } from "@/utils/api";
+import { api } from '@/utils/api';
 
-import "@/styles/globals.css";
+import '@/styles/globals.css';
 
-import MainLayout from "@/components/layout";
+import MainLayout from '@/components/layout';
 
 const queryClient = new QueryClient();
 

@@ -6,9 +6,9 @@ import { InstantSearchNext } from 'react-instantsearch-nextjs';
 
 const searchClient = algoliasearch(
   // eslint-disable-next-line @typescript-eslint/dot-notation
-  process.env.ALGOLIA_APP_ID,
+  process.env.ALGOLIA_APP_ID!,
   // eslint-disable-next-line @typescript-eslint/dot-notation
-  process.env.ALGOLIA_API_KEY,
+  process.env.ALGOLIA_API_KEY!,
 );
 
 const INDEX_NAME = 'store';

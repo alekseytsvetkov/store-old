@@ -3,10 +3,12 @@ import Head from 'next/head';
 import { api } from '@/utils/api';
 import { signIn, signOut, useSession } from '@store/auth/react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@store/ui';
-import Image from 'next/image';
 import { ProductPreview } from '@/components';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 export default function Home() {
+  const { t } = useTranslation('common');
   const hello = api.auth.hello.useQuery({ text: 'from tRPC' });
 
   return (
@@ -21,7 +23,7 @@ export default function Home() {
           <div className="flex items-center justify-center">
             <TabsList>
               <TabsTrigger value="recommended" className="relative">
-                Recommended
+                {t('recommended')}
               </TabsTrigger>
               <TabsTrigger value="news-and-trending">News & Trending</TabsTrigger>
               <TabsTrigger value="top-sellers">Top sellsers</TabsTrigger>
@@ -139,4 +141,12 @@ function AuthShowcase() {
       </button>
     </div>
   );
+}
+
+export async function getStaticProps({ locale }: { locale: string }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common'])),
+    },
+  };
 }

@@ -5,6 +5,7 @@ import { SearchContent } from './search-content';
 import { Button, Dialog, DialogContent, DialogTrigger } from '@store/ui';
 import { useEffect, useState } from 'react';
 import { SearchIcon } from '@store/ui/icons';
+import { useTranslation } from 'next-i18next';
 
 export function Search() {
   const [open, setOpen] = useState(false);
@@ -27,9 +28,7 @@ export function Search() {
         <SearchBar setOpen={setOpen} />
       </DialogTrigger>
       <SearchProvider>
-        <DialogContent
-          className="max-h-[80vh] max-w-full gap-0 overflow-hidden rounded-sm p-0 sm:rounded-sm md:max-w-[75vw] lg:max-w-[60vw] xl:max-h-[60vh]"
-        >
+        <DialogContent className="max-h-[80vh] max-w-full gap-0 overflow-hidden rounded-sm p-0 sm:rounded-sm md:max-w-[75vw] lg:max-w-[60vw] xl:max-h-[60vh]">
           <SearchContent onClick={() => setOpen(false)} />
         </DialogContent>
       </SearchProvider>
@@ -38,6 +37,8 @@ export function Search() {
 }
 
 function SearchBar({ setOpen }: { setOpen: React.Dispatch<React.SetStateAction<boolean>> }) {
+  const { t } = useTranslation('common');
+
   return (
     <>
       {/* Mobile Bar */}
@@ -58,7 +59,7 @@ function SearchBar({ setOpen }: { setOpen: React.Dispatch<React.SetStateAction<b
         <SearchIcon />
         <span className="sm:hidden">Search</span>
         <span className="hidden w-20 truncate text-left sm:inline-block md:w-full">
-          Search...
+          {t('search_input')}
         </span>
         <span className="text-xs">⌘K</span>
       </Button>

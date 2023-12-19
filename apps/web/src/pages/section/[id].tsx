@@ -1,9 +1,10 @@
-import Head from "next/head";
+import Head from 'next/head';
 
-import { api } from "@/utils/api";
+import { api } from '@/utils/api';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import type { GetStaticPaths } from 'next';
 
 export default function Section() {
-
   return (
     <>
       <Head>
@@ -17,3 +18,18 @@ export default function Section() {
     </>
   );
 }
+
+export async function getStaticProps({ locale }: { locale: string }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common'])),
+    },
+  };
+}
+
+export const getStaticPaths: GetStaticPaths<{ id: string }> = async () => {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  };
+};

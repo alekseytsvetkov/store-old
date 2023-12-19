@@ -48,5 +48,5 @@ export {
   Star,
   SearchIcon,
   Loader2Icon as LoaderIcon,
-  XIcon
+  XIcon,
 } from 'lucide-react';

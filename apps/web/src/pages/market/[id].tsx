@@ -2,6 +2,8 @@ import Head from 'next/head';
 import { Button } from '@store/ui';
 import { MoreHorizontal } from '@store/ui/icons';
 import { MarketPreview, ProductPreview } from '@/components';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import type { GetStaticPaths } from 'next';
 
 export default function Market() {
   return (
@@ -56,3 +58,18 @@ export default function Market() {
     </>
   );
 }
+
+export async function getStaticProps({ locale }: { locale: string }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common'])),
+    },
+  };
+}
+
+export const getStaticPaths: GetStaticPaths<{ id: string }> = async () => {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  };
+};
