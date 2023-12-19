@@ -1,7 +1,10 @@
+import Image from 'next/image'
+
 declare module '*.md' {
   const text: string;
   export default text;
 }
+
 declare module '*.png';
 
 declare namespace NodeJS {
