@@ -10,6 +10,8 @@
         "NODE_ENV",
         "DATABASE_URL",
         "DISCORD_CLIENT_ID",
+        "ALGOLIA_APP_ID",
+        "ALGOLIA_API_KEY",
         "DISCORD_CLIENT_SECRET",
         "GITHUB_ID",
         "GITHUB_SECRET",

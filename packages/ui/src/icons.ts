@@ -45,5 +45,8 @@ export {
   X,
   RotateCcw,
   MoreHorizontal,
-  Star
+  Star,
+  SearchIcon,
+  Loader2Icon as LoaderIcon,
+  XIcon
 } from 'lucide-react';
