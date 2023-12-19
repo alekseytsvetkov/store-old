@@ -1,7 +1,7 @@
 import Head from 'next/head';
-import { Avatar, AvatarFallback, AvatarImage, Button } from '@store/ui';
-import { MoreHorizontal, Star } from '@store/ui/icons';
-import { ProductPreview } from '@/components';
+import { Button } from '@store/ui';
+import { MoreHorizontal } from '@store/ui/icons';
+import { MarketPreview, ProductPreview } from '@/components';
 
 export default function Market() {
   return (
@@ -15,19 +15,12 @@ export default function Market() {
         {/* Профиль маркета */}
         <div>
           <div className="flex flex-row justify-between">
-            <div className="flex flex-row items-center">
-              <Avatar className="flex h-20 w-20 items-center justify-center space-y-0 rounded-sm border">
-                <AvatarImage src="https://placehold.co/80x80" alt="Market name logo" />
-                <AvatarFallback>Market name</AvatarFallback>
-              </Avatar>
-              <div className="pl-6">
-                <div className="text-lg font-medium">Market name</div>
-                <div className="flex flex-row items-center">
-                  <Star fill="white" size={14} className="mr-1" />
-                  <div className="text-sm">4.8 • 4.6K Ratings</div>
-                </div>
-              </div>
-            </div>
+            <MarketPreview
+              name="Market name"
+              rating={4.8}
+              reviewsCount={4.6}
+              image="https://placehold.co/80x80"
+            />
             <div className="flex items-center gap-2">
               <Button>
                 <span>Follow</span>
@@ -37,7 +30,7 @@ export default function Market() {
               </Button>
             </div>
           </div>
-          <p className="max-w-xl py-4">
+          <p className="max-w-xl">
             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Animi, atque autem excepturi
             dolor enim hic, soluta molestias voluptate ab nihil velit modi fugit iusto ea minus
             porro voluptatibus cupiditate quae.
@@ -50,6 +43,7 @@ export default function Market() {
             {new Array(24).fill('').map((_, index) => (
               <ProductPreview
                 key={index}
+                id={String(index)}
                 name="Product name"
                 price={1200}
                 reviewsCount={64}

@@ -10,7 +10,8 @@ import {
   CardHeader,
 } from '@store/ui';
 import { Star } from '@store/ui/icons';
-import { ProductPreview } from '@/components';
+import { MarketPreview, ProductPreview } from '@/components';
+import Link from 'next/link';
 
 export default function Product() {
   return (
@@ -58,19 +59,14 @@ export default function Product() {
             </div>
           </div>
           <div>
-            <div className="flex flex-row items-center pb-4">
-              <Avatar className="flex h-20 w-20 items-center justify-center space-y-0 rounded-sm border">
-                <AvatarImage src="https://placehold.co/80x80" alt="Market name logo" />
-                <AvatarFallback>Market name</AvatarFallback>
-              </Avatar>
-              <div className="pl-6">
-                <p className="text-lg font-medium">Market name</p>
-                <div className="flex flex-row items-center">
-                  <Star fill="white" size={14} className="mr-1" />
-                  <p className="text-sm">4.8 • 4.6K Ratings</p>
-                </div>
-              </div>
-            </div>
+            <Link href="/market/1">
+              <MarketPreview
+                name="Market name"
+                rating={4.8}
+                reviewsCount={4.6}
+                image="https://placehold.co/80x80"
+              />
+            </Link>
             <p className="pb-4 text-lg font-medium">Total price</p>
             <p className="font-medium">1 200 ₽</p>
             <div className="flex flex-col py-4">
@@ -126,6 +122,7 @@ export default function Product() {
           {new Array(6).fill('').map((_, index) => (
             <ProductPreview
               key={index}
+              id={String(index)}
               name="Product name"
               price={1200}
               reviewsCount={64}

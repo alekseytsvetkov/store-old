@@ -34,6 +34,7 @@ export default function Home() {
               {new Array(24).fill('').map((_, index) => (
                 <ProductPreview
                   key={index}
+                  id={String(index)}
                   name="Product name"
                   price={1200}
                   reviewsCount={64}
@@ -50,6 +51,7 @@ export default function Home() {
               {new Array(24).fill('').map((_, index) => (
                 <ProductPreview
                   key={index}
+                  id={String(index)}
                   name="Product name"
                   price={1200}
                   reviewsCount={64}
@@ -66,6 +68,7 @@ export default function Home() {
               {new Array(24).fill('').map((_, index) => (
                 <ProductPreview
                   key={index}
+                  id={String(index)}
                   name="Product name"
                   price={1200}
                   reviewsCount={64}
@@ -82,6 +85,7 @@ export default function Home() {
               {new Array(24).fill('').map((_, index) => (
                 <ProductPreview
                   key={index}
+                  id={String(index)}
                   name="Product name"
                   price={1200}
                   reviewsCount={64}
@@ -98,6 +102,7 @@ export default function Home() {
               {new Array(24).fill('').map((_, index) => (
                 <ProductPreview
                   key={index}
+                  id={String(index)}
                   name="Product name"
                   price={1200}
                   reviewsCount={64}
