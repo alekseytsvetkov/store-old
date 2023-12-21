@@ -10,7 +10,7 @@ import { api } from '@/utils/api';
 
 import '@/styles/globals.css';
 
-import MainLayout from '@/components/layout';
+import MainLayout from '@/components/layout/main-layout';
 
 const queryClient = new QueryClient();
 

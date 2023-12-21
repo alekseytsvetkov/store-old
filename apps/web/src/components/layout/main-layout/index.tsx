@@ -1,14 +1,11 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import { ModeToggle } from '../mode-toggle';
 import { Inter } from 'next/font/google';
 import { Suspense } from 'react';
-import { Search } from '../search';
-import { LanguageSwitcher } from '../language-switcher';
-import { UserNav } from '../user-nav';
-import { CatalogMenu } from '../catalog-menu';
 import { Button } from '@store/ui';
 import { SiteFooter } from './site-footer';
+import { CatalogMenu, LanguageSwitcher, ModeToggle, UserNav } from '@/components';
+import { Search } from '@/components/search';
 
 interface MainLayoutProps {
   children: React.ReactNode;

@@ -384,14 +384,6 @@ main {
   }
 }
 
-* {
-  @apply focus:ring-blue-600 group-focus:ring-blue-600;
-}
-
-a {
-  @apply focus:outline-none focus-visible:ring-2;
-}
-
 .hamburger .line {
   width: 20px;
   height: 2px;

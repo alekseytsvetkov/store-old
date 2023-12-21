@@ -22,3 +22,5 @@ export * from './components/ui/badge';
 export * from './components/ui/checkbox';
 export * from './components/ui/sheet';
 export * from './components/ui/navigation-menu';
+export * from './components/ui/aspect-ratio';
+export * from './components/ui/skeleton';

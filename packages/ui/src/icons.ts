@@ -1,4 +1,5 @@
 export {
+  type LucideIcon,
   AlertCircle,
   ArrowUp,
   ArrowLeft,
@@ -49,4 +50,9 @@ export {
   SearchIcon,
   Loader2Icon as LoaderIcon,
   XIcon,
+  CogIcon,
+  UserCircleIcon,
+  CompassIcon,
+  LogOutIcon,
+  StoreIcon
 } from 'lucide-react';

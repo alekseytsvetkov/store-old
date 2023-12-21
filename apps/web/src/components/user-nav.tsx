@@ -15,8 +15,9 @@ import {
 import { useState } from 'react';
 import { signIn, signOut, useSession } from '@store/auth/react';
 import { RoleTypes } from '@store/db/types';
-import { Loader2, LogIn } from '@store/ui/icons';
+import { CogIcon, Loader2, LogIn, LogOutIcon, StoreIcon, UserCircleIcon } from '@store/ui/icons';
 import { cn } from '@store/ui/cn';
+import Link from 'next/link';
 
 export function UserNav() {
   const [loading, setLoading] = useState(false);
@@ -67,20 +68,36 @@ export function UserNav() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            Profile
-            <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+          <DropdownMenuItem asChild className="hover:cursor-pointer">
+            <Link href="/dashboard/profile">
+              <UserCircleIcon className="mr-2 h-4 w-4" aria-hidden="true" />
+              Profile
+              <DropdownMenuShortcut>⌘P</DropdownMenuShortcut>
+            </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            Settings
-            <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+          <DropdownMenuItem asChild className="hover:cursor-pointer">
+            <Link href="/dashboard/stores">
+              <StoreIcon className="mr-2 h-4 w-4" aria-hidden="true" />
+              Stores
+              <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild className="hover:cursor-pointer">
+            <Link href="/dashboard/settings">
+              <CogIcon className="mr-2 h-4 w-4" aria-hidden="true" />
+              Settings
+              <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem asChild className="hover:cursor-pointer" onClick={handleSignOut}>
+            <Link href="/">
+              <LogOutIcon className="mr-2 h-4 w-4" aria-hidden="true" />
+              Log out
+              <DropdownMenuShortcut>⌘Q</DropdownMenuShortcut>
+            </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem className="hover:cursor-pointer" onClick={handleSignOut}>
-          Log out
-          <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
-        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   ) : (

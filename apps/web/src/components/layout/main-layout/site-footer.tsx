@@ -1,6 +1,6 @@
 import { siteConfig } from '@/config/site';
 import Link from 'next/link';
-import { ModeToggle } from '../mode-toggle';
+import { ModeToggle } from '../../mode-toggle';
 
 export function SiteFooter() {
   return (
