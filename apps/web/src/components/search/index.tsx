@@ -6,6 +6,7 @@ import { Button, Dialog, DialogContent, DialogTrigger } from '@store/ui';
 import { useEffect, useState } from 'react';
 import { SearchIcon } from '@store/ui/icons';
 import { useTranslation } from 'next-i18next';
+import { isMacOs } from '@/utils';
 
 export function Search() {
   const [open, setOpen] = useState(false);
@@ -53,7 +54,7 @@ function SearchBar({ setOpen }: { setOpen: React.Dispatch<React.SetStateAction<b
       {/* Desktop Bar */}
       <Button
         variant="outline"
-        className="text-muted-foreground hidden w-64 justify-between gap-3 text-sm lg:inline-flex"
+        className="text-muted-foreground relative hidden w-64 justify-between gap-3 text-sm lg:inline-flex"
         onClick={() => setOpen(true)}
       >
         <SearchIcon />
@@ -61,7 +62,13 @@ function SearchBar({ setOpen }: { setOpen: React.Dispatch<React.SetStateAction<b
         <span className="hidden w-20 truncate text-left sm:inline-block md:w-full">
           {t('search_input')}
         </span>
-        <span className="text-xs">⌘K</span>
+        {/* <span className="text-xs">⌘K</span> */}
+        <kbd className="bg-muted pointer-events-none absolute right-1.5 top-2 hidden h-6 select-none items-center gap-1 rounded border px-1.5 font-mono text-xs font-medium opacity-100 xl:flex">
+          <abbr title={isMacOs() ? 'Command' : 'Control'} className="no-underline">
+            {isMacOs() ? '⌘' : 'Ctrl'}
+          </abbr>
+          K
+        </kbd>
       </Button>
     </>
   );
