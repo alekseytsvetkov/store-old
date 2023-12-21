@@ -13,6 +13,8 @@
     "stream": false
   },
   "dependencies": {
+    "@stitches/core": "^1.2.8",
+    "@stitches/react": "^1.2.8",
     "@store/api": "workspace:*",
     "@store/auth": "workspace:*",
     "@store/db": "workspace:*",

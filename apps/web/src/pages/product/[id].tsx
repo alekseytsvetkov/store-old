@@ -66,7 +66,7 @@ export default function Product() {
                 image="https://placehold.co/80x80"
               />
             </Link>
-            <p className="py-2 text-sm">Payment method</p>
+            <p className="pb-3 pt-2 text-sm">Payment method</p>
             <PaymentMethodSwitcher />
             <p className="pt-6 font-medium">Total price: 1 200 ₽</p>
             <div className="flex flex-col">

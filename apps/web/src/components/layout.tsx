@@ -6,6 +6,7 @@ import { Suspense } from 'react';
 import { Search } from './search';
 import { LanguageSwitcher } from './language-switcher';
 import { UserNav } from './user-nav';
+import { CatalogMenu } from './catalog-menu';
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -22,12 +23,13 @@ export default function MainLayout({ children }: MainLayoutProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="bg-background h-screen">
-        <header className="w-full border-b">
+        <header className="relative w-full border-b">
           <nav className="container flex h-16 items-center px-4 text-sm font-medium text-slate-800 dark:text-slate-300">
             <div className="flex w-full items-center justify-between">
               <Link href="/">
                 <div className="text-sm font-medium hover:cursor-pointer">Store</div>
               </Link>
+              <CatalogMenu />
               <div className="flex items-center justify-end gap-2">
                 <Suspense>
                   <Search />

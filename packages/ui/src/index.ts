@@ -20,3 +20,5 @@ export * from './components/ui/use-toast';
 export * from './components/ui/table';
 export * from './components/ui/badge';
 export * from './components/ui/checkbox';
+export * from './components/ui/sheet';
+export * from './components/ui/navigation-menu';
