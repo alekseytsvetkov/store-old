@@ -25,10 +25,10 @@ export default function Home() {
               <TabsTrigger value="recommended" className="relative">
                 {t('recommended')}
               </TabsTrigger>
-              <TabsTrigger value="news-and-trending">News & Trending</TabsTrigger>
-              <TabsTrigger value="top-sellers">Top sellsers</TabsTrigger>
-              <TabsTrigger value="popular-upcoming">Popular Upcoming</TabsTrigger>
-              <TabsTrigger value="specials">Specials</TabsTrigger>
+              <TabsTrigger value="news-and-trending">{t('news_trending')}</TabsTrigger>
+              <TabsTrigger value="top-sellers">{t('top_sellsers')}</TabsTrigger>
+              <TabsTrigger value="popular-upcoming">{t('popular_upcoming')}</TabsTrigger>
+              <TabsTrigger value="specials">{t('specials')}</TabsTrigger>
             </TabsList>
           </div>
           <TabsContent value="recommended" className="border-none p-0 outline-none">

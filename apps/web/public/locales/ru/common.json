@@ -1,4 +1,16 @@
 {
   "search_input": "Поиск...",
-  "recommended": "Рекомендуемое"
+  "catalog": "Каталог",
+  "work_with_us": "Работайте с нами",
+  "profile": "Профиль",
+  "stores": "Магазины",
+  "settings": "Настройки",
+  "logout": "Выйти",
+  "recommended": "Рекомендуемое",
+  "news_trending": "Новое и интересное",
+  "top_sellsers": "Лидеры продаж",
+  "popular_upcoming": "Будущие продукты",
+  "specials": "Специальные предложения",
+  "create_store": "Создать магазин",
+  "manage_your_stores": "Управляйте своими магазинами"
 }

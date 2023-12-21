@@ -4,8 +4,11 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Link from 'next/link';
 import { Button } from '@store/ui';
 import { Suspense } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export default function Stores() {
+  const { t } = useTranslation();
+
   return (
     <>
       <Head>
@@ -17,14 +20,14 @@ export default function Stores() {
         <section className="grid gap-1">
           <div className="flex space-x-4">
             <h1 className="flex-1 text-2xl font-bold tracking-tighter md:text-3xl lg:leading-[1.1]">
-              Stores
+              {t('stores')}
             </h1>
             <Link aria-label="Create store" href="/dashboard/stores/new">
-              <Button size="sm">Create store</Button>
+              <Button size="sm"> {t('create_store')}</Button>
             </Link>
           </div>
           <p className="text-muted-foreground max-w-[750px] text-sm sm:text-base">
-            Manage your stores
+            {t('manage_your_stores')}
           </p>
         </section>
         <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

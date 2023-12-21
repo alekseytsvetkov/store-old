@@ -6,6 +6,7 @@ import { Button } from '@store/ui';
 import { SiteFooter } from './site-footer';
 import { CatalogMenu, LanguageSwitcher, ModeToggle, UserNav } from '@/components';
 import { Search } from '@/components/search';
+import { useTranslation } from 'react-i18next';
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -14,6 +15,8 @@ interface MainLayoutProps {
 const inter = Inter({ subsets: ['latin'] });
 
 export default function MainLayout({ children }: MainLayoutProps) {
+  const { t } = useTranslation();
+
   return (
     <div className={`${inter.className} flex flex-col`}>
       <Head>
@@ -42,7 +45,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
               </div>
               <div className="flex items-center justify-end gap-2">
                 <Link href="/">
-                  <Button variant="link">Work with us</Button>
+                  <Button variant="link">{t('work_with_us')}</Button>
                 </Link>
                 <LanguageSwitcher />
                 <ModeToggle />

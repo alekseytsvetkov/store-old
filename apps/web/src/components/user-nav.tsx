@@ -18,8 +18,11 @@ import { RoleTypes } from '@store/db/types';
 import { CogIcon, Loader2, LogIn, LogOutIcon, StoreIcon, UserCircleIcon } from '@store/ui/icons';
 import { cn } from '@store/ui/cn';
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 
 export function UserNav() {
+  const { t } = useTranslation();
+
   const [loading, setLoading] = useState(false);
   const { data: session, status } = useSession();
 
@@ -71,21 +74,21 @@ export function UserNav() {
           <DropdownMenuItem asChild className="hover:cursor-pointer">
             <Link href="/dashboard/profile">
               <UserCircleIcon className="mr-2 h-4 w-4" aria-hidden="true" />
-              Profile
+              {t('profile')}
               <DropdownMenuShortcut>⌘P</DropdownMenuShortcut>
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild className="hover:cursor-pointer">
             <Link href="/dashboard/stores">
               <StoreIcon className="mr-2 h-4 w-4" aria-hidden="true" />
-              Stores
+              {t('stores')}
               <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild className="hover:cursor-pointer">
             <Link href="/dashboard/settings">
               <CogIcon className="mr-2 h-4 w-4" aria-hidden="true" />
-              Settings
+              {t('settings')}
               <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
             </Link>
           </DropdownMenuItem>
@@ -93,7 +96,7 @@ export function UserNav() {
           <DropdownMenuItem asChild className="hover:cursor-pointer" onClick={handleSignOut}>
             <Link href="/">
               <LogOutIcon className="mr-2 h-4 w-4" aria-hidden="true" />
-              Log out
+              {t('logout')}
               <DropdownMenuShortcut>⌘Q</DropdownMenuShortcut>
             </Link>
           </DropdownMenuItem>

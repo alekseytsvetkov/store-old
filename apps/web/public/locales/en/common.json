@@ -1,4 +1,16 @@
 {
   "search_input": "Search...",
-  "recommended": "Recommended"
+  "catalog": "Catalog",
+  "work_with_us": "Work with us",
+  "profile": "Profile",
+  "stores": "Stores",
+  "settings": "Settings",
+  "logout": "Log out",
+  "recommended": "Recommended",
+  "news_trending": "News & Trending",
+  "top_sellsers": "Top sellsers",
+  "popular_upcoming": "Popular Upcoming",
+  "specials": "Specials",
+  "create_store": "Create store",
+  "manage_your_stores": "Manage your stores"
 }

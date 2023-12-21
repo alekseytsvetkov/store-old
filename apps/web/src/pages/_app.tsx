@@ -11,6 +11,7 @@ import { api } from '@/utils/api';
 import '@/styles/globals.css';
 
 import MainLayout from '@/components/layout/main-layout';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const queryClient = new QueryClient();
 

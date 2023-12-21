@@ -5,12 +5,14 @@ import type { SidebarNavItem } from '@/types';
 import { ChevronLeftIcon } from '@radix-ui/react-icons';
 import { cn } from '@store/ui/cn';
 import { useRouter } from 'next/router';
+import { useTranslation } from 'react-i18next';
 
 export interface SidebarNavProps extends React.HTMLAttributes<HTMLDivElement> {
   items: SidebarNavItem[];
 }
 
 export function SidebarNav({ items, className, ...props }: SidebarNavProps) {
+  const { t } = useTranslation();
   const router = useRouter();
   const segment = router.route;
 
@@ -39,7 +41,7 @@ export function SidebarNav({ items, className, ...props }: SidebarNavProps) {
               )}
             >
               <Icon className="mr-2 h-4 w-4" aria-hidden="true" />
-              <span>{item.title}</span>
+              <span>{t(item.title)}</span>
             </span>
           </Link>
         ) : (
