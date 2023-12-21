@@ -7,6 +7,7 @@ import { Search } from './search';
 import { LanguageSwitcher } from './language-switcher';
 import { UserNav } from './user-nav';
 import { CatalogMenu } from './catalog-menu';
+import { Button } from '@store/ui';
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -25,19 +26,28 @@ export default function MainLayout({ children }: MainLayoutProps) {
       <div className="bg-background h-screen">
         <header className="relative w-full border-b">
           <nav className="container flex h-16 items-center px-4 text-sm font-medium text-slate-800 dark:text-slate-300">
-            <div className="flex w-full items-center justify-between">
-              <Link href="/">
-                <div className="text-sm font-medium hover:cursor-pointer">Store</div>
-              </Link>
-              <CatalogMenu />
-              <div className="flex items-center justify-end gap-2">
+            <div className="grid w-full md:grid-cols-3">
+              <div className="flex items-center justify-start gap-2">
+                <Link href="/">
+                  <Button variant="link" className="px-0">
+                    Store
+                  </Button>
+                </Link>
+                <Suspense>
+                  <CatalogMenu />
+                </Suspense>
+              </div>
+              <div className="flex items-center justify-center">
                 <Suspense>
                   <Search />
                 </Suspense>
+              </div>
+              <div className="flex items-center justify-end gap-2">
+                <Link href="/">
+                  <Button variant="link">Work with us</Button>
+                </Link>
                 <LanguageSwitcher />
-                <div className="ml-auto flex items-center space-x-4">
-                  <ModeToggle />
-                </div>
+                <ModeToggle />
                 <UserNav />
               </div>
             </div>

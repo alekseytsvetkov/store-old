@@ -4,107 +4,22 @@ import * as React from 'react';
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
 
 import { createStitches } from '@stitches/core';
+import { cn } from '@store/ui/cn';
+import { motion } from 'framer-motion';
+import { useState } from 'react';
+import Image from 'next/image';
 
 export const { css, keyframes } = createStitches({
-  theme: {
-    colors: {
-      white: '#fff',
-      gray100: '#ccc',
-      gray300: '#aaa',
-      black: '#111',
-      red: 'crimson',
-      green: 'green',
-    },
-  },
+  theme: {},
 });
 
 export function CatalogMenu() {
   return (
     <NavigationMenu.Root>
       <NavigationMenu.List className={mainListClass()}>
-        {/* <NavigationMenu.Item>
-          <TriggerWithIndicator>Products</TriggerWithIndicator>
-          <NavigationMenu.Content className={submenusContentClass()}>
-            <NavigationMenu.Sub className={submenusRootClass()} defaultValue="extensibility">
-              <NavigationMenu.List className={mainListClass()}>
-                <NavigationMenu.Item value="extensibility">
-                  <NavigationMenu.Trigger className={submenusSubTriggerClass()}>
-                    Extensibility
-                  </NavigationMenu.Trigger>
-
-                  <NavigationMenu.Content
-                    className={submenusSubContentClass()}
-                    style={{
-                      gridTemplateColumns: '1.5fr 1fr 1fr',
-                    }}
-                  >
-                    <LinkGroup items={['Donec quis dui', 'Vestibulum', 'Nunc dignissim']} />
-                    <LinkGroup
-                      items={['Fusce pellentesque', 'Aliquam porttitor', 'Pellentesque']}
-                    />
-                    <LinkGroup
-                      items={['Fusce pellentesque', 'Aliquam porttitor', 'Pellentesque']}
-                    />
-                  </NavigationMenu.Content>
-                </NavigationMenu.Item>
-
-                <NavigationMenu.Item value="security">
-                  <NavigationMenu.Trigger className={submenusSubTriggerClass()}>
-                    Security
-                  </NavigationMenu.Trigger>
-                  <NavigationMenu.Content
-                    className={submenusSubContentClass()}
-                    style={{
-                      gridTemplateColumns: '1fr 1fr 1fr',
-                    }}
-                  >
-                    <LinkGroup
-                      items={[
-                        'Fusce pellentesque',
-                        'Aliquam porttitor',
-                        'Pellentesque',
-                        'Vestibulum',
-                      ]}
-                    />
-                    <LinkGroup
-                      items={['Fusce pellentesque', 'Aliquam porttitor', 'Pellentesque']}
-                    />
-                    <LinkGroup items={['Fusce pellentesque', 'Aliquam porttitor']} />
-                  </NavigationMenu.Content>
-                </NavigationMenu.Item>
-
-                <NavigationMenu.Item value="authentication">
-                  <NavigationMenu.Trigger className={submenusSubTriggerClass()}>
-                    Authentication
-                  </NavigationMenu.Trigger>
-
-                  <NavigationMenu.Content
-                    className={submenusSubContentClass()}
-                    style={{
-                      gridTemplateColumns: '1.5fr 1fr 1fr',
-                    }}
-                  >
-                    <LinkGroup items={['Donec quis dui', 'Vestibulum', 'Nunc dignissim']} />
-                    <LinkGroup
-                      items={['Fusce pellentesque', 'Aliquam porttitor', 'Pellentesque']}
-                    />
-                    <LinkGroup
-                      items={['Fusce pellentesque', 'Aliquam porttitor', 'Pellentesque']}
-                    />
-                  </NavigationMenu.Content>
-                </NavigationMenu.Item>
-
-                <NavigationMenu.Indicator className={submenusSubIndicatorClass()} />
-              </NavigationMenu.List>
-
-              <NavigationMenu.Viewport className={submenusSubViewportClass()} />
-            </NavigationMenu.Sub>
-          </NavigationMenu.Content>
-        </NavigationMenu.Item> */}
-
         <NavigationMenu.Item>
           <TriggerWithIndicator>Catalog</TriggerWithIndicator>
-          <NavigationMenu.Content className={submenusContentClass()}>
+          <NavigationMenu.Content className={cn(submenusContentClass().className, 'container')}>
             <NavigationMenu.Sub
               className={submenusRootClass()}
               orientation="vertical"
@@ -113,7 +28,14 @@ export function CatalogMenu() {
               <NavigationMenu.List className={mainListClass()}>
                 <NavigationMenu.Item value="steam">
                   <NavigationMenu.Trigger className={submenusSubTriggerClass()}>
-                    Steam
+                    <Image
+                      alt="dota2-logo"
+                      width="24"
+                      height="24"
+                      src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/570/0bbb630d63262dd66d2fdd0f7d37e8661a410075.jpg"
+                      className="mr-2"
+                    />
+                    <span>Steam</span>
                   </NavigationMenu.Trigger>
 
                   <NavigationMenu.Content
@@ -122,16 +44,31 @@ export function CatalogMenu() {
                       gridTemplateColumns: '1.5fr 1fr',
                     }}
                   >
-                    <LinkGroup items={['Top Up', 'Accounts', 'Keys', 'Gifts']} />
                     <LinkGroup
-                      items={['Services', 'Points', 'Offline activation', 'Region change']}
+                      items={[
+                        'Top Up',
+                        'Accounts',
+                        'Keys',
+                        'Gifts',
+                        'Services',
+                        'Points',
+                        'Offline activation',
+                        'Region change',
+                      ]}
                     />
                   </NavigationMenu.Content>
                 </NavigationMenu.Item>
 
                 <NavigationMenu.Item value="discord">
                   <NavigationMenu.Trigger className={submenusSubTriggerClass()}>
-                    Discord
+                    <Image
+                      alt="dota2-logo"
+                      width="24"
+                      height="24"
+                      src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/570/0bbb630d63262dd66d2fdd0f7d37e8661a410075.jpg"
+                      className="mr-2"
+                    />
+                    <span>Discord</span>
                   </NavigationMenu.Trigger>
 
                   <NavigationMenu.Content
@@ -140,14 +77,22 @@ export function CatalogMenu() {
                       gridTemplateColumns: '1.5fr 1fr',
                     }}
                   >
-                    <LinkGroup items={['Servers', 'Decoration Services']} />
-                    <LinkGroup items={['Nitro', 'Server boost']} />
+                    <LinkGroup
+                      items={['Servers', 'Decoration Services', 'Nitro', 'Server boost']}
+                    />
                   </NavigationMenu.Content>
                 </NavigationMenu.Item>
 
                 <NavigationMenu.Item value="dota2">
                   <NavigationMenu.Trigger className={submenusSubTriggerClass()}>
-                    Dota 2
+                    <Image
+                      alt="dota2-logo"
+                      width="24"
+                      height="24"
+                      src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/570/0bbb630d63262dd66d2fdd0f7d37e8661a410075.jpg"
+                      className="mr-2"
+                    />
+                    <span>Dota 2</span>
                   </NavigationMenu.Trigger>
                   <NavigationMenu.Content
                     className={submenusSubContentClass()}
@@ -156,17 +101,32 @@ export function CatalogMenu() {
                     }}
                   >
                     <LinkGroup
-                      items={['Accounts', 'VHS Pool', 'Items', 'MMR Boosting', 'Calibration']}
-                    />
-                    <LinkGroup
-                      items={['LP Removal', 'Coaching Dota+', 'Services', 'Compendium', 'Other']}
+                      items={[
+                        'Accounts',
+                        'VHS Pool',
+                        'Items',
+                        'MMR Boosting',
+                        'Calibration',
+                        'LP Removal',
+                        'Coaching Dota+',
+                        'Services',
+                        'Compendium',
+                        'Other',
+                      ]}
                     />
                   </NavigationMenu.Content>
                 </NavigationMenu.Item>
 
                 <NavigationMenu.Item value="Path of Exile">
                   <NavigationMenu.Trigger className={submenusSubTriggerClass()}>
-                    Path of Exile
+                    <Image
+                      alt="dota2-logo"
+                      width="24"
+                      height="24"
+                      src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/570/0bbb630d63262dd66d2fdd0f7d37e8661a410075.jpg"
+                      className="mr-2"
+                    />
+                    <span>Path of Exile</span>
                   </NavigationMenu.Trigger>
 
                   <NavigationMenu.Content
@@ -176,10 +136,11 @@ export function CatalogMenu() {
                     }}
                   >
                     <LinkGroup
-                      items={['Divine orbs', 'Exalted orbs', 'Chaos orbs', 'Other orbs']}
-                    />
-                    <LinkGroup
                       items={[
+                        'Divine orbs',
+                        'Exalted orbs',
+                        'Chaos orbs',
+                        'Other orbs',
                         'Accounts',
                         'Items',
                         'Boosting',
@@ -201,7 +162,11 @@ export function CatalogMenu() {
         </NavigationMenu.Item>
       </NavigationMenu.List>
 
-      <NavigationMenu.Viewport className={submenusViewportClass()} />
+      <NavigationMenu.Viewport
+        className={submenusViewportClass()}
+        onPointerMove={(event) => event.preventDefault()}
+        onPointerLeave={(event) => event.preventDefault()}
+      />
     </NavigationMenu.Root>
   );
 }
@@ -210,10 +175,37 @@ const TriggerWithIndicator: React.FC<{ children?: React.ReactNode; disabled?: bo
   children,
   disabled,
 }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <NavigationMenu.Trigger className={triggerClass()} disabled={disabled}>
+    <NavigationMenu.Trigger
+      className={cn(
+        triggerClass().className,
+        'hamburger rounded-lg p-4 duration-300 focus:outline-none ',
+        isOpen ? 'is-active' : '',
+      )}
+      disabled={disabled}
+      onPointerMove={(event) => event.preventDefault()}
+      onPointerLeave={(event) => event.preventDefault()}
+      onClick={() => setIsOpen((prev) => !prev)}
+    >
       {children}
-      <CaretDownIcon />
+      <div className="ml-1">
+        <span className="line mb-2" />
+        <span className="line mt-2" />
+      </div>
+      <motion.div
+        key={isOpen ? 'open' : 'close'}
+        initial={{ opacity: 0 }}
+        // Clicking on link closes the nav
+        onClickCapture={() => setIsOpen(false)}
+        animate={{ opacity: 1 }}
+        className={`bg-background/80 left-0 top-[55px] z-10 flex h-full w-full flex-1 snap-y flex-col gap-5 justify-self-center border-b p-3 backdrop-blur-md md:mt-0 md:hidden md:pb-0 ${
+          isOpen ? 'absolute block w-full' : 'hidden'
+        }`}
+      >
+        {children}
+      </motion.div>
     </NavigationMenu.Trigger>
   );
 };
@@ -242,7 +234,7 @@ const LinkGroup: React.FC<{ items: string[]; bordered?: boolean }> = ({
             style={{
               display: 'flex',
               alignItems: 'center',
-              color: 'black',
+              color: 'hsl(var(--foreground))',
             }}
           >
             {item}
@@ -266,10 +258,9 @@ const listClass = css(listStyles);
 
 const borderdListClass = css({
   ...listStyles,
-  backgroundColor: '#f3f4f5',
-  border: '1px solid #d4d6d8',
+  backgroundColor: 'hsl(var(--secondary))',
   padding: 25,
-  borderRadius: 8,
+  borderRadius: 4,
 });
 
 /* -----------------------------------------------------------------------------------------------*/
@@ -368,10 +359,11 @@ const submenusViewportClass = css({
   position: 'absolute',
   left: 0,
   top: '100%',
-  // borderTop: '1px solid #dcdfe3',
+  borderTop: '1px solid hsl(var(--secondary))',
+  borderBottom: '1px solid hsl(var(--secondary))',
   transformOrigin: 'top center',
-  width: '100vw',
-  backgroundColor: 'black',
+  width: '100%',
+  backgroundColor: 'hsl(var(--background))',
   height: 'var(--radix-navigation-menu-viewport-height)',
   transition: 'height 300ms ease',
   overflow: 'hidden',
@@ -390,13 +382,13 @@ const submenusViewportClass = css({
 const submenusContentClass = css({
   display: 'flex',
   // justifyContent: 'center',
-  position: 'absolute',
-  top: 0,
-  left: 0,
+  // position: 'absolute',
+  // top: 0,
+  // left: 0,
   width: '100%',
 
-  paddingTop: 35,
-  paddingBottom: 35,
+  paddingTop: 16,
+  paddingBottom: 16,
 
   '&[data-motion="from-start"]': {
     animation: `${enterFromLeft} 250ms ease`,
@@ -416,6 +408,8 @@ const submenusSubContentClass = css({
   display: 'grid',
   gap: 20,
   width: '100%',
+  paddingLeft: 16,
+  borderLeft: '1px solid hsl(var(--secondary))',
 });
 
 const submenusSubViewportClass = css({
@@ -434,13 +428,13 @@ const submenusSubTriggerClass = css({
   borderRadius: 4,
 
   '&[data-state="open"]': {
-    // backgroundColor: '#f3f4f5',
+    backgroundColor: 'hsl(var(--secondary))',
   },
 });
 
 const submenusSubIndicatorClass = css({
-  backgroundColor: 'white',
-  borderRadius: 4,
+  // backgroundColor: 'white',
+  // borderRadius: 4,
 
   '&[data-orientation="vertical"]': {
     width: 3,

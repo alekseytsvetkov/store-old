@@ -391,3 +391,40 @@ main {
 a {
   @apply focus:outline-none focus-visible:ring-2;
 }
+
+.hamburger .line {
+  width: 20px;
+  height: 2px;
+  background-color: hsl(var(--muted-foreground));
+  display: block;
+  -webkit-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+.hamburger {
+  padding: 5px;
+}
+
+.hamburger:hover {
+  cursor: pointer;
+}
+
+.hamburger .line:nth-child(1) {
+  height: 2px;
+}
+
+.hamburger.is-active .line:nth-child(1) {
+  height: 2px;
+  -webkit-transform: translateY(5px) rotate(45deg);
+  -ms-transform: translateY(5px) rotate(45deg);
+  -o-transform: translateY(5px) rotate(45deg);
+  transform: translateY(5px) rotate(45deg);
+}
+
+.hamburger.is-active .line:nth-child(2) {
+  -webkit-transform: translateY(-5px) rotate(-45deg);
+  -ms-transform: translateY(-5px) rotate(-45deg);
+  -o-transform: translateY(-5px) rotate(-45deg);
+  transform: translateY(-5px) rotate(-45deg);
+}

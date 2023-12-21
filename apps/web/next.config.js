@@ -42,6 +42,10 @@ const config = {
         protocol: 'https',
         hostname: 'placehold.co'
       },
+      {
+        protocol: 'https',
+        hostname: 'cdn.cloudflare.steamstatic.com'
+      },
     ],
   },
   i18n,
