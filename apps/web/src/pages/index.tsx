@@ -18,7 +18,7 @@ export default function Home() {
         <meta name="description" content="" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="flex min-h-screen flex-col items-center justify-center py-6">
+      <div className="flex flex-col items-center justify-center py-6">
         <Tabs defaultValue="recommended" className="h-full w-full">
           <div className="flex items-center justify-center">
             <TabsList>
