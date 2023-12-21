@@ -13,6 +13,8 @@
   "specials": "Специальные предложения",
   "create_store": "Создать магазин",
   "manage_your_stores": "Управляйте своими магазинами",
+  "store": "Магазин",
+  "manage_your_store": "Управляйте своим магазином",
   "new_store_title": "Новый магазин",
   "new_store_description": "Создать новый магазин в свой аккаунт",
   "card_add_store_title": "Создать магазин",
@@ -22,5 +24,9 @@
   "input_store_description": "Напишите описание магазина тут.",
   "add_store": "Создать магазин",
   "name": "Название",
-  "description": "Описание"
+  "description": "Описание",
+  "update_your_store_title": "Обновите свой магазин",
+  "update_your_store_description": "Обновите название и описание вашего магазина или удалите его.",
+  "update_store": "Обновить магазин",
+  "delete_store": "Удалить магазин"
 }

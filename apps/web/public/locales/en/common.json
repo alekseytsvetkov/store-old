@@ -13,6 +13,8 @@
   "specials": "Specials",
   "create_store": "Create store",
   "manage_your_stores": "Manage your stores",
+  "store": "Store",
+  "manage_your_store": "Manage your store",
   "new_store_title": "New Store",
   "new_store_description": "Add a new store to your account",
   "card_add_store_title": "Add store",
@@ -22,5 +24,9 @@
   "input_store_description": "Type store description here.",
   "add_store": "Add store",
   "name": "Name",
-  "description": "Description"
+  "description": "Description",
+  "update_your_store_title": "Update your store",
+  "update_your_store_description": "Update your store name and description, or delete it",
+  "update_store": "Update store",
+  "delete_store": "Delete store"
 }
