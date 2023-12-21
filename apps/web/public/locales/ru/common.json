@@ -12,5 +12,15 @@
   "popular_upcoming": "Будущие продукты",
   "specials": "Специальные предложения",
   "create_store": "Создать магазин",
-  "manage_your_stores": "Управляйте своими магазинами"
+  "manage_your_stores": "Управляйте своими магазинами",
+  "new_store_title": "Новый магазин",
+  "new_store_description": "Создать новый магазин в свой аккаунт",
+  "card_add_store_title": "Создать магазин",
+  "card_add_store_description": "Создайте новый магазин в свой аккаунт",
+  "form_add_store_success": "Магазин успешно создан.",
+  "input_store_name": "Напишите название магазина тут.",
+  "input_store_description": "Напишите описание магазина тут.",
+  "add_store": "Создать магазин",
+  "name": "Название",
+  "description": "Описание"
 }

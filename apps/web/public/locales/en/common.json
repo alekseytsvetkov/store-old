@@ -12,5 +12,15 @@
   "popular_upcoming": "Popular Upcoming",
   "specials": "Specials",
   "create_store": "Create store",
-  "manage_your_stores": "Manage your stores"
+  "manage_your_stores": "Manage your stores",
+  "new_store_title": "New Store",
+  "new_store_description": "Add a new store to your account",
+  "card_add_store_title": "Add store",
+  "card_add_store_description": "Add a new store to your account",
+  "form_add_store_success": "Store added successfully.",
+  "input_store_name": "Type store name here.",
+  "input_store_description": "Type store description here.",
+  "add_store": "Add store",
+  "name": "Name",
+  "description": "Description"
 }

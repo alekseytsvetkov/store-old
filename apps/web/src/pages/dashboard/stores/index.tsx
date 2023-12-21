@@ -19,11 +19,11 @@ export default function Stores() {
       <DashboardLayout>
         <section className="grid gap-1">
           <div className="flex space-x-4">
-            <h1 className="flex-1 text-2xl font-bold tracking-tighter md:text-3xl lg:leading-[1.1]">
+            <h1 className="flex-1 text-2xl font-bold tracking-tighter md:text-3xl">
               {t('stores')}
             </h1>
             <Link aria-label="Create store" href="/dashboard/stores/new">
-              <Button size="sm"> {t('create_store')}</Button>
+              <Button size="sm">{t('create_store')}</Button>
             </Link>
           </div>
           <p className="text-muted-foreground max-w-[750px] text-sm sm:text-base">

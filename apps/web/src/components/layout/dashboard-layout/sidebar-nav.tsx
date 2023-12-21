@@ -6,6 +6,7 @@ import { ChevronLeftIcon } from '@radix-ui/react-icons';
 import { cn } from '@store/ui/cn';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
+import { processPath } from '@/utils';
 
 export interface SidebarNavProps extends React.HTMLAttributes<HTMLDivElement> {
   items: SidebarNavItem[];
@@ -13,8 +14,9 @@ export interface SidebarNavProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export function SidebarNav({ items, className, ...props }: SidebarNavProps) {
   const { t } = useTranslation();
-  const router = useRouter();
-  const segment = router.route;
+  const { route } = useRouter();
+
+  const segment = processPath(route);
 
   if (!items?.length) return null;
 
