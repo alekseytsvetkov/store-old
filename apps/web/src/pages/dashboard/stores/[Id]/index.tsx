@@ -1,4 +1,4 @@
-import { DashboardLayout } from '@/components';
+import { DashboardLayout, StoreLayout } from '@/components';
 import {
   Card,
   CardHeader,
@@ -12,16 +12,15 @@ import {
 } from '@store/ui';
 import type { GetStaticPaths } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 
-interface UpdateStorePageProps {
+interface IUpdateStorePageProps {
   params: {
     storeId: string;
   };
 }
 
-export default function UpdateStorePage({ params }: UpdateStorePageProps) {
+export default function UpdateStorePage({ params }: IUpdateStorePageProps) {
   const { t } = useTranslation();
   // const storeId = Number(params.storeId)
 
@@ -48,61 +47,63 @@ export default function UpdateStorePage({ params }: UpdateStorePageProps) {
           {t('manage_your_store')}
         </p>
       </section>
-      <div className="space-y-10">
-        <Card>
-          <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl">{t('update_your_store_title')}</CardTitle>
-            <CardDescription>{t('update_your_store_description')}</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form
-              // action={updateStore.bind(null, storeId)}
-              className="grid w-full max-w-xl gap-5"
-            >
-              <div className="grid gap-2.5">
-                <Label htmlFor="update-store-name">{t('name')}</Label>
-                <Input
-                  id="update-store-name"
-                  aria-describedby="update-store-name-description"
-                  name="name"
-                  required
-                  minLength={3}
-                  maxLength={50}
-                  placeholder={t('input_store_name')}
-                  // defaultValue={store.name}
-                  defaultValue="Store name"
-                />
-              </div>
-              <div className="grid gap-2.5">
-                <Label htmlFor="update-store-description">{t('description')}</Label>
-                <Textarea
-                  id="update-store-description"
-                  aria-describedby="update-store-description-description"
-                  name="description"
-                  minLength={3}
-                  maxLength={255}
-                  placeholder={t('input_store_description')}
-                  // defaultValue={store.description ?? ""}
-                  defaultValue="Store desciption"
-                />
-              </div>
-              <div className="xs:flex-row flex flex-row gap-2">
-                <Button>
-                  {t('update_store')}
-                  <span className="sr-only">{t('update_store')}</span>
-                </Button>
-                <Button
-                  // formAction={deleteStore.bind(null, storeId)}
-                  variant="destructive"
-                >
-                  {t('delete_store')}
-                  <span className="sr-only">{t('delete_store')}</span>
-                </Button>
-              </div>
-            </form>
-          </CardContent>
-        </Card>
-      </div>
+      <StoreLayout>
+        <div className="space-y-10">
+          <Card>
+            <CardHeader className="space-y-1">
+              <CardTitle className="text-2xl">{t('update_your_store_title')}</CardTitle>
+              <CardDescription>{t('update_your_store_description')}</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <form
+                // action={updateStore.bind(null, storeId)}
+                className="grid w-full max-w-xl gap-5"
+              >
+                <div className="grid gap-2.5">
+                  <Label htmlFor="update-store-name">{t('name')}</Label>
+                  <Input
+                    id="update-store-name"
+                    aria-describedby="update-store-name-description"
+                    name="name"
+                    required
+                    minLength={3}
+                    maxLength={50}
+                    placeholder={t('input_store_name')}
+                    // defaultValue={store.name}
+                    defaultValue="Store name"
+                  />
+                </div>
+                <div className="grid gap-2.5">
+                  <Label htmlFor="update-store-description">{t('description')}</Label>
+                  <Textarea
+                    id="update-store-description"
+                    aria-describedby="update-store-description-description"
+                    name="description"
+                    minLength={3}
+                    maxLength={255}
+                    placeholder={t('input_store_description')}
+                    // defaultValue={store.description ?? ""}
+                    defaultValue="Store desciption"
+                  />
+                </div>
+                <div className="xs:flex-row flex flex-row gap-2">
+                  <Button>
+                    {t('update_store')}
+                    <span className="sr-only">{t('update_store')}</span>
+                  </Button>
+                  <Button
+                    // formAction={deleteStore.bind(null, storeId)}
+                    variant="destructive"
+                  >
+                    {t('delete_store')}
+                    <span className="sr-only">{t('delete_store')}</span>
+                  </Button>
+                </div>
+              </form>
+            </CardContent>
+          </Card>
+        </div>
+      </StoreLayout>
     </DashboardLayout>
   );
 }

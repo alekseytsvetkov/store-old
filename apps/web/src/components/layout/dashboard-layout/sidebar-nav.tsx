@@ -14,9 +14,9 @@ export interface SidebarNavProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export function SidebarNav({ items, className, ...props }: SidebarNavProps) {
   const { t } = useTranslation();
-  const { route } = useRouter();
+  const router = useRouter();
 
-  const segment = processPath(route);
+  const segment = processPath(router.asPath);
 
   if (!items?.length) return null;
 

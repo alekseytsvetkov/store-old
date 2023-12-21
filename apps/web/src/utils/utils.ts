@@ -23,10 +23,21 @@ export function catchError(err: unknown) {
 export function processPath(path: string) {
   const segments = path.split('/').filter(segment => segment !== '');
 
-  if (segments.length > 2) {
-    segments.pop();
-    return segments.join('/');
+  if (segments.length === 4) {
+    return `${segments[0]}/${segments[1]}`;
+  } else if (segments.length > 2) {
+    return segments.length > 2 ? segments.slice(0, 2).join('/') : path;
   } else {
-    return path.replace(/\/$/, ''); // Remove the trailing '/' if it exists
+    return path.replace(/\/$/, '');
+  }
+}
+
+export function processStorePath(path: string) {
+  const segments = path.split('/').filter(segment => segment !== '');
+
+  if (segments.length === 3) {
+    return null;
+  } else if (segments.length === 4) {
+    return segments[3];
   }
 }
