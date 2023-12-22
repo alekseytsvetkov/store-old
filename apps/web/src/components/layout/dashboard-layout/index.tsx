@@ -1,3 +1,5 @@
+'use client';
+
 import { dashboardConfig } from '@/config/dashboard';
 import { ScrollArea } from '@store/ui';
 import { SidebarNav } from './sidebar-nav';

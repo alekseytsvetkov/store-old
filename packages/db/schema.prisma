@@ -85,6 +85,7 @@ model User {
   emailVerified DateTime?
   image         String?
   roles         Role[]
+  stores        Store[]
 
   bio String @default("")
 
@@ -186,4 +187,19 @@ model Product {
   updatedAt DateTime @updatedAt
 
   @@index([categoryId])
+}
+
+model Store {
+  id          String  @id @default(uuid())
+  name        String
+  description String?
+  slug        String?
+  isActive    Boolean @default(false)
+  user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
 }

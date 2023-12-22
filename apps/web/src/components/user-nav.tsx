@@ -72,21 +72,21 @@ export function UserNav() {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem asChild className="hover:cursor-pointer">
-            <Link href="/dashboard/profile">
+            <Link href="/dashboard/profile" suppressHydrationWarning>
               <UserCircleIcon className="mr-2 h-4 w-4" aria-hidden="true" />
               {t('profile')}
               <DropdownMenuShortcut>⌘P</DropdownMenuShortcut>
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild className="hover:cursor-pointer">
-            <Link href="/dashboard/stores">
+            <Link href="/dashboard/stores" suppressHydrationWarning>
               <StoreIcon className="mr-2 h-4 w-4" aria-hidden="true" />
               {t('stores')}
               <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild className="hover:cursor-pointer">
-            <Link href="/dashboard/settings">
+            <Link href="/dashboard/settings" suppressHydrationWarning>
               <CogIcon className="mr-2 h-4 w-4" aria-hidden="true" />
               {t('settings')}
               <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
@@ -94,7 +94,7 @@ export function UserNav() {
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem asChild className="hover:cursor-pointer" onClick={handleSignOut}>
-            <Link href="/">
+            <Link href="/" suppressHydrationWarning>
               <LogOutIcon className="mr-2 h-4 w-4" aria-hidden="true" />
               {t('logout')}
               <DropdownMenuShortcut>⌘Q</DropdownMenuShortcut>

@@ -1,10 +1,10 @@
 import Link from 'next/link';
-import { type CuratedStore } from '@/types';
+import { type ICuratedStore } from '@/types';
 
 import { Card, AspectRatio, CardHeader, CardTitle, CardDescription } from '@store/ui';
 
 interface StoreCardProps {
-  store: CuratedStore;
+  store: ICuratedStore;
   href: string;
 }
 

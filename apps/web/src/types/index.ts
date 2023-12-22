@@ -1,25 +1,25 @@
-import type { LucideIcon } from "@store/ui/icons"
+import type { LucideIcon } from '@store/ui/icons';
 
 export interface NavItem {
-  title: string
-  href?: string
-  disabled?: boolean
-  external?: boolean
-  icon?: LucideIcon
-  label?: string
-  description?: string
+  title: string;
+  href?: string;
+  disabled?: boolean;
+  external?: boolean;
+  icon?: LucideIcon;
+  label?: string;
+  description?: string;
 }
 
 export interface NavItemWithChildren extends NavItem {
-  items: NavItemWithChildren[]
+  items: NavItemWithChildren[];
 }
 
 export interface NavItemWithOptionalChildren extends NavItem {
-  items?: NavItemWithChildren[]
+  items?: NavItemWithChildren[];
 }
-export type MainNavItem = NavItemWithOptionalChildren
+export type MainNavItem = NavItemWithOptionalChildren;
 
-export type SidebarNavItem = NavItemWithChildren
+export type SidebarNavItem = NavItemWithChildren;
 
 // export interface CuratedStore {
 //   id: Store["id"]
@@ -28,25 +28,28 @@ export type SidebarNavItem = NavItemWithChildren
 //   productCount?: number
 // }
 
-export interface CuratedStore {
+export interface ICuratedStore {
   id: string;
   name: string;
-  description?:string;
-  productCount?: number
+  description?: string | null;
+  productCount?: number;
+  isActive: boolean;
+  userId: string;
+  slug?: string | null;
+  createdAt: Date;
+  updatedAt: Date;
 }
-
 export interface Option {
-  label: string
-  value: string
-  icon?: React.ComponentType<{ className?: string }>
+  label: string;
+  value: string;
+  icon?: React.ComponentType<{ className?: string }>;
 }
 
 export interface DataTableSearchableColumn<TData> {
-  id: keyof TData
-  title: string
+  id: keyof TData;
+  title: string;
 }
 
-export interface DataTableFilterableColumn<TData>
-  extends DataTableSearchableColumn<TData> {
-  options: Option[]
+export interface DataTableFilterableColumn<TData> extends DataTableSearchableColumn<TData> {
+  options: Option[];
 }

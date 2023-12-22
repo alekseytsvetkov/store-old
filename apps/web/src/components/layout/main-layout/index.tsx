@@ -45,7 +45,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
               </div>
               <div className="flex items-center justify-end gap-2">
                 <Link href="/">
-                  <Button variant="link" suppressHydrationWarning={true}>
+                  <Button variant="link" suppressHydrationWarning>
                     {t('work_with_us')}
                   </Button>
                 </Link>

@@ -43,7 +43,7 @@ export function SidebarNav({ items, className, ...props }: SidebarNavProps) {
               )}
             >
               <Icon className="mr-2 h-4 w-4" aria-hidden="true" />
-              <span>{t(item.title)}</span>
+              <span suppressHydrationWarning>{t(item.title)}</span>
             </span>
           </Link>
         ) : (

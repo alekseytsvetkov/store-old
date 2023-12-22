@@ -26,7 +26,7 @@ export function CatalogMenu() {
   return (
     <NavigationMenu.Root>
       <NavigationMenu.List className={mainListClass()}>
-        <NavigationMenu.Item suppressHydrationWarning={true}>
+        <NavigationMenu.Item suppressHydrationWarning>
           {isClient && <TriggerWithIndicator>{t('catalog')}</TriggerWithIndicator>}
           <NavigationMenu.Content className={cn(submenusContentClass().className, 'container')}>
             <NavigationMenu.Sub

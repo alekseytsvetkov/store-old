@@ -34,7 +34,6 @@ export function AddStoreForm({ userId }: AddStoreFormProps) {
   const router = useRouter();
   const [isPending, startTransition] = React.useTransition();
 
-  // react-hook-form
   const form = useForm<Inputs>({
     resolver: zodResolver(storeSchema),
     defaultValues: {
