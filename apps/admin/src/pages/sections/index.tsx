@@ -1,16 +1,16 @@
-import { DataTable, EmptyPlaceholder } from "@/components";
-import { Button, Separator } from "@store/ui";
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { useTranslation } from 'next-i18next'
-import { api } from "@/utils/api";
-import { sectionsColumns } from "@/components/columns";
-import { Loader2 } from "@store/ui/icons";
-import Link from "next/link";
+import { DataTable, EmptyPlaceholder } from '@/components';
+import { Button, Separator } from '@store/ui';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
+import { api } from '@/utils/api';
+import { sectionsColumns } from '@/components/columns';
+import { Loader2 } from '@store/ui/icons';
+import Link from 'next/link';
 
 export default function Sections() {
-  const { t } = useTranslation('common')
+  const { t } = useTranslation('common');
 
-  const { data, isLoading, status } = api.section.list.useQuery({
+  const { data, isPending, status } = api.section.list.useQuery({
     limit: 10,
   });
 
@@ -18,9 +18,7 @@ export default function Sections() {
     <>
       <div className="flex items-center justify-between">
         <div className="space-y-1">
-          <h2 className="text-2xl font-semibold tracking-tight">
-            {t('sections-capitalized')}
-          </h2>
+          <h2 className="text-2xl font-semibold tracking-tight">{t('sections-capitalized')}</h2>
         </div>
         <Link href="/sections/new">
           <Button size="sm" className="relative">
@@ -29,23 +27,26 @@ export default function Sections() {
         </Link>
       </div>
       <Separator className="my-4" />
-      {status === 'loading' || isLoading ? (
+      {status === 'pending' || isPending ? (
         <Loader2 className="h-5 w-5 animate-spin" />
       ) : data?.items ? (
         <DataTable data={data.items} columns={sectionsColumns} />
       ) : (
-        <EmptyPlaceholder name={t('section')} title={t('empty_list_title')} description={`${t('add_your_first')} ${t('section')}`} link="/sections/new" />
+        <EmptyPlaceholder
+          name={t('section')}
+          title={t('empty_list_title')}
+          description={`${t('add_your_first')} ${t('section')}`}
+          link="/sections/new"
+        />
       )}
     </>
-  )
+  );
 }
 
-export async function getStaticProps({ locale } : { locale: string }) {
+export async function getStaticProps({ locale }: { locale: string }) {
   return {
     props: {
-      ...(await serverSideTranslations(locale, [
-        'common',
-      ])),
+      ...(await serverSideTranslations(locale, ['common'])),
     },
-  }
+  };
 }

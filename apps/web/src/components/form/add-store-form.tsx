@@ -34,9 +34,9 @@ export default function AddStoreForm({ userId }: AddStoreFormProps) {
   const router = useRouter();
   const [isPending, startTransition] = React.useTransition();
 
-  const utils = api.useContext();
+  const utils = api.useUtils();
 
-  const { mutateAsync: createStore, isLoading: isCreateLoading } = api.store.create.useMutation({
+  const { mutateAsync: createStore, isPending: isCreatePending } = api.store.create.useMutation({
     async onSuccess() {
       await utils.store.list.invalidate();
       router.push('/dashboard/stores');
@@ -95,8 +95,8 @@ export default function AddStoreForm({ userId }: AddStoreFormProps) {
             </FormItem>
           )}
         />
-        <Button className="w-fit" disabled={isCreateLoading}>
-          {isCreateLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />}
+        <Button className="w-fit" disabled={isCreatePending}>
+          {isCreatePending && <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />}
           {t('add_store')}
           <span className="sr-only">{t('add_store')}</span>
         </Button>

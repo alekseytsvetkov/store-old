@@ -38,21 +38,21 @@ type Inputs = z.infer<typeof storeSchema>;
 export default function UpdateStorePage(props: InferGetStaticPropsType<typeof getStaticProps>) {
   const { t } = useTranslation();
   const router = useRouter();
-  const [isUpdatePending, startUpdateTransition] = useTransition();
-  const [isDeletePending, startDeleteTransition] = useTransition();
+  const [isUpdatePendingTransition, startUpdateTransition] = useTransition();
+  const [isDeletePendingTransition, startDeleteTransition] = useTransition();
   const { data: session } = useSession();
 
   const {
     data: store,
-    isLoading,
+    isPending,
     isError,
   } = api.store.byId.useQuery({
     id: props.id,
   });
 
-  const utils = api.useContext();
+  const utils = api.useUtils();
 
-  const { mutateAsync: deleteStoreMutation, isLoading: isDeleteLoading } =
+  const { mutateAsync: deleteStoreMutation, isPending: isDeletePending } =
     api.store.delete.useMutation({
       async onSuccess() {
         await utils.store.list.invalidate();
@@ -60,7 +60,7 @@ export default function UpdateStorePage(props: InferGetStaticPropsType<typeof ge
       },
     });
 
-  const { mutateAsync: updateStoreMutation, isLoading: isUpdateLoading } =
+  const { mutateAsync: updateStoreMutation, isPending: isUpdatePending } =
     api.store.update.useMutation({
       async onSuccess() {
         await utils.store.list.invalidate();
@@ -169,20 +169,20 @@ export default function UpdateStorePage(props: InferGetStaticPropsType<typeof ge
                     )}
                   />
                   <div className="xs:flex-row flex flex-row gap-2">
-                    <Button disabled={isUpdateLoading} type="submit">
-                      {isUpdateLoading && (
+                    <Button disabled={isUpdatePending} type="submit">
+                      {isUpdatePending && (
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
                       )}
                       {t('update_store')}
                       <span className="sr-only">{t('update_store')}</span>
                     </Button>
                     <Button
-                      disabled={isDeleteLoading}
+                      disabled={isDeletePending}
                       onClick={deleteStore}
                       variant="destructive"
                       type="button"
                     >
-                      {isDeleteLoading && (
+                      {isDeletePending && (
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
                       )}
                       {t('delete_store')}

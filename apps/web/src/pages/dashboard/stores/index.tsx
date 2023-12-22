@@ -5,13 +5,14 @@ import Link from 'next/link';
 import { Button } from '@store/ui';
 import { useTranslation } from 'react-i18next';
 import { api } from '@/utils/api';
+import type { Store } from '@store/db/types';
 
 export default function Stores() {
   const { t } = useTranslation();
 
   const {
     data: stores,
-    isLoading: isStoresLoading,
+    isPending: isStoresPending,
     isError: isStoresError,
   } = api.store.list.useQuery({
     limit: 10,
@@ -47,10 +48,10 @@ export default function Stores() {
           </p>
         </section>
         <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {(isStoresLoading || isStoresError) &&
+          {(isStoresPending || isStoresError) &&
             Array.from({ length: 3 }).map((_, i) => <StoreCardSkeleton key={i} />)}
-          {!isStoresLoading &&
-            stores?.items.map((store) => (
+          {!isStoresPending &&
+            stores?.items.map((store: Store) => (
               <StoreCard key={store.id} store={store} href={`/dashboard/stores/${store.id}`} />
             ))}
         </section>

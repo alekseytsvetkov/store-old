@@ -1,17 +1,23 @@
-"use client"
+'use client';
 
-import { type ColumnDef } from "@tanstack/react-table"
+import { type ColumnDef } from '@tanstack/react-table';
 
-import { categorySchema, type Category, type Section, type User, sectionSchema } from "./data/schema"
-import { DataTableColumnHeader } from "./data-table-column-header"
-import { DataTableRowActions } from "./data-table-row-actions"
-import { Checkbox, useToast } from "@store/ui"
-import { useRouter } from "next/router"
-import { api } from "@/utils/api"
+import {
+  categorySchema,
+  type Category,
+  type Section,
+  type User,
+  sectionSchema,
+} from './data/schema';
+import { DataTableColumnHeader } from './data-table-column-header';
+import { DataTableRowActions } from './data-table-row-actions';
+import { Checkbox, useToast } from '@store/ui';
+import { useRouter } from 'next/router';
+import { api } from '@/utils/api';
 
 export const usersColumns: ColumnDef<User>[] = [
   {
-    id: "select",
+    id: 'select',
     header: ({ table }) => (
       <Checkbox
         checked={table.getIsAllPageRowsSelected()}
@@ -32,26 +38,22 @@ export const usersColumns: ColumnDef<User>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "id",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="ID" />
-    ),
-    cell: ({ row }) => <div className="w-[80px]">{row.getValue("id")}</div>,
+    accessorKey: 'id',
+    header: ({ column }) => <DataTableColumnHeader column={column} title="ID" />,
+    cell: ({ row }) => <div className="w-[80px]">{row.getValue('id')}</div>,
     enableSorting: false,
     enableHiding: false,
   },
   {
-    accessorKey: "name",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Name" />
-    ),
-    cell: ({ row }) => <div className="flex space-x-2">{row.getValue("name")}</div>,
+    accessorKey: 'name',
+    header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
+    cell: ({ row }) => <div className="flex space-x-2">{row.getValue('name')}</div>,
   },
-]
+];
 
 export const sectionsColumns: ColumnDef<Section>[] = [
   {
-    id: "select",
+    id: 'select',
     header: ({ table }) => (
       <Checkbox
         checked={table.getIsAllPageRowsSelected()}
@@ -72,73 +74,71 @@ export const sectionsColumns: ColumnDef<Section>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "id",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="ID" />
-    ),
-    cell: ({ row }) => <div className="w-[80px]">{row.getValue("id")}</div>,
+    accessorKey: 'id',
+    header: ({ column }) => <DataTableColumnHeader column={column} title="ID" />,
+    cell: ({ row }) => <div className="w-[80px]">{row.getValue('id')}</div>,
     enableSorting: false,
     enableHiding: false,
   },
   {
-    accessorKey: "name",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Name" />
-    ),
-    cell: ({ row }) => <div className="flex space-x-2">{row.getValue("name")}</div>,
+    accessorKey: 'name',
+    header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
+    cell: ({ row }) => <div className="flex space-x-2">{row.getValue('name')}</div>,
   },
   {
-    id: "actions",
+    id: 'actions',
     header: ({ column }) => (
       <div className="flex justify-end">
         <DataTableColumnHeader column={column} title="Actions" />
       </div>
     ),
     cell: ({ row }) => {
-      const { toast } = useToast()
-      const router = useRouter()
+      const { toast } = useToast();
+      const router = useRouter();
 
-      const section = sectionSchema.parse(row.original)
+      const section = sectionSchema.parse(row.original);
 
-      const {mutateAsync, isError, isLoading} = api.section.delete.useMutation({
+      const { mutateAsync, isError, isPending } = api.section.delete.useMutation({
         async onSuccess() {
-          await utils.section.list.invalidate()
+          await utils.section.list.invalidate();
         },
         onError() {
           toast({
-            title: "К сожалению не удалось удалить секцию",
-          })
-        }
-      })
+            title: 'К сожалению не удалось удалить секцию',
+          });
+        },
+      });
 
-      const utils = api.useContext();
+      const utils = api.useUtils();
 
       const handleEdit = async () => {
-        router.push(`/sections/edit/${section.id}`)
-      }
+        router.push(`/sections/edit/${section.id}`);
+      };
 
       const handleDelete = async () => {
         router.reload(); // TODO: idc why invalidate not working
-        const result = await mutateAsync({id: section.id})
+        const result = await mutateAsync({ id: section.id });
 
-        if(result && !isError && !isLoading) {
+        if (result && !isError && !isPending) {
           toast({
-            title: "Поздравляем!",
-            description: `Вы успешно удалили секцию: ${section.name}`
-          })
+            title: 'Поздравляем!',
+            description: `Вы успешно удалили секцию: ${section.name}`,
+          });
         }
-      }
+      };
 
-      return <div className="flex justify-end">
-        <DataTableRowActions handleEdit={handleEdit} handleDelete={handleDelete} />
-      </div>
-    }
+      return (
+        <div className="flex justify-end">
+          <DataTableRowActions handleEdit={handleEdit} handleDelete={handleDelete} />
+        </div>
+      );
+    },
   },
-]
+];
 
 export const categoriesColumns: ColumnDef<Category>[] = [
   {
-    id: "select",
+    id: 'select',
     header: ({ table }) => (
       <Checkbox
         checked={table.getIsAllPageRowsSelected()}
@@ -159,73 +159,69 @@ export const categoriesColumns: ColumnDef<Category>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "id",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="ID" />
-    ),
-    cell: ({ row }) => <div className="w-[80px]">{row.getValue("id")}</div>,
+    accessorKey: 'id',
+    header: ({ column }) => <DataTableColumnHeader column={column} title="ID" />,
+    cell: ({ row }) => <div className="w-[80px]">{row.getValue('id')}</div>,
     enableSorting: false,
     enableHiding: false,
   },
   {
-    accessorKey: "section",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Section" />
-    ),
+    accessorKey: 'section',
+    header: ({ column }) => <DataTableColumnHeader column={column} title="Section" />,
     cell: ({ row }) => <div className="flex space-x-2">{row.original.section.name}</div>,
   },
   {
-    accessorKey: "name",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Name" />
-    ),
-    cell: ({ row }) => <div className="flex space-x-2">{row.getValue("name")}</div>,
+    accessorKey: 'name',
+    header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
+    cell: ({ row }) => <div className="flex space-x-2">{row.getValue('name')}</div>,
   },
   {
-    id: "actions",
+    id: 'actions',
     header: ({ column }) => (
       <div className="flex justify-end">
         <DataTableColumnHeader column={column} title="Actions" />
       </div>
     ),
     cell: ({ row }) => {
-      const { toast } = useToast()
-      const router = useRouter()
+      const { toast } = useToast();
+      const router = useRouter();
 
-      const category = categorySchema.parse(row.original)
+      const category = categorySchema.parse(row.original);
 
-      const {mutateAsync, isError, isLoading} = api.category.delete.useMutation({
+      const { mutateAsync, isError, isPending } = api.category.delete.useMutation({
         async onSuccess() {
-          await utils.category.list.invalidate()
+          await utils.category.list.invalidate();
         },
         onError() {
           toast({
-            title: "К сожалению не удалось удалить категорию",
-          })
-        }
-      })
+            title: 'К сожалению не удалось удалить категорию',
+          });
+        },
+      });
 
-      const utils = api.useContext();
+      const utils = api.useUtils();
 
       const handleEdit = async () => {
-        router.push(`/categories/edit/${category.id}`)
-      }
+        router.push(`/categories/edit/${category.id}`);
+      };
 
       const handleDelete = async () => {
         router.reload(); // TODO: idc why invalidate not working
-        const result = await mutateAsync({id: category.id})
+        const result = await mutateAsync({ id: category.id });
 
-        if(result && !isError && !isLoading) {
+        if (result && !isError && !isPending) {
           toast({
-            title: "Поздравляем!",
-            description: `Вы успешно удалили категорию: ${category.name}`
-          })
+            title: 'Поздравляем!',
+            description: `Вы успешно удалили категорию: ${category.name}`,
+          });
         }
-      }
+      };
 
-      return <div className="flex justify-end">
-        <DataTableRowActions handleEdit={handleEdit} handleDelete={handleDelete} />
-      </div>
-    }
+      return (
+        <div className="flex justify-end">
+          <DataTableRowActions handleEdit={handleEdit} handleDelete={handleDelete} />
+        </div>
+      );
+    },
   },
-]
+];
