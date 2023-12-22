@@ -1,4 +1,4 @@
-import { toast } from 'sonner';
+import { toast } from '@store/ui';
 import * as z from 'zod';
 
 export function isMacOs() {
@@ -70,11 +70,11 @@ export function catchError(err: unknown) {
     const errors = err.issues.map((issue) => {
       return issue.message;
     });
-    return toast(errors.join('\n'));
+    return toast({ title: errors.join('\n') });
   } else if (err instanceof Error) {
-    return toast(err.message);
+    return toast({ title: err.message });
   } else {
-    return toast('Something went wrong, please try again later.');
+    return toast({ title: 'Something went wrong, please try again later.' });
   }
 }
 
