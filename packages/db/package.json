@@ -39,7 +39,6 @@
     "@store/lint": "workspace:*",
     "@store/tsconfig": "workspace:*",
     "@types/node": "^16.18.11",
-    "@vercel/spaces": "https://spaces-cli.vercel.sh/download/0.9.0?auth=41deae36c701",
     "dotenv-cli": "^7.2.1",
     "eslint": "^8.42.0",
     "prisma": "^5.0.0",

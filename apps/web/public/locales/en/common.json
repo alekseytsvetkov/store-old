@@ -32,5 +32,8 @@
   "products": "Products",
   "orders": "Orders",
   "customers": "Customers",
-  "analytics": "Analytics"
+  "analytics": "Analytics",
+  "form_create_store_success": "You have successfully created a store!",
+  "form_update_store_update_success": " You have successfully updated the store",
+  "form_update_store_delete_success": "You have successfully deleted the store"
 }

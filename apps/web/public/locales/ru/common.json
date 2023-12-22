@@ -32,5 +32,8 @@
   "products": "Товары",
   "orders": "Заказы",
   "customers": "Клиенты",
-  "analytics": "Аналитика"
+  "analytics": "Аналитика",
+  "form_create_store_success": "Вы успешно создали магазин!",
+  "form_update_store_update_success": "Вы успешно обновили магазин",
+  "form_update_store_delete_success": "Вы успешно удалили магазин"
 }
