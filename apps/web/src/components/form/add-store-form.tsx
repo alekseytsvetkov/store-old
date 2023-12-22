@@ -21,18 +21,26 @@ import { storeSchema } from '@/lib/validations';
 import { catchError } from '@/utils';
 import { Loader2 } from '@store/ui/icons';
 import { useTranslation } from 'react-i18next';
-
+import { api } from '@/utils/api';
 interface AddStoreFormProps {
   userId: string;
 }
 
 type Inputs = z.infer<typeof storeSchema>;
 
-export function AddStoreForm({ userId }: AddStoreFormProps) {
+export default function AddStoreForm({ userId }: AddStoreFormProps) {
   const { t } = useTranslation();
 
   const router = useRouter();
   const [isPending, startTransition] = React.useTransition();
+
+  const utils = api.useContext();
+
+  const { mutateAsync: addStore } = api.store.create.useMutation({
+    async onSuccess() {
+      await utils.store.list.invalidate();
+    },
+  });
 
   const form = useForm<Inputs>({
     resolver: zodResolver(storeSchema),
@@ -45,7 +53,7 @@ export function AddStoreForm({ userId }: AddStoreFormProps) {
   function onSubmit(data: Inputs) {
     startTransition(async () => {
       try {
-        // await addStore({ ...data, userId });
+        await addStore({ ...data, userId });
 
         form.reset();
         toast.success(t('form_add_store_success'));

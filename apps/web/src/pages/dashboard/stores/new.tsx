@@ -3,9 +3,12 @@ import { AddStoreForm, DashboardLayout } from '@/components';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@store/ui';
 import { useTranslation } from 'react-i18next';
+import { useSession } from '@store/auth/react';
 
 export default function CreateNewStore() {
   const { t } = useTranslation();
+
+  const { data: session } = useSession();
 
   return (
     <>
@@ -31,9 +34,7 @@ export default function CreateNewStore() {
             <CardDescription>{t('card_add_store_description')}</CardDescription>
           </CardHeader>
           <CardContent>
-            <AddStoreForm
-            // userId={user.id}
-            />
+            <AddStoreForm userId={session?.user.id} />
           </CardContent>
         </Card>
       </DashboardLayout>

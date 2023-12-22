@@ -41,6 +41,7 @@ export function UserNav() {
       setLoading(false);
     }
   };
+
   const handleSignOut = async () => {
     await signOut({ redirect: false });
     // whatever

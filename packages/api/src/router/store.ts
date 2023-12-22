@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { createTRPCRouter, protectedProcedure } from '../trpc';
 import { prisma } from '@store/db';
 import { TRPCError } from '@trpc/server';
+import { slugify } from '../utils';
 
 export const storeRouter = createTRPCRouter({
   list: protectedProcedure
@@ -69,19 +70,31 @@ export const storeRouter = createTRPCRouter({
   create: protectedProcedure
     .input(
       z.object({
-        id: z.string().uuid().optional(),
         name: z.string().min(1).max(32),
-        description: z.string().min(1).max(32),
+        description: z.string().min(1).max(32).optional(),
         userId: z.string().uuid(),
       }),
     )
     .mutation(async ({ input }) => {
       const { name, description, userId } = input;
+
+      const storeWithSameName = await prisma.store.findFirst({
+        where: {
+          userId,
+          name,
+        },
+      });
+
+      if (storeWithSameName) {
+        throw new Error('Store name already taken.');
+      }
+
       const store = await prisma.store.create({
         data: {
           name,
           description,
           userId,
+          slug: slugify(name),
         },
       });
       return store;
@@ -90,12 +103,25 @@ export const storeRouter = createTRPCRouter({
     .input(
       z.object({
         id: z.string(),
-        name: z.string().min(1).max(32),
-        description: z.string().min(1).max(32),
+        name: z.string().min(1).max(32).optional(),
+        description: z.string().min(1).max(32).optional(),
+        userId: z.string().uuid(),
       }),
     )
     .mutation(async ({ input }) => {
-      const { id, name, description } = input;
+      const { id, name, description, userId } = input;
+
+      const storeWithSameName = await prisma.store.findFirst({
+        where: {
+          userId,
+          name,
+        },
+      });
+
+      if (storeWithSameName) {
+        throw new Error('Store name already taken.');
+      }
+
       const store = await prisma.store.update({
         where: { id },
         data: {
@@ -113,9 +139,20 @@ export const storeRouter = createTRPCRouter({
     )
     .mutation(async ({ input }) => {
       const { id } = input;
-      const store = await prisma.store.delete({
+
+      const store = await prisma.store.findFirst({
+        where: {
+          id,
+        },
+      });
+
+      if (!store) {
+        throw new Error('Store not found');
+      }
+
+      const deletedStore = await prisma.store.delete({
         where: { id },
       });
-      return store;
+      return deletedStore;
     }),
 });
