@@ -144,6 +144,8 @@ export default function StoreOrdersPage({ params, searchParams }: IStoreOrdersPa
             <DateRangePicker align="end" />
           </div>
           <React.Suspense fallback={<DataTableSkeleton columnCount={6} />}>
+            {/* TODO: add props later */}
+            {/* @ts-ignore */}
             <OrdersTableShell
             // transaction={transaction} limit={limit} storeId={storeId}
             />

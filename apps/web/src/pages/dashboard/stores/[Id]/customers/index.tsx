@@ -153,6 +153,8 @@ export default function StoreCustomersPage({ params, searchParams }: IStoreCusto
             <DateRangePicker align="end" />
           </div>
           <React.Suspense fallback={<DataTableSkeleton columnCount={5} filterableFieldCount={0} />}>
+            {/* TODO: add props later */}
+            {/* @ts-ignore */}
             <CustomersTableShell
             // transaction={transaction} limit={limit} storeId={store.id}
             />

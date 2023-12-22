@@ -151,6 +151,8 @@ export default function StoreProductsPage({ params, searchParams }: IStoreProduc
             <h2 className="text-2xl font-bold tracking-tight">Products</h2>
             <DateRangePicker align="end" />
           </div>
+          {/* TODO: add props later */}
+          {/* @ts-ignore */}
           <SeedProducts
             //storeId={storeId}
             count={4}
@@ -160,6 +162,8 @@ export default function StoreProductsPage({ params, searchParams }: IStoreProduc
               <DataTableSkeleton columnCount={6} isNewRowCreatable={true} isRowsDeletable={true} />
             }
           >
+            {/* TODO: add props later */}
+            {/* @ts-ignore */}
             <ProductsTableShell
             // transaction={transaction} limit={limit} storeId={storeId}
             />
