@@ -10,7 +10,11 @@ const config = {
     return config;
   },
   reactStrictMode: true,
-  serverActions: true,
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '2mb',
+    },
+  },
   typescript: {
     ignoreBuildErrors: false,
   },
