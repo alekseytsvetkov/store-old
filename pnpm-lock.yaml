@@ -167,145 +167,6 @@ importers:
         specifier: ^5.1.6
         version: 5.1.6
 
-  apps/space:
-    dependencies:
-      '@hookform/resolvers':
-        specifier: ^3.3.1
-        version: 3.3.1(react-hook-form@7.45.1)
-      '@radix-ui/react-icons':
-        specifier: ^1.3.0
-        version: 1.3.0(react@18.2.0)
-      '@radix-ui/react-slot':
-        specifier: ^1.0.2
-        version: 1.0.2(@types/react@18.2.21)(react@18.2.0)
-      '@store/api':
-        specifier: workspace:*
-        version: link:../../packages/api
-      '@store/auth':
-        specifier: workspace:*
-        version: link:../../packages/auth
-      '@store/db':
-        specifier: workspace:*
-        version: link:../../packages/db
-      '@store/lint':
-        specifier: workspace:*
-        version: link:../../tooling/config-eslint
-      '@store/ui':
-        specifier: workspace:*
-        version: link:../../packages/ui
-      '@tanstack/react-query':
-        specifier: ^4.33.0
-        version: 4.33.0(react-dom@18.2.0)(react@18.2.0)
-      '@tanstack/react-query-devtools':
-        specifier: ^4.33.0
-        version: 4.33.0(@tanstack/react-query@4.33.0)(react-dom@18.2.0)(react@18.2.0)
-      '@tanstack/react-query-next-experimental':
-        specifier: 5.0.0-alpha.80
-        version: 5.0.0-alpha.80(@tanstack/react-query@4.33.0)(next@13.4.19)(react-dom@18.2.0)(react@18.2.0)
-      '@trpc/client':
-        specifier: ^10.34.0
-        version: 10.34.0(@trpc/server@10.34.0)
-      '@trpc/next':
-        specifier: ^10.34.0
-        version: 10.34.0(@tanstack/react-query@4.33.0)(@trpc/client@10.34.0)(@trpc/react-query@10.34.0)(@trpc/server@10.34.0)(next@13.4.19)(react-dom@18.2.0)(react@18.2.0)
-      '@trpc/react-query':
-        specifier: ^10.34.0
-        version: 10.34.0(@tanstack/react-query@4.33.0)(@trpc/client@10.34.0)(@trpc/server@10.34.0)(react-dom@18.2.0)(react@18.2.0)
-      '@trpc/server':
-        specifier: ^10.34.0
-        version: 10.34.0
-      '@vercel/analytics':
-        specifier: ^1.0.2
-        version: 1.0.2
-      '@vercel/edge-config':
-        specifier: ^0.2.1
-        version: 0.2.1
-      '@vercel/toolbar':
-        specifier: ^0.1.1
-        version: 0.1.1(next@13.4.19)
-      class-variance-authority:
-        specifier: ^0.7.0
-        version: 0.7.0
-      clsx:
-        specifier: ^2.0.0
-        version: 2.0.0
-      date-fns:
-        specifier: ^2.30.0
-        version: 2.30.0
-      i18next:
-        specifier: ^23.4.6
-        version: 23.4.6
-      next:
-        specifier: ^13.4.19
-        version: 13.4.19(react-dom@18.2.0)(react@18.2.0)
-      next-i18next:
-        specifier: ^14.0.0
-        version: 14.0.0(i18next@23.4.6)(next@13.4.19)(react-i18next@13.2.1)(react@18.2.0)
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      react-day-picker:
-        specifier: ^8.7.1
-        version: 8.8.0(date-fns@2.30.0)(react@18.2.0)
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
-      react-hook-form:
-        specifier: ^7.45.1
-        version: 7.45.1(react@18.2.0)
-      react-i18next:
-        specifier: ^13.2.1
-        version: 13.2.1(i18next@23.4.6)(react-dom@18.2.0)(react@18.2.0)
-      recharts:
-        specifier: ^2.8.0
-        version: 2.8.0(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)
-      superjson:
-        specifier: 1.12.4
-        version: 1.12.4
-      tailwind-merge:
-        specifier: ^1.14.0
-        version: 1.14.0
-      tailwindcss-animate:
-        specifier: ^1.0.6
-        version: 1.0.6(tailwindcss@3.3.3)
-    devDependencies:
-      '@next/eslint-plugin-next':
-        specifier: ^13.4.19
-        version: 13.4.19
-      '@store/tsconfig':
-        specifier: workspace:*
-        version: link:../../tooling/config-typescript
-      '@tailwindcss/container-queries':
-        specifier: ^0.1.1
-        version: 0.1.1(tailwindcss@3.3.3)
-      '@tailwindcss/typography':
-        specifier: ^0.5.9
-        version: 0.5.9(tailwindcss@3.3.3)
-      '@types/node':
-        specifier: ^18.11.17
-        version: 18.17.8
-      '@types/react':
-        specifier: ^18.2.5
-        version: 18.2.21
-      '@types/react-dom':
-        specifier: ^18.2.4
-        version: 18.2.7
-      autoprefixer:
-        specifier: ^10.4.13
-        version: 10.4.13(postcss@8.4.28)
-      dotenv:
-        specifier: ^16.3.1
-        version: 16.3.1
-      postcss:
-        specifier: ^8.4.20
-        version: 8.4.28
-      tailwindcss:
-        specifier: ^3.2.4
-        version: 3.3.3
-      typescript:
-        specifier: ^5.1.6
-        version: 5.1.6
-
   apps/web:
     dependencies:
       '@stitches/core':
@@ -389,9 +250,6 @@ importers:
       react-instantsearch-nextjs:
         specifier: ^0.1.5
         version: 0.1.6(next@13.4.19)(react-instantsearch@7.4.1)
-      sonner:
-        specifier: ^1.2.4
-        version: 1.2.4(react-dom@18.2.0)(react@18.2.0)
       superjson:
         specifier: 1.12.4
         version: 1.12.4
@@ -7578,16 +7436,6 @@ packages:
   /slash@4.0.0:
     resolution: {integrity: sha512-3dOsAHXXUkQTpOYcoAxLIorMTp4gIQr5IW3iVb7A7lFIp0VHhnynm9izx6TssdrIcVIESAlVjtnO2K8bg+Coew==}
     engines: {node: '>=12'}
-    dev: false
-
-  /sonner@1.2.4(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-WGLP2QQnomgewaCTsK7YWiLcy5n1Yj83vsL5cP4zHMmpSkmFsCYTpQKhlXJrPE5kzjwbqCkCFXcOpbKc4vaUaA==}
-    peerDependencies:
-      react: ^18.0.0
-      react-dom: ^18.0.0
-    dependencies:
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /sort-object-keys@1.1.3:

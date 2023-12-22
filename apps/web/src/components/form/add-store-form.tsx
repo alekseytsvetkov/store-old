@@ -4,7 +4,6 @@ import * as React from 'react';
 import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
 import type { z } from 'zod';
 import {
   Form,
@@ -16,6 +15,7 @@ import {
   Textarea,
   Button,
   Input,
+  toast,
 } from '@store/ui';
 import { storeSchema } from '@/lib/validations';
 import { catchError } from '@/utils';
@@ -57,7 +57,9 @@ export default function AddStoreForm({ userId }: AddStoreFormProps) {
         await createStore({ ...data, userId });
 
         form.reset();
-        toast.success(t('form_create_store_success'));
+        toast({
+          title: t('form_create_store_success'),
+        });
       } catch (err) {
         catchError(err);
       }

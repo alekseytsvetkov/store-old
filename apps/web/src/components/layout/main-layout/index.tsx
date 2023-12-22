@@ -20,7 +20,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
   return (
     <div className={`${inter.className} flex flex-col`}>
       <Head>
-        <title>Space</title>
+        <title>Store</title>
         <meta name="description" content="" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

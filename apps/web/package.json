@@ -40,7 +40,6 @@
     "react-i18next": "^13.2.1",
     "react-instantsearch": "^7.3.0",
     "react-instantsearch-nextjs": "^0.1.5",
-    "sonner": "^1.2.4",
     "superjson": "1.12.4"
   },
   "devDependencies": {

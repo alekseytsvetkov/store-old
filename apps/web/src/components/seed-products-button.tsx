@@ -1,10 +1,10 @@
 'use client';
 
-import { Button, type ButtonProps } from '@store/ui';
+import { Button, toast, type ButtonProps } from '@store/ui';
 import { cn } from '@store/ui/cn';
 import { Loader2 } from '@store/ui/icons';
-import * as React from 'react';
-import { toast } from 'sonner';
+import React, { useTransition } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface ISeedProductsProps extends ButtonProps {
   storeId: number;
@@ -12,7 +12,8 @@ interface ISeedProductsProps extends ButtonProps {
 }
 
 export function SeedProducts({ storeId, count, className, ...props }: ISeedProductsProps) {
-  const [isPending, startTransition] = React.useTransition();
+  const { t } = useTranslation();
+  const [isPending, startTransition] = useTransition();
 
   return (
     <Button
@@ -24,7 +25,9 @@ export function SeedProducts({ storeId, count, className, ...props }: ISeedProdu
           //   storeId,
           //   count,
           // })
-          toast.success('Products seeded successfully.');
+          toast({
+            title: t('products_seeded_successfully.'),
+          });
         });
       }}
       {...props}

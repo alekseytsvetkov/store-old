@@ -14,6 +14,7 @@ import {
   Textarea,
   Input,
   Button,
+  toast,
 } from '@store/ui';
 import type { GetStaticPaths, GetStaticPropsContext, InferGetStaticPropsType } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -23,7 +24,6 @@ import { createServerSideHelpers } from '@trpc/react-query/server';
 import { api } from '@/utils/api';
 import { storeRouter } from '@store/api/router';
 import { useCallback, useEffect, useMemo, useTransition } from 'react';
-import { toast } from 'sonner';
 import { Loader2 } from '@store/ui/icons';
 import type { z } from 'zod';
 import { storeSchema } from '@/lib/validations';
@@ -86,7 +86,9 @@ export default function UpdateStorePage(props: InferGetStaticPropsType<typeof ge
         await updateStoreMutation({ id: props.id, ...data, userId });
 
         form.reset();
-        toast.success(t('form_update_store_update_success'));
+        toast({
+          title: t('form_update_store_update_success'),
+        });
       } catch (err) {
         catchError(err);
       }
@@ -99,7 +101,9 @@ export default function UpdateStorePage(props: InferGetStaticPropsType<typeof ge
         await deleteStoreMutation({ id: props.id });
 
         form.reset();
-        toast.success(t('form_update_store_delete_success'));
+        toast({
+          title: t('form_update_store_delete_success'),
+        });
       } catch (err) {
         catchError(err);
       }
