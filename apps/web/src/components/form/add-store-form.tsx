@@ -36,9 +36,10 @@ export default function AddStoreForm({ userId }: AddStoreFormProps) {
 
   const utils = api.useContext();
 
-  const { mutateAsync: addStore } = api.store.create.useMutation({
+  const { mutateAsync: createStore, isLoading: isCreateLoading } = api.store.create.useMutation({
     async onSuccess() {
       await utils.store.list.invalidate();
+      router.push('/dashboard/stores');
     },
   });
 
@@ -53,11 +54,10 @@ export default function AddStoreForm({ userId }: AddStoreFormProps) {
   function onSubmit(data: Inputs) {
     startTransition(async () => {
       try {
-        await addStore({ ...data, userId });
+        await createStore({ ...data, userId });
 
         form.reset();
-        toast.success(t('form_add_store_success'));
-        router.push('/dashboard/stores');
+        toast.success(t('form_create_store_success'));
       } catch (err) {
         catchError(err);
       }
@@ -93,8 +93,8 @@ export default function AddStoreForm({ userId }: AddStoreFormProps) {
             </FormItem>
           )}
         />
-        <Button className="w-fit" disabled={isPending}>
-          {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />}
+        <Button className="w-fit" disabled={isCreateLoading}>
+          {isCreateLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />}
           {t('add_store')}
           <span className="sr-only">{t('add_store')}</span>
         </Button>

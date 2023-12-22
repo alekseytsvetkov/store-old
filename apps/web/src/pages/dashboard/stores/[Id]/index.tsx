@@ -56,6 +56,7 @@ export default function UpdateStorePage(props: InferGetStaticPropsType<typeof ge
     api.store.delete.useMutation({
       async onSuccess() {
         await utils.store.list.invalidate();
+        router.push('/dashboard/stores');
       },
     });
 
@@ -63,6 +64,7 @@ export default function UpdateStorePage(props: InferGetStaticPropsType<typeof ge
     api.store.update.useMutation({
       async onSuccess() {
         await utils.store.list.invalidate();
+        router.push('/dashboard/stores');
       },
     });
 
@@ -85,7 +87,6 @@ export default function UpdateStorePage(props: InferGetStaticPropsType<typeof ge
 
         form.reset();
         toast.success(t('form_update_store_update_success'));
-        router.push('/dashboard/stores');
       } catch (err) {
         catchError(err);
       }
@@ -99,7 +100,6 @@ export default function UpdateStorePage(props: InferGetStaticPropsType<typeof ge
 
         form.reset();
         toast.success(t('form_update_store_delete_success'));
-        router.push('/dashboard/stores');
       } catch (err) {
         catchError(err);
       }
