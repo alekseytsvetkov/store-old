@@ -10,9 +10,7 @@ const config = {
     return config;
   },
   reactStrictMode: true,
-  experimental: {
-    serverActions: true,
-  },
+  serverActions: true,
   typescript: {
     ignoreBuildErrors: false,
   },
