@@ -14,6 +14,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from '@store/ui';
+import { use, useMemo } from 'react';
 
 interface AwaitedCustomer {
   email: string | null;
@@ -33,12 +34,12 @@ interface CustomersTableShellProps {
 }
 
 export function CustomersTableShell({ transaction, limit, storeId }: CustomersTableShellProps) {
-  const { items: data, count } = React.use(transaction);
+  const { items: data, count } = use(transaction);
 
   const pageCount = Math.ceil(count / limit);
 
   // Memoize the columns so they don't re-render on every render
-  const columns = React.useMemo<ColumnDef<AwaitedCustomer, unknown>[]>(
+  const columns = useMemo<ColumnDef<AwaitedCustomer, unknown>[]>(
     () => [
       {
         accessorKey: 'name',

@@ -29,13 +29,13 @@
   "dependencies": {
     "@store/auth": "workspace:*",
     "@store/db": "workspace:*",
-    "@tanstack/react-query": "^4.33.0",
-    "@trpc/client": "^10.34.0",
-    "@trpc/next": "^10.34.0",
-    "@trpc/react-query": "^10.34.0",
-    "@trpc/server": "^10.34.0",
-    "superjson": "1.12.4",
-    "zod": "^3.20.2"
+    "@tanstack/react-query": "^5.14.2",
+    "@trpc/client": "^10.44.1",
+    "@trpc/next": "^10.44.1",
+    "@trpc/react-query": "^10.44.1",
+    "@trpc/server": "^10.44.1",
+    "superjson": "2.2.1",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@store/lint": "workspace:*",
