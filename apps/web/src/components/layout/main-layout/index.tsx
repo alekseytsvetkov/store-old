@@ -45,7 +45,9 @@ export default function MainLayout({ children }: MainLayoutProps) {
               </div>
               <div className="flex items-center justify-end gap-2">
                 <Link href="/">
-                  <Button variant="link">{t('work_with_us')}</Button>
+                  <Button variant="link" suppressHydrationWarning={true}>
+                    {t('work_with_us')}
+                  </Button>
                 </Link>
                 <LanguageSwitcher />
                 <ModeToggle />

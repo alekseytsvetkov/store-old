@@ -17,11 +17,17 @@ export const { css, keyframes } = createStitches({
 export function CatalogMenu() {
   const { t } = useTranslation();
 
+  const [isClient, setIsClient] = useState(false);
+
+  React.useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   return (
     <NavigationMenu.Root>
       <NavigationMenu.List className={mainListClass()}>
-        <NavigationMenu.Item>
-          <TriggerWithIndicator>{t('catalog')}</TriggerWithIndicator>
+        <NavigationMenu.Item suppressHydrationWarning={true}>
+          {isClient && <TriggerWithIndicator>{t('catalog')}</TriggerWithIndicator>}
           <NavigationMenu.Content className={cn(submenusContentClass().className, 'container')}>
             <NavigationMenu.Sub
               className={submenusRootClass()}
