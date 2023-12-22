@@ -2,8 +2,7 @@ import {
   DashboardLayout,
   DataTableSkeleton,
   DateRangePicker,
-  ProductsTableShell,
-  SeedProducts,
+  OrdersTableShell,
   StoreLayout,
 } from '@/components';
 import type { GetStaticPaths } from 'next';
@@ -11,7 +10,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 
-interface IStoreProductsPageProps {
+interface IStoreOrdersPageProps {
   params: {
     storeId: string;
   };
@@ -20,14 +19,13 @@ interface IStoreProductsPageProps {
   };
 }
 
-export default function StoreProductsPage({ params, searchParams }: IStoreProductsPageProps) {
+export default function StoreOrdersPage({ params, searchParams }: IStoreOrdersPageProps) {
   const { t } = useTranslation();
 
   // const storeId = Number(params.storeId)
 
-  // // Parse search params using zod schema
-  // const { page, per_page, sort, name, category, from, to } =
-  //   dashboardProductsSearchParamsSchema.parse(searchParams)
+  // const { page, per_page, sort, customer, status, from, to } =
+  //   ordersSearchParamsSchema.parse(searchParams)
 
   // const store = await db.query.stores.findFirst({
   //   where: eq(stores.id, storeId),
@@ -51,82 +49,76 @@ export default function StoreProductsPage({ params, searchParams }: IStoreProduc
   // // Number of items to skip
   // const offset = fallbackPage > 0 ? (fallbackPage - 1) * limit : 0
   // // Column and order to sort by
-  // const [column, order] = (sort?.split(".") as [
-  //   keyof Product | undefined,
+  // const [column, order] = (sort.split(".") as [
+  //   keyof Order | undefined,
   //   "asc" | "desc" | undefined,
   // ]) ?? ["createdAt", "desc"]
 
-  // const categories = (category?.split(".") as Product["category"][]) ?? []
+  // const statuses = status ? status.split(".") : []
 
   // const fromDay = from ? new Date(from) : undefined
   // const toDay = to ? new Date(to) : undefined
 
   // // Transaction is used to ensure both queries are executed in a single transaction
-  // noStore()
-
   // const transaction = db.transaction(async (tx) => {
   //   const items = await tx
   //     .select({
-  //       id: products.id,
-  //       name: products.name,
-  //       category: products.category,
-  //       price: products.price,
-  //       inventory: products.inventory,
-  //       rating: products.rating,
-  //       createdAt: products.createdAt,
+  //       id: orders.id,
+  //       storeId: orders.storeId,
+  //       quantity: orders.quantity,
+  //       amount: orders.amount,
+  //       paymentIntentId: orders.stripePaymentIntentId,
+  //       status: orders.stripePaymentIntentStatus,
+  //       customer: orders.email,
+  //       createdAt: orders.createdAt,
   //     })
-  //     .from(products)
+  //     .from(orders)
   //     .limit(limit)
   //     .offset(offset)
   //     .where(
   //       and(
-  //         eq(products.storeId, storeId),
-  //         // Filter by name
-  //         name ? like(products.name, `%${name}%`) : undefined,
-  //         // Filter by category
-  //         categories.length > 0
-  //           ? inArray(products.category, categories)
+  //         eq(orders.storeId, storeId),
+  //         // Filter by email
+  //         customer ? like(orders.email, `%${customer}%`) : undefined,
+  //         // Filter by status
+  //         statuses.length > 0
+  //           ? inArray(orders.stripePaymentIntentStatus, statuses)
   //           : undefined,
   //         // Filter by createdAt
   //         fromDay && toDay
-  //           ? and(
-  //               gte(products.createdAt, fromDay),
-  //               lte(products.createdAt, toDay)
-  //             )
+  //           ? and(gte(orders.createdAt, fromDay), lte(orders.createdAt, toDay))
   //           : undefined
   //       )
   //     )
   //     .orderBy(
-  //       column && column in products
+  //       column && column in orders
   //         ? order === "asc"
-  //           ? asc(products[column])
-  //           : desc(products[column])
-  //         : desc(products.createdAt)
+  //           ? asc(orders[column])
+  //           : desc(orders[column])
+  //         : desc(orders.createdAt)
   //     )
 
   //   const count = await tx
   //     .select({
-  //       count: sql<number>`count(${products.id})`,
+  //       count: sql<number>`count(*)`,
   //     })
-  //     .from(products)
+  //     .from(orders)
   //     .where(
   //       and(
-  //         eq(products.storeId, storeId),
-  //         // Filter by name
-  //         name ? like(products.name, `%${name}%`) : undefined,
-  //         // Filter by category
-  //         categories.length > 0
-  //           ? inArray(products.category, categories)
+  //         eq(orders.storeId, storeId),
+  //         // Filter by email
+  //         customer ? like(orders.email, `%${customer}%`) : undefined,
+  //         // Filter by status
+  //         statuses.length > 0
+  //           ? inArray(orders.stripePaymentIntentStatus, statuses)
   //           : undefined,
   //         // Filter by createdAt
   //         fromDay && toDay
-  //           ? and(
-  //               gte(products.createdAt, fromDay),
-  //               lte(products.createdAt, toDay)
-  //             )
+  //           ? and(gte(orders.createdAt, fromDay), lte(orders.createdAt, toDay))
   //           : undefined
   //       )
   //     )
+  //     .execute()
   //     .then((res) => res[0]?.count ?? 0)
 
   //   return {
@@ -148,19 +140,11 @@ export default function StoreProductsPage({ params, searchParams }: IStoreProduc
       <StoreLayout>
         <div className="space-y-6">
           <div className="xs:flex-row xs:items-center xs:justify-between flex flex-col gap-4">
-            <h2 className="text-2xl font-bold tracking-tight">Products</h2>
+            <h2 className="text-2xl font-bold tracking-tight">Orders</h2>
             <DateRangePicker align="end" />
           </div>
-          <SeedProducts
-            //storeId={storeId}
-            count={4}
-          />
-          <React.Suspense
-            fallback={
-              <DataTableSkeleton columnCount={6} isNewRowCreatable={true} isRowsDeletable={true} />
-            }
-          >
-            <ProductsTableShell
+          <React.Suspense fallback={<DataTableSkeleton columnCount={6} />}>
+            <OrdersTableShell
             // transaction={transaction} limit={limit} storeId={storeId}
             />
           </React.Suspense>

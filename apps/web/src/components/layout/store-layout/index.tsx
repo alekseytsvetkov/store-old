@@ -1,4 +1,4 @@
-import { StoreTabs } from '@/components/pager/store-tabs';
+import { StoreTabs } from '@/components';
 
 interface StoreLayoutProps {
   children: React.ReactNode;

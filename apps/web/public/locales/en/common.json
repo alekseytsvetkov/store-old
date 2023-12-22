@@ -28,5 +28,9 @@
   "update_your_store_title": "Update your store",
   "update_your_store_description": "Update your store name and description, or delete it",
   "update_store": "Update store",
-  "delete_store": "Delete store"
+  "delete_store": "Delete store",
+  "products": "Products",
+  "orders": "Orders",
+  "customers": "Customers",
+  "analytics": "Analytics"
 }

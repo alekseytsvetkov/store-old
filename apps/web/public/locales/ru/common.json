@@ -28,5 +28,9 @@
   "update_your_store_title": "Обновите свой магазин",
   "update_your_store_description": "Обновите название и описание вашего магазина или удалите его.",
   "update_store": "Обновить магазин",
-  "delete_store": "Удалить магазин"
+  "delete_store": "Удалить магазин",
+  "products": "Товары",
+  "orders": "Заказы",
+  "customers": "Клиенты",
+  "analytics": "Аналитика"
 }

@@ -7,6 +7,59 @@ export function isMacOs() {
   return window.navigator.userAgent.includes("Mac")
 }
 
+export function formatId(id: number) {
+  return `#${id.toString().padStart(4, "0")}`
+}
+
+export function toSentenceCase(str: string) {
+  return str
+    .replace(/([A-Z])/g, " $1")
+    .replace(/^./, (str) => str.toUpperCase())
+}
+
+export function formatDate(date: Date | string | number) {
+  return new Intl.DateTimeFormat("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  }).format(new Date(date))
+}
+
+export function formatPrice(
+  price: number | string,
+  options: {
+    currency?: "USD" | "EUR" | "GBP" | "BDT"
+    notation?: Intl.NumberFormatOptions["notation"]
+  } = {}
+) {
+  const { currency = "USD", notation = "compact" } = options
+
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency,
+    notation,
+  }).format(Number(price))
+}
+
+export function formatNumber(
+  number: number | string,
+  options: {
+    decimals?: number
+    style?: Intl.NumberFormatOptions["style"]
+    notation?: Intl.NumberFormatOptions["notation"]
+  } = {}
+) {
+  const { decimals = 0, style = "decimal", notation = "standard" } = options
+
+  return new Intl.NumberFormat("en-US", {
+    style,
+    notation,
+    minimumFractionDigits: decimals,
+    maximumFractionDigits: decimals,
+  }).format(Number(number))
+}
+
+
 export function catchError(err: unknown) {
   if (err instanceof z.ZodError) {
     const errors = err.issues.map((issue) => {

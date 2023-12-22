@@ -5,38 +5,40 @@ import { cn } from '@store/ui/cn';
 import { processStorePath } from '@/utils';
 import { useRouter } from 'next/router';
 import { Separator } from '@store/ui';
+import { useTranslation } from 'react-i18next';
 
 interface StoreTabsProps {
   storeId: number;
 }
 
 export function StoreTabs({ storeId }: StoreTabsProps) {
+  const { t } = useTranslation();
   const router = useRouter();
   const segment = processStorePath(router.asPath);
 
   const tabs = [
     {
-      title: 'Store',
+      title: 'store',
       href: `/dashboard/stores/${storeId}`,
       isActive: segment === null,
     },
     {
-      title: 'Products',
+      title: 'products',
       href: `/dashboard/stores/${storeId}/products`,
       isActive: segment === 'products',
     },
     {
-      title: 'Orders',
+      title: 'orders',
       href: `/dashboard/stores/${storeId}/orders`,
       isActive: segment === 'orders',
     },
     {
-      title: 'Customers',
+      title: 'customers',
       href: `/dashboard/stores/${storeId}/customers`,
       isActive: segment === 'customers',
     },
     {
-      title: 'Analytics',
+      title: 'analytics',
       href: `/dashboard/stores/${storeId}/analytics`,
       isActive: segment === 'analytics',
     },
@@ -65,7 +67,7 @@ export function StoreTabs({ storeId }: StoreTabsProps) {
                 tab.isActive && 'text-foreground',
               )}
             >
-              {tab.title}
+              {t(tab.title)}
             </TabsTrigger>
           </div>
         ))}
