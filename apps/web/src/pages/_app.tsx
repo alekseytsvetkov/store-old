@@ -5,12 +5,10 @@ import { ThemeProvider } from 'next-themes';
 import { appWithTranslation } from 'next-i18next';
 import { Toaster } from '@store/ui';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-
+import { MainLayout } from '@/components';
 import { api } from '@/utils';
 
 import '@/styles/globals.css';
-
-import MainLayout from '@/components/layout/main-layout';
 
 const queryClient = new QueryClient();
 

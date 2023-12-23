@@ -1,4 +1,4 @@
-import { useLocalStorage } from "@/utils";
+import { useLocalStorage } from '@/hooks';
 
 const SEARCH_LOCAL_STORAGE_KEY = '__STORE_SEARCH__';
 
