@@ -4,11 +4,17 @@ import {
   CardContent,
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
   Input,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
   useToast,
 } from '@store/ui';
 import { ArrowLeft, Loader2 } from '@store/ui/icons';
@@ -21,89 +27,92 @@ import { useForm } from 'react-hook-form';
 import { api } from '@/utils/api';
 import { useRouter } from 'next/router';
 
-const sectionFormSchema = z.object({
+const subcategoryFormSchema = z.object({
   name: z
     .string()
     .min(1, {
-      message: 'Section name must be at least 1 characters.',
+      message: 'Subcategory name must be at least 1 characters.',
     })
     .max(32, {
-      message: 'Section name must not be longer than 32 characters.',
+      message: 'Subcategory name must not be longer than 32 characters.',
     }),
-  shortName: z
-    .string()
-    .min(1, {
-      message: 'Section short name must be at least 1 characters.',
-    })
-    .max(32, {
-      message: 'Section short must not be longer than 32 characters.',
-    }),
+  categoryId: z.string().uuid(),
 });
 
-type SectionFormValues = z.infer<typeof sectionFormSchema>;
+type SubcategoryFormValues = z.infer<typeof subcategoryFormSchema>;
 
-const defaultValues: Partial<SectionFormValues> = {
-  name: '',
-  shortName: '',
-};
-
-export default function NewSection() {
+export default function NewSubcategory() {
   const { t } = useTranslation('common');
   const { toast } = useToast();
   const router = useRouter();
 
   const utils = api.useUtils();
 
-  const { mutateAsync, isError, isLoading, error } = api.section.create.useMutation({
+  const {
+    data: categories,
+    isLoading: isCategoriesLoading,
+    isError: isCategoriesError,
+  } = api.category.list.useQuery({
+    limit: 10,
+  });
+
+  const { mutateAsync, isError, isLoading } = api.subcategory.create.useMutation({
     async onSuccess() {
-      await utils.section.list.invalidate();
+      await utils.subcategory.list.invalidate();
     },
     onError() {
       toast({
-        title: 'К сожалению не удалось создать секцию',
+        title: 'К сожалению не удалось создать подкатегорию',
       });
     },
   });
 
-  const form = useForm<SectionFormValues>({
-    resolver: zodResolver(sectionFormSchema),
+  const defaultValues: Partial<SubcategoryFormValues> = {
+    name: '',
+    categoryId: categories?.items[0]?.id,
+  };
+
+  const form = useForm<SubcategoryFormValues>({
+    resolver: zodResolver(subcategoryFormSchema),
     defaultValues,
     mode: 'onChange',
   });
 
-  async function onSubmit(data: SectionFormValues) {
+  async function onSubmit(data: SubcategoryFormValues) {
     try {
       await mutateAsync({
         name: data.name,
-        shortName: data.shortName,
+        categoryId: data.categoryId,
       });
 
       if (!isLoading && !isError) {
-        router.push('/sections');
+        router.push('/subcategories');
 
         return toast({
           title: 'Поздравляем!',
-          description: `Вы успешно добавили секцию: ${data.name}`,
+          description: `Вы успешно добавили подкатегорию: ${data.name}`,
         });
       }
     } catch (cause) {
-      console.error({ cause }, 'Failed to add section');
+      console.error({ cause }, 'Failed to add subcategory');
     }
   }
 
-  return (
+  return isCategoriesLoading ? (
+    <Loader2 className="h-5 w-5 animate-spin" />
+  ) : (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <div className="grid grid-cols-6 gap-4">
           <div className="col-span-4 col-start-2 flex flex-col justify-between">
             <div className="mb-6 flex flex-row items-center space-y-1">
-              <Link href="/sections">
+              <Link href="/categories">
                 <div className="hover:bg-accent mr-2 mt-1 rounded-md p-1">
                   <ArrowLeft className="h-5 w-5" />
                 </div>
               </Link>
               <h2 className="text-lg font-semibold tracking-tight">
-                {t('add')} {t('section_2')}
+                {t('add')} {t('category_2')}
               </h2>
             </div>
             <div className="grid grid-cols-4 gap-6">
@@ -112,25 +121,39 @@ export default function NewSection() {
                   <div className="grid gap-2">
                     <FormField
                       control={form.control}
-                      name="name"
+                      name="categoryId"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Название</FormLabel>
-                          <FormControl>
-                            <Input placeholder="Path of Exile" {...field} />
-                          </FormControl>
+                          <FormLabel>{t('category-capitalized')}</FormLabel>
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue={categories?.items[0]?.id ?? field.value}
+                          >
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select a category to display" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              {categories?.items.map((category) => (
+                                <SelectItem key={category.id} value={category.id}>
+                                  {category.name}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
                           <FormMessage />
                         </FormItem>
                       )}
                     />
                     <FormField
                       control={form.control}
-                      name="shortName"
+                      name="name"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Короткое название</FormLabel>
+                          <FormLabel>Название</FormLabel>
                           <FormControl>
-                            <Input placeholder="poe" {...field} />
+                            <Input placeholder="Аккаунты" {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>

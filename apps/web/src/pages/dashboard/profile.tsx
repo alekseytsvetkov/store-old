@@ -13,7 +13,7 @@ export default function Profile() {
         <meta name="description" content="" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <DashboardLayout>
+      <DashboardLayout title={t('profile')}>
         <p />
       </DashboardLayout>
     </>

@@ -1,16 +1,16 @@
-import { Button } from "@store/ui";
-import Link from "next/link";
-import { useTranslation } from 'next-i18next'
+import { Button } from '@store/ui';
+import Link from 'next/link';
+import { useTranslation } from 'next-i18next';
 
 interface EmptyPlaceholderProps {
   name: string;
-  title: string,
+  title: string;
   description: string;
   link: string;
 }
 
 export function EmptyPlaceholder({ name, title, description, link }: EmptyPlaceholderProps) {
-  const { t } = useTranslation('common')
+  const { t } = useTranslation('common');
 
   return (
     <div className="flex h-[450px] shrink-0 items-center justify-center rounded-md border border-dashed">
@@ -22,7 +22,7 @@ export function EmptyPlaceholder({ name, title, description, link }: EmptyPlaceh
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth="2"
-          className="h-10 w-10 text-muted-foreground"
+          className="text-muted-foreground h-10 w-10"
           viewBox="0 0 24 24"
         >
           <circle cx="12" cy="11" r="1" />
@@ -31,9 +31,7 @@ export function EmptyPlaceholder({ name, title, description, link }: EmptyPlaceh
         </svg>
 
         <h3 className="mt-4 text-lg font-semibold">{title}</h3>
-        <p className="mb-4 mt-2 text-sm text-muted-foreground">
-          {description}
-        </p>
+        <p className="text-muted-foreground mb-4 mt-2 text-sm">{description}</p>
         <Link href={link}>
           <Button size="sm" className="relative">
             {t('add')} {name}
@@ -41,5 +39,5 @@ export function EmptyPlaceholder({ name, title, description, link }: EmptyPlaceh
         </Link>
       </div>
     </div>
-  )
+  );
 }

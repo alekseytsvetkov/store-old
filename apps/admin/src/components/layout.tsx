@@ -1,17 +1,13 @@
-// import { PlusCircledIcon } from "@radix-ui/react-icons"
-// import { Tabs, TabsList, TabsTrigger, TabsContent, Separator, ScrollArea, ScrollBar } from "@store/ui"
-// import { Button } from "react-day-picker"
-import Head from "next/head"
-import { MainNav } from "./main-nav"
-import { ModeToggle } from "./mode-toggle"
-import { Search } from "./search"
-import { Sidebar } from "./sidebar"
-import { UserNav } from "./user-nav"
-import Link from "next/link"
-import { LanguageSwitcher } from "./language-switcher"
+import Head from 'next/head';
+import { ModeToggle } from './mode-toggle';
+import { Search } from './search';
+import { Sidebar } from './sidebar';
+import { UserNav } from './user-nav';
+import Link from 'next/link';
+import { LanguageSwitcher } from './language-switcher';
 
 interface MainLayoutProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 export default function MainLayout({ children }: MainLayoutProps) {
@@ -36,17 +32,15 @@ export default function MainLayout({ children }: MainLayoutProps) {
             </div>
           </div>
         </div>
-        <div className="flex flex-1 h-[calc(100%-65px)]">
-        <Sidebar className="hidden lg:block relative w-56" />
-        <div className="flex w-0 flex-1 flex-col lg:border-l">
-        <div className="h-full px-4 py-6 lg:px-8 grid grid-cols-6">
-          <div className="col-start-2 col-span-4">
-            {children}
+        <div className="flex h-[calc(100%-65px)] flex-1">
+          <Sidebar className="relative hidden w-56 lg:block" />
+          <div className="flex w-0 flex-1 flex-col lg:border-l">
+            <div className="grid h-full grid-cols-6 px-4 py-6 lg:px-8">
+              <div className="col-span-4 col-start-2">{children}</div>
+            </div>
           </div>
-        </div>
-        </div>
         </div>
       </div>
     </>
-  )
+  );
 }

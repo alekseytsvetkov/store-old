@@ -3,14 +3,14 @@ import { Button, Separator } from '@store/ui';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
 import { api } from '@/utils/api';
-import { sectionsColumns } from '@/components/columns';
+import { subcategoriesColumns } from '@/components/columns';
 import { Loader2 } from '@store/ui/icons';
 import Link from 'next/link';
 
-export default function Sections() {
+export default function Subcategories() {
   const { t } = useTranslation('common');
 
-  const { data, isLoading, status } = api.section.list.useQuery({
+  const { data, isLoading, status } = api.subcategory.list.useQuery({
     limit: 10,
   });
 
@@ -18,11 +18,13 @@ export default function Sections() {
     <>
       <div className="flex items-center justify-between">
         <div className="space-y-1">
-          <h2 className="text-2xl font-semibold tracking-tight">{t('sections-capitalized')}</h2>
+          <h2 className="text-2xl font-semibold tracking-tight">
+            {t('subcategories-capitalized')}
+          </h2>
         </div>
-        <Link href="/sections/new">
+        <Link href="/subcategories/new">
           <Button size="sm" className="relative">
-            {t('add')} {t('section_2')}
+            {t('add')} {t('subcategory_2')}
           </Button>
         </Link>
       </div>
@@ -30,13 +32,13 @@ export default function Sections() {
       {status === 'loading' || isLoading ? (
         <Loader2 className="h-5 w-5 animate-spin" />
       ) : data?.items ? (
-        <DataTable data={data.items} columns={sectionsColumns} />
+        <DataTable data={data.items} columns={subcategoriesColumns} />
       ) : (
         <EmptyPlaceholder
-          name={t('section')}
+          name={t('subcategory')}
           title={t('empty_list_title')}
-          description={`${t('add_your_first')} ${t('section')}`}
-          link="/sections/new"
+          description={`${t('add_your_first')} ${t('subcategory')}`}
+          link="/subcategories/new"
         />
       )}
     </>

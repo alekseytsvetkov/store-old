@@ -4,17 +4,11 @@ import {
   CardContent,
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
   Input,
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
   useToast,
 } from '@store/ui';
 import { ArrowLeft, Loader2 } from '@store/ui/icons';
@@ -36,27 +30,31 @@ const categoryFormSchema = z.object({
     .max(32, {
       message: 'Category name must not be longer than 32 characters.',
     }),
-  sectionId: z.string().uuid(),
+  shortName: z
+    .string()
+    .min(1, {
+      message: 'Category short name must be at least 1 characters.',
+    })
+    .max(32, {
+      message: 'Category short must not be longer than 32 characters.',
+    }),
 });
 
 type CategoryFormValues = z.infer<typeof categoryFormSchema>;
 
-export default function NewSection() {
+const defaultValues: Partial<CategoryFormValues> = {
+  name: '',
+  shortName: '',
+};
+
+export default function NewCategory() {
   const { t } = useTranslation('common');
   const { toast } = useToast();
   const router = useRouter();
 
   const utils = api.useUtils();
 
-  const {
-    data: sections,
-    isLoading: isSectionsLoading,
-    isError: isSectionsError,
-  } = api.section.list.useQuery({
-    limit: 10,
-  });
-
-  const { mutateAsync, isError, isLoading } = api.category.create.useMutation({
+  const { mutateAsync, isError, isLoading, error } = api.category.create.useMutation({
     async onSuccess() {
       await utils.category.list.invalidate();
     },
@@ -66,11 +64,6 @@ export default function NewSection() {
       });
     },
   });
-
-  const defaultValues: Partial<CategoryFormValues> = {
-    name: '',
-    sectionId: sections?.items[0]?.id,
-  };
 
   const form = useForm<CategoryFormValues>({
     resolver: zodResolver(categoryFormSchema),
@@ -82,7 +75,7 @@ export default function NewSection() {
     try {
       await mutateAsync({
         name: data.name,
-        sectionId: data.sectionId,
+        shortName: data.shortName,
       });
 
       if (!isLoading && !isError) {
@@ -98,9 +91,7 @@ export default function NewSection() {
     }
   }
 
-  return isSectionsLoading ? (
-    <Loader2 className="h-5 w-5 animate-spin" />
-  ) : (
+  return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <div className="grid grid-cols-6 gap-4">
@@ -121,39 +112,25 @@ export default function NewSection() {
                   <div className="grid gap-2">
                     <FormField
                       control={form.control}
-                      name="sectionId"
+                      name="name"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>{t('section-capitalized')}</FormLabel>
-                          <Select
-                            onValueChange={field.onChange}
-                            defaultValue={sections?.items[0]?.id ?? field.value}
-                          >
-                            <FormControl>
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select a section to display" />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              {sections?.items.map((section) => (
-                                <SelectItem key={section.id} value={section.id}>
-                                  {section.name}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
+                          <FormLabel>Название</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Path of Exile" {...field} />
+                          </FormControl>
                           <FormMessage />
                         </FormItem>
                       )}
                     />
                     <FormField
                       control={form.control}
-                      name="name"
+                      name="shortName"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Название</FormLabel>
+                          <FormLabel>Короткое название</FormLabel>
                           <FormControl>
-                            <Input placeholder="Аккаунты" {...field} />
+                            <Input placeholder="poe" {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>

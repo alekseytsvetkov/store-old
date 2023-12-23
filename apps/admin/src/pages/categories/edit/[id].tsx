@@ -10,11 +10,6 @@ import {
   FormLabel,
   FormMessage,
   Input,
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
   useToast,
 } from '@store/ui';
 import { ArrowLeft, Loader2 } from '@store/ui/icons';
@@ -41,14 +36,19 @@ const categoryFormSchema = z.object({
     .max(32, {
       message: 'Category name must not be longer than 32 characters.',
     }),
-  sectionId: z.string().uuid(),
+  shortName: z
+    .string()
+    .min(1, {
+      message: 'Category short name must be at least 1 characters.',
+    })
+    .max(32, {
+      message: 'Category short must not be longer than 32 characters.',
+    }),
 });
 
 type CategoryFormValues = z.infer<typeof categoryFormSchema>;
 
 export default function EditCategory(props: InferGetStaticPropsType<typeof getStaticProps>) {
-  const { id } = props;
-
   const { t } = useTranslation('common');
   const { toast } = useToast();
 
@@ -56,13 +56,7 @@ export default function EditCategory(props: InferGetStaticPropsType<typeof getSt
 
   const utils = api.useUtils();
 
-  const {
-    data: sections,
-    isLoading: isSectionsPending,
-    isError: isSectionsError,
-  } = api.section.list.useQuery({
-    limit: 10,
-  });
+  const { id } = props;
 
   const { data, isLoading, isError } = api.category.byId.useQuery({
     id,
@@ -84,17 +78,14 @@ export default function EditCategory(props: InferGetStaticPropsType<typeof getSt
     defaultValues: useMemo(() => {
       return {
         name: data?.name,
-        sectionId: data?.sectionId,
+        shortName: data?.shortName,
       };
     }, [data]),
     mode: 'onChange',
   });
 
   useEffect(() => {
-    form.reset({
-      name: data?.name,
-      sectionId: data?.sectionId,
-    });
+    form.reset(data);
   }, [data]);
 
   async function onSubmit(data: CategoryFormValues) {
@@ -102,7 +93,7 @@ export default function EditCategory(props: InferGetStaticPropsType<typeof getSt
       await mutateAsync({
         id,
         name: data.name,
-        sectionId: data.sectionId,
+        shortName: data.shortName,
       });
 
       if (!isLoading && !isError) {
@@ -110,17 +101,15 @@ export default function EditCategory(props: InferGetStaticPropsType<typeof getSt
 
         return toast({
           title: 'Поздравляем!',
-          description: `Вы успешно обновили секцию: ${data.name}`,
+          description: `Вы успешно обновили категорию: ${data.name}`,
         });
       }
     } catch (cause) {
-      console.error({ cause }, 'Failed to add category');
+      console.error({ cause }, 'Failed to update category');
     }
   }
 
-  return isLoading || isSectionsPending ? (
-    <Loader2 className="h-5 w-5 animate-spin" />
-  ) : (
+  return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <div className="flex flex-col justify-between">
@@ -146,39 +135,25 @@ export default function EditCategory(props: InferGetStaticPropsType<typeof getSt
                   <div className="grid gap-2">
                     <FormField
                       control={form.control}
-                      name="sectionId"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>{t('section-capitalized')}</FormLabel>
-                          <Select
-                            onValueChange={field.onChange}
-                            defaultValue={data.sectionId ?? field.value}
-                          >
-                            <FormControl>
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select a section to display" />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              {sections?.items.map((section) => (
-                                <SelectItem key={section.id} value={section.id}>
-                                  {section.name}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
                       name="name"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Название</FormLabel>
                           <FormControl>
                             <Input placeholder="Path of Exile" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="shortName"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Короткое название</FormLabel>
+                          <FormControl>
+                            <Input placeholder="poe" {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>

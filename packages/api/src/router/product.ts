@@ -80,10 +80,11 @@ export const productRouter = createTRPCRouter({
         name: z.string().min(1).max(32),
         price: z.number(),
         categoryId: z.string().uuid(),
+        subcategoryId: z.string().uuid(),
       }),
     )
     .mutation(async ({ input }) => {
-      const { name, price, categoryId } = input;
+      const { name, price, categoryId, subcategoryId } = input;
       const product = await prisma.product.create({
         data: {
           name,
@@ -93,9 +94,15 @@ export const productRouter = createTRPCRouter({
               id: categoryId,
             },
           },
+          subcategory: {
+            connect: {
+              id: subcategoryId,
+            },
+          },
         },
         include: {
           category: true,
+          subcategory: true,
         },
       });
       return product;

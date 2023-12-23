@@ -1,40 +1,34 @@
-import Link from "next/link"
+import Link from 'next/link';
 
-import { cn } from "@store/ui/cn"
+import { cn } from '@store/ui/cn';
 
-export function MainNav({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLElement>) {
+export function MainNav({ className, ...props }: React.HTMLAttributes<HTMLElement>) {
   return (
-    <nav
-      className={cn("flex items-center space-x-4 lg:space-x-6", className)}
-      {...props}
-    >
+    <nav className={cn('flex items-center space-x-4 lg:space-x-6', className)} {...props}>
       <Link
         href="/examples/dashboard"
-        className="text-sm font-medium transition-colors text-muted-foreground hover:text-primary"
+        className="text-muted-foreground hover:text-primary text-sm font-medium transition-colors"
       >
         Overview
       </Link>
       <Link
         href="/examples/dashboard"
-        className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+        className="text-muted-foreground hover:text-primary text-sm font-medium transition-colors"
       >
         Customers
       </Link>
       <Link
         href="/examples/dashboard"
-        className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+        className="text-muted-foreground hover:text-primary text-sm font-medium transition-colors"
       >
         Products
       </Link>
       <Link
         href="/examples/dashboard"
-        className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+        className="text-muted-foreground hover:text-primary text-sm font-medium transition-colors"
       >
         Settings
       </Link>
     </nav>
-  )
+  );
 }

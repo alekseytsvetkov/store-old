@@ -1,22 +1,19 @@
 import { cn } from '@/utils/cn';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { api } from '@/utils/api';
 import Image from 'next/image';
 
 export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
-  const router = useRouter();
-
-  const { data, isLoading, isError } = api.section.list.useQuery({
+  const { data, isLoading, isError } = api.category.list.useQuery({
     limit: 10,
   });
 
   const PATHS =
-    data?.items.map((section) => {
+    data?.items.map((category) => {
       return {
-        url: `/sections/${section.id}`,
-        name: section.name,
-        icon: section.icon,
+        url: `/categories/${category.id}`,
+        name: category.name,
+        icon: category.icon,
       };
     }) ?? [];
 

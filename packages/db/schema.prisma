@@ -107,7 +107,8 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model Section {
+// Steam, Discord, Dota 2, Counter Strike 2
+model Category {
   id String @id @default(uuid())
 
   name        String  @unique
@@ -116,21 +117,22 @@ model Section {
   icon        String?
   cover       String?
 
-  categories Category[] // Divine Orbs / Chaos Orbs
+  subcategories Subcategory[] // Divine Orbs / Chaos Orbs
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Product   Product[]
 }
 
-model Category {
+model Subcategory {
   id String @id @default(uuid())
 
   name        String // Divine Orbs
   description String?
   image       String?
 
-  sectionId String
-  section   Section @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 
   filters Filter[] // PLATFORM / DIFFICULTY / LEAGUE / ADDITIONAL OPTIONS
 
@@ -139,7 +141,7 @@ model Category {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([sectionId])
+  @@index([categoryId])
 }
 
 model Filter {
@@ -150,13 +152,13 @@ model Filter {
 
   options FilterOption[] // SOFTCORE / HARDCORE
 
-  categoryId String
-  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  subcategoryId String
+  subcategory   Subcategory @relation(fields: [subcategoryId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([categoryId])
+  @@index([subcategoryId])
 }
 
 model FilterOption {
@@ -202,10 +204,14 @@ model Product {
   categoryId String
   category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 
+  subcategoryId String
+  subcategory   Subcategory @relation(fields: [subcategoryId], references: [id], onDelete: Cascade)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([categoryId])
+  @@index([subcategoryId])
 }
 
 model Payment {

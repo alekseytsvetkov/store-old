@@ -4,12 +4,16 @@ import {
   CardContent,
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
   Input,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
   useToast,
 } from '@store/ui';
 import { ArrowLeft, Loader2 } from '@store/ui/icons';
@@ -23,32 +27,27 @@ import { api } from '@/utils/api';
 import { useRouter } from 'next/router';
 import type { GetStaticPaths, GetStaticPropsContext, InferGetStaticPropsType } from 'next';
 import { createServerSideHelpers } from '@trpc/react-query/server';
-import { sectionRouter } from '@store/api/router';
+import { subcategoryRouter } from '@store/api/router';
 import superjson from 'superjson';
 import { useEffect, useMemo } from 'react';
 
-const sectionFormSchema = z.object({
+const subcategoryFormSchema = z.object({
   name: z
     .string()
     .min(1, {
-      message: 'Section name must be at least 1 characters.',
+      message: 'Category name must be at least 1 characters.',
     })
     .max(32, {
-      message: 'Section name must not be longer than 32 characters.',
+      message: 'Category name must not be longer than 32 characters.',
     }),
-  shortName: z
-    .string()
-    .min(1, {
-      message: 'Section short name must be at least 1 characters.',
-    })
-    .max(32, {
-      message: 'Section short must not be longer than 32 characters.',
-    }),
+  categoryId: z.string().uuid(),
 });
 
-type SectionFormValues = z.infer<typeof sectionFormSchema>;
+type SubcategoryFormValues = z.infer<typeof subcategoryFormSchema>;
 
-export default function EditSection(props: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function EditSubcategory(props: InferGetStaticPropsType<typeof getStaticProps>) {
+  const { id } = props;
+
   const { t } = useTranslation('common');
   const { toast } = useToast();
 
@@ -56,71 +55,82 @@ export default function EditSection(props: InferGetStaticPropsType<typeof getSta
 
   const utils = api.useUtils();
 
-  const { id } = props;
+  const {
+    data: categories,
+    isLoading: isCategoriesPending,
+    isError: isCategoriesError,
+  } = api.category.list.useQuery({
+    limit: 10,
+  });
 
-  const { data, isLoading, isError } = api.section.byId.useQuery({
+  const { data, isLoading, isError } = api.subcategory.byId.useQuery({
     id,
   });
 
-  const { mutateAsync, isLoading: isUpdatePending } = api.section.update.useMutation({
+  const { mutateAsync, isLoading: isUpdatePending } = api.subcategory.update.useMutation({
     async onSuccess() {
-      await utils.section.list.invalidate();
+      await utils.subcategory.list.invalidate();
     },
     onError() {
       toast({
-        title: 'К сожалению не удалось обновить секцию',
+        title: 'К сожалению не удалось обновить подкатегорию',
       });
     },
   });
 
-  const form = useForm<SectionFormValues>({
-    resolver: zodResolver(sectionFormSchema),
+  const form = useForm<SubcategoryFormValues>({
+    resolver: zodResolver(subcategoryFormSchema),
     defaultValues: useMemo(() => {
       return {
         name: data?.name,
-        shortName: data?.shortName,
+        categoryId: data?.categoryId,
       };
     }, [data]),
     mode: 'onChange',
   });
 
   useEffect(() => {
-    form.reset(data);
+    form.reset({
+      name: data?.name,
+      categoryId: data?.categoryId,
+    });
   }, [data]);
 
-  async function onSubmit(data: SectionFormValues) {
+  async function onSubmit(data: SubcategoryFormValues) {
     try {
       await mutateAsync({
         id,
         name: data.name,
-        shortName: data.shortName,
+        categoryId: data.categoryId,
       });
 
       if (!isLoading && !isError) {
-        router.push('/sections');
+        router.push('/subcategories');
 
         return toast({
           title: 'Поздравляем!',
-          description: `Вы успешно обновили секцию: ${data.name}`,
+          description: `Вы успешно обновили подкатегорию: ${data.name}`,
         });
       }
     } catch (cause) {
-      console.error({ cause }, 'Failed to add section');
+      console.error({ cause }, 'Failed to update subcategory');
     }
   }
 
-  return (
+  return isLoading || isCategoriesPending ? (
+    <Loader2 className="h-5 w-5 animate-spin" />
+  ) : (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <div className="flex flex-col justify-between">
           <div className="mb-6 flex flex-row items-center space-y-1">
-            <Link href="/sections">
+            <Link href="/categories">
               <div className="hover:bg-accent mr-2 mt-1 rounded-md p-1">
                 <ArrowLeft className="h-5 w-5" />
               </div>
             </Link>
             <h2 className="text-lg font-semibold tracking-tight">
-              {t('update')} {t('section_2')}
+              {t('update')} {t('category_2')}
               {data?.name && `: ${data.name}`}
             </h2>
           </div>
@@ -135,25 +145,39 @@ export default function EditSection(props: InferGetStaticPropsType<typeof getSta
                   <div className="grid gap-2">
                     <FormField
                       control={form.control}
-                      name="name"
+                      name="categoryId"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Название</FormLabel>
-                          <FormControl>
-                            <Input placeholder="Path of Exile" {...field} />
-                          </FormControl>
+                          <FormLabel>{t('category-capitalized')}</FormLabel>
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue={data.categoryId ?? field.value}
+                          >
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select a category to display" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              {categories?.items.map((category) => (
+                                <SelectItem key={category.id} value={category.id}>
+                                  {category.name}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
                           <FormMessage />
                         </FormItem>
                       )}
                     />
                     <FormField
                       control={form.control}
-                      name="shortName"
+                      name="name"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Короткое название</FormLabel>
+                          <FormLabel>Название</FormLabel>
                           <FormControl>
-                            <Input placeholder="poe" {...field} />
+                            <Input placeholder="Path of Exile" {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -179,7 +203,7 @@ export async function getStaticProps(
   context: GetStaticPropsContext<{ id: string; locale: string }>,
 ) {
   const helpers = createServerSideHelpers({
-    router: sectionRouter,
+    router: subcategoryRouter,
     // @ts-ignore
     ctx: {},
     transformer: superjson, // optional - adds superjson serialization

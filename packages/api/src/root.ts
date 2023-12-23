@@ -1,11 +1,18 @@
-import { authRouter, userRouter, sectionRouter, categoryRouter, productRouter, storeRouter } from "./router";
-import { createTRPCRouter } from "./trpc";
+import {
+  authRouter,
+  userRouter,
+  categoryRouter,
+  subcategoryRouter,
+  productRouter,
+  storeRouter,
+} from './router';
+import { createTRPCRouter } from './trpc';
 
 export const appRouter = createTRPCRouter({
   auth: authRouter,
   user: userRouter,
-  section: sectionRouter,
   category: categoryRouter,
+  subcategory: subcategoryRouter,
   product: productRouter,
   store: storeRouter,
 });

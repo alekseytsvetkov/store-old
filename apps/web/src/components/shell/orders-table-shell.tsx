@@ -32,7 +32,7 @@ interface OrdersTableShellProps {
     count: number;
   }>;
   limit: number;
-  storeId: number;
+  storeId: string;
   isSearchable?: boolean;
 }
 
