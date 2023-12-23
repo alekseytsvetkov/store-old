@@ -27,6 +27,7 @@
     "@trpc/next": "^10.44.1",
     "@trpc/react-query": "^10.44.1",
     "@trpc/server": "^10.44.1",
+    "@uploadthing/react": "^6.0.2",
     "@vercel/analytics": "^1.1.1",
     "@vercel/edge-config": "^0.4.1",
     "@vercel/toolbar": "^0.1.7",
@@ -36,11 +37,15 @@
     "next": "^14.0.4",
     "next-i18next": "^15.1.1",
     "react": "^18.2.0",
+    "react-cropper": "^2.3.3",
     "react-dom": "^18.2.0",
+    "react-dropzone": "^14.2.3",
     "react-i18next": "^14.0.0",
     "react-instantsearch": "^7.3.0",
     "react-instantsearch-nextjs": "^0.1.5",
-    "superjson": "2.2.1"
+    "react-medium-image-zoom": "^5.1.9",
+    "superjson": "2.2.1",
+    "uploadthing": "^6.1.0"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^14.0.4",

@@ -19,3 +19,5 @@ export * from './pager';
 export * from './shell';
 export * from './data-table';
 export * from './search';
+export * from './zoom-image';
+export * from './file-dialog';

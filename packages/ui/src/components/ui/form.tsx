@@ -155,6 +155,32 @@ const FormMessage = React.forwardRef<
 });
 FormMessage.displayName = 'FormMessage';
 
+const UncontrolledFormMessage = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLParagraphElement> & {
+    message?: string;
+  }
+>(({ className, children, message, ...props }, ref) => {
+  const { formMessageId } = useFormField();
+  const body = message ? String(message) : children;
+
+  if (!body) {
+    return null;
+  }
+
+  return (
+    <p
+      ref={ref}
+      id={formMessageId}
+      className={cn('text-destructive text-sm font-medium', className)}
+      {...props}
+    >
+      {body}
+    </p>
+  );
+});
+UncontrolledFormMessage.displayName = 'UncontrolledFormMessage';
+
 export {
   useFormField,
   Form,
@@ -163,5 +189,6 @@ export {
   FormControl,
   FormDescription,
   FormMessage,
+  UncontrolledFormMessage,
   FormField,
 };

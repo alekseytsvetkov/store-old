@@ -1,3 +1,2 @@
-import AddStoreForm from './add-store-form';
-
-export { AddStoreForm };
+export * from './add-store-form';
+export * from './add-product-form';

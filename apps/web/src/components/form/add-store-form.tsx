@@ -28,7 +28,7 @@ interface AddStoreFormProps {
 
 type Inputs = z.infer<typeof storeSchema>;
 
-export default function AddStoreForm({ userId }: AddStoreFormProps) {
+export function AddStoreForm({ userId }: AddStoreFormProps) {
   const { t } = useTranslation();
 
   const router = useRouter();

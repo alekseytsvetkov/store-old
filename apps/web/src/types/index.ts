@@ -1,4 +1,6 @@
+import type { Product, Subcategory } from '@store/db/types';
 import type { LucideIcon } from '@store/ui/icons';
+import type { FileWithPath } from '@uploadthing/react';
 
 export interface NavItem {
   title: string;
@@ -20,13 +22,6 @@ export interface NavItemWithOptionalChildren extends NavItem {
 export type MainNavItem = NavItemWithOptionalChildren;
 
 export type SidebarNavItem = NavItemWithChildren;
-
-// export interface CuratedStore {
-//   id: Store["id"]
-//   name: Store["name"]
-//   description?: Store["description"]
-//   productCount?: number
-// }
 
 export interface ICuratedStore {
   id: string;
@@ -52,4 +47,15 @@ export interface DataTableSearchableColumn<TData> {
 
 export interface DataTableFilterableColumn<TData> extends DataTableSearchableColumn<TData> {
   options: Option[];
+}
+
+export type FileWithPreview = FileWithPath & {
+  preview: string;
+};
+
+export interface Category {
+  title: Product['category'];
+  image: string;
+  icon: React.ComponentType<{ className?: string }>;
+  subcategories: Subcategory[];
 }
