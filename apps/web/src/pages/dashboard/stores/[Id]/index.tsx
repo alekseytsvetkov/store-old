@@ -114,15 +114,7 @@ export default function UpdateStorePage(props: InferGetStaticPropsType<typeof ge
   }, [store]);
 
   return (
-    <DashboardLayout>
-      <section className="grid gap-1">
-        <div className="flex space-x-4">
-          <h1 className="flex-1 text-2xl font-bold tracking-tighter md:text-3xl">{t('store')}</h1>
-        </div>
-        <p className="text-muted-foreground max-w-[750px] text-sm sm:text-base">
-          {t('manage_your_store')}
-        </p>
-      </section>
+    <DashboardLayout title={t('store')} description={t('manage_your_store')}>
       <StoreLayout storeId={props.id}>
         <div className="space-y-10">
           <Card>

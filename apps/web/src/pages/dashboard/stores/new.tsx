@@ -17,17 +17,7 @@ export default function CreateNewStore() {
         <meta name="description" content="" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <DashboardLayout>
-        <section className="grid gap-1">
-          <div className="flex space-x-4">
-            <h1 className="flex-1 text-2xl font-bold tracking-tighter md:text-3xl">
-              {t('new_store_title')}
-            </h1>
-          </div>
-          <p className="text-muted-foreground max-w-[750px] text-sm sm:text-base">
-            {t('new_store_description')}
-          </p>
-        </section>
+      <DashboardLayout title={t('new_store_title')} description={t('new_store_description')}>
         <Card id="new-store-page-form-container" aria-labelledby="new-store-page-form-heading">
           <CardHeader className="space-y-1">
             <CardTitle className="text-2xl">{t('card_add_store_title')}</CardTitle>

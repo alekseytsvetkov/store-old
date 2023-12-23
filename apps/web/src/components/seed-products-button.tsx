@@ -7,7 +7,7 @@ import React, { useTransition } from 'react';
 import { useTranslation } from 'react-i18next';
 
 interface ISeedProductsProps extends ButtonProps {
-  storeId: number;
+  storeId: string;
   count?: number;
 }
 

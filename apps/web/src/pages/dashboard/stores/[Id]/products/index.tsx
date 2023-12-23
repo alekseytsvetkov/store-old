@@ -6,21 +6,15 @@ import {
   SeedProducts,
   StoreLayout,
 } from '@/components';
-import type { GetStaticPaths } from 'next';
+import { storeRouter } from '@store/api/router';
+import { createServerSideHelpers } from '@trpc/react-query/server';
+import type { GetStaticPaths, GetStaticPropsContext, InferGetStaticPropsType } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
+import superjson from 'superjson';
 
-interface IStoreProductsPageProps {
-  params: {
-    storeId: string;
-  };
-  searchParams: {
-    [key: string]: string | string[] | undefined;
-  };
-}
-
-export default function StoreProductsPage({ params, searchParams }: IStoreProductsPageProps) {
+export default function StoreProductsPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
   const { t } = useTranslation();
 
   // const storeId = Number(params.storeId)
@@ -136,7 +130,7 @@ export default function StoreProductsPage({ params, searchParams }: IStoreProduc
   // })
 
   return (
-    <DashboardLayout>
+    <DashboardLayout title={t('store')} description={t('manage_your_store')}>
       <section className="grid gap-1">
         <div className="flex space-x-4">
           <h1 className="flex-1 text-2xl font-bold tracking-tighter md:text-3xl">{t('store')}</h1>
@@ -145,18 +139,13 @@ export default function StoreProductsPage({ params, searchParams }: IStoreProduc
           {t('manage_your_store')}
         </p>
       </section>
-      <StoreLayout>
+      <StoreLayout storeId={props.id}>
         <div className="space-y-6">
           <div className="xs:flex-row xs:items-center xs:justify-between flex flex-col gap-4">
             <h2 className="text-2xl font-bold tracking-tight">Products</h2>
             <DateRangePicker align="end" />
           </div>
-          {/* TODO: add props later */}
-          {/* @ts-ignore */}
-          <SeedProducts
-            //storeId={storeId}
-            count={4}
-          />
+          <SeedProducts storeId={props.id} count={4} />
           <React.Suspense
             fallback={
               <DataTableSkeleton columnCount={6} isNewRowCreatable={true} isRowsDeletable={true} />
@@ -165,7 +154,8 @@ export default function StoreProductsPage({ params, searchParams }: IStoreProduc
             {/* TODO: add props later */}
             {/* @ts-ignore */}
             <ProductsTableShell
-            // transaction={transaction} limit={limit} storeId={storeId}
+              // transaction={transaction} limit={limit}
+              storeId={props.id}
             />
           </React.Suspense>
         </div>
@@ -174,11 +164,30 @@ export default function StoreProductsPage({ params, searchParams }: IStoreProduc
   );
 }
 
-export async function getStaticProps({ locale }: { locale: string }) {
+export async function getStaticProps(
+  context: GetStaticPropsContext<{
+    id: string;
+    locale: string;
+  }>,
+) {
+  const helpers = createServerSideHelpers({
+    router: storeRouter,
+    // @ts-ignore
+    ctx: {},
+    transformer: superjson, // optional - adds superjson serialization
+  });
+  const id = context.params?.id as string;
+  // prefetch `post.byId`
+  await helpers.byId.prefetch({ id });
+
   return {
     props: {
-      ...(await serverSideTranslations(locale, ['common'])),
+      trpcState: helpers.dehydrate(),
+      id,
+      // @ts-ignore
+      ...(await serverSideTranslations(context.locale, ['common'])),
     },
+    revalidate: 1,
   };
 }
 

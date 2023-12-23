@@ -32,7 +32,7 @@ interface ProductsTableShellProps {
     count: number;
   }>;
   limit: number;
-  storeId: number;
+  storeId: string;
 }
 
 export function ProductsTableShell({ transaction, limit, storeId }: ProductsTableShellProps) {

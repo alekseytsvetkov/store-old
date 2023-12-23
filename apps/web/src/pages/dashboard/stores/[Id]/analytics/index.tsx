@@ -1,19 +1,13 @@
 import { DashboardLayout, DateRangePicker, StoreLayout } from '@/components';
+import { storeRouter } from '@store/api/router';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@store/ui';
-import type { GetStaticPaths } from 'next';
+import { createServerSideHelpers } from '@trpc/react-query/server';
+import type { GetStaticPaths, GetStaticPropsContext, InferGetStaticPropsType } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'react-i18next';
+import superjson from 'superjson';
 
-interface IAnalyticsPageProps {
-  params: {
-    storeId: string;
-  };
-  searchParams: {
-    [key: string]: string | string[] | undefined;
-  };
-}
-
-export default function AnalyticsPage({ params, searchParams }: IAnalyticsPageProps) {
+export default function AnalyticsPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
   const { t } = useTranslation();
   // const storeId = Number(params.storeId);
 
@@ -78,16 +72,8 @@ export default function AnalyticsPage({ params, searchParams }: IAnalyticsPagePr
   //   .orderBy(desc(sql<number>`sum(${orders.amount})`));
 
   return (
-    <DashboardLayout>
-      <section className="grid gap-1">
-        <div className="flex space-x-4">
-          <h1 className="flex-1 text-2xl font-bold tracking-tighter md:text-3xl">{t('store')}</h1>
-        </div>
-        <p className="text-muted-foreground max-w-[750px] text-sm sm:text-base">
-          {t('manage_your_store')}
-        </p>
-      </section>
-      <StoreLayout>
+    <DashboardLayout title={t('store')} description={t('manage_your_store')}>
+      <StoreLayout storeId={props.id}>
         <div className="space-y-6 p-1">
           <div className="xs:flex-row xs:items-center xs:justify-between flex flex-row items-center justify-between gap-4">
             <h2 className="text-2xl font-bold tracking-tight">Analytics</h2>
@@ -198,11 +184,30 @@ export default function AnalyticsPage({ params, searchParams }: IAnalyticsPagePr
   );
 }
 
-export async function getStaticProps({ locale }: { locale: string }) {
+export async function getStaticProps(
+  context: GetStaticPropsContext<{
+    id: string;
+    locale: string;
+  }>,
+) {
+  const helpers = createServerSideHelpers({
+    router: storeRouter,
+    // @ts-ignore
+    ctx: {},
+    transformer: superjson, // optional - adds superjson serialization
+  });
+  const id = context.params?.id as string;
+  // prefetch `post.byId`
+  await helpers.byId.prefetch({ id });
+
   return {
     props: {
-      ...(await serverSideTranslations(locale, ['common'])),
+      trpcState: helpers.dehydrate(),
+      id,
+      // @ts-ignore
+      ...(await serverSideTranslations(context.locale, ['common'])),
     },
+    revalidate: 1,
   };
 }
 
