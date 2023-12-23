@@ -143,7 +143,7 @@ export default function StoreCustomersPage(props: InferGetStaticPropsType<typeof
     <DashboardLayout title={t('store')} description={t('manage_your_store')}>
       <StoreLayout storeId={props.id}>
         <div className="space-y-6">
-          <div className="xs:flex-row xs:items-center xs:justify-between flex flex-col gap-4">
+          <div className="flex flex-row items-center justify-between gap-4">
             <h2 className="text-2xl font-bold tracking-tight">Customers</h2>
             <DateRangePicker align="end" />
           </div>
