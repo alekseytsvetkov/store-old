@@ -5,6 +5,8 @@ import {
   ProductsTableShell,
   SeedProducts,
   StoreLayout,
+  ProductsTableLoading,
+  ErrorCard,
 } from '@/components';
 import { api } from '@/utils';
 import { storeRouter } from '@store/api/router';
@@ -135,13 +137,32 @@ export default function StoreProductsPage(props: InferGetStaticPropsType<typeof 
               <DataTableSkeleton columnCount={6} isNewRowCreatable={true} isRowsDeletable={true} />
             }
           >
-            {products?.items && (
-              <ProductsTableShell products={products?.items} storeId={props.id} />
+            {isProductsLoading && <ProductsTableLoading />}
+            {!isProductsLoading && isProductsError && <ProductsNotFound storeId={props.id} />}
+            {!isProductsLoading && !isProductsError && (
+              <ProductsTableShell products={products?.items!} storeId={props.id} />
             )}
           </React.Suspense>
         </div>
       </StoreLayout>
     </DashboardLayout>
+  );
+}
+
+interface IProductNotFoundProps {
+  storeId: string;
+}
+
+export function ProductsNotFound({ storeId }: IProductNotFoundProps) {
+  return (
+    <section className="container flex h-[100dvh] max-w-md flex-col justify-center">
+      <ErrorCard
+        title="Product not found"
+        description="The product may have expired or you may have already updated your product"
+        retryLink={`/dashboard/stores/${storeId}/products`}
+        retryLinkText="Go to Products"
+      />
+    </section>
   );
 }
 

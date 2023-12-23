@@ -19,15 +19,8 @@ import {
 import { DataTable, DataTableColumnHeader } from '../data-table';
 import type { Product } from '@store/db/types';
 
-// TODO: type later
-// type AwaitedProduct = Pick<
-//   Product,
-//   'id' | 'name' | 'category' | 'price' | 'inventory' | 'rating' | 'createdAt'
-// >;
-
 interface ProductsTableShellProps {
   products: Product[];
-  // s
   storeId: string;
 }
 
@@ -83,14 +76,11 @@ export function ProductsTableShell({
         accessorKey: 'category',
         header: ({ column }) => <DataTableColumnHeader column={column} title="Category" />,
         cell: ({ cell }) => {
-          // const categories = Object.values(products.category.enumValues);
-          // const category = cell.getValue() as Product['category'];
-
-          // if (!categories.includes(category)) return null;
+          const category = cell.getValue() as Product['category'];
 
           return (
             <Badge variant="outline" className="capitalize">
-              {/* {category} */}
+              {category.name}
             </Badge>
           );
         },
@@ -195,18 +185,16 @@ export function ProductsTableShell({
       columns={columns}
       data={products}
       // pageCount={pageCount}
-      filterableColumns={[
-        // @ts-ignore
-        // TODO: type later
-        {
-          id: 'category',
-          title: 'Category',
-          // options: products.category.enumValues.map((category) => ({
-          //   label: `${category.charAt(0).toUpperCase()}${category.slice(1)}`,
-          //   value: category,
-          // })),
-        },
-      ]}
+      // filterableColumns={[
+      //   {
+      //     id: 'category',
+      //     title: 'Category',
+      //     options: products.category.map((category) => ({
+      //       label: `${category.charAt(0).toUpperCase()}${category.slice(1)}`,
+      //       value: category,
+      //     })),
+      //   },
+      // ]}
       searchableColumns={[
         {
           id: 'name',

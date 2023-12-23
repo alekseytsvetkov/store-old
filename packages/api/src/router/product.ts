@@ -85,6 +85,7 @@ export const productRouter = createTRPCRouter({
         },
         include: {
           category: true,
+          subcategory: true,
         },
       });
       let nextCursor: typeof cursor | undefined;

@@ -1,1 +1,2 @@
-export * from './store-card'
+export * from './store-card';
+export * from './error-card';
