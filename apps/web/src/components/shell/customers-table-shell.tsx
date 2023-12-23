@@ -14,32 +14,19 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from '@store/ui';
-import { use, useMemo } from 'react';
-
-interface AwaitedCustomer {
-  email: string | null;
-  name: string | null;
-  orderPlaced: number;
-  totalSpent: number;
-  createdAt: string;
-}
+import { useMemo } from 'react';
+import type { User } from '@store/db/types';
 
 interface CustomersTableShellProps {
-  transaction: Promise<{
-    items: AwaitedCustomer[];
-    count: number;
-  }>;
-  limit: number;
-  storeId: number;
+  customers: User[];
+  storeId: string;
 }
 
-export function CustomersTableShell({ transaction, limit, storeId }: CustomersTableShellProps) {
-  const { items: data, count } = use(transaction);
-
-  const pageCount = Math.ceil(count / limit);
+export function CustomersTableShell({ customers, storeId }: CustomersTableShellProps) {
+  // const pageCount = Math.ceil(count / limit);
 
   // Memoize the columns so they don't re-render on every render
-  const columns = useMemo<ColumnDef<AwaitedCustomer, unknown>[]>(
+  const columns = useMemo<ColumnDef<User, unknown>[]>(
     () => [
       {
         accessorKey: 'name',
@@ -101,8 +88,8 @@ export function CustomersTableShell({ transaction, limit, storeId }: CustomersTa
   return (
     <DataTable
       columns={columns}
-      data={data}
-      pageCount={pageCount}
+      data={customers}
+      // pageCount={pageCount}
       searchableColumns={[
         {
           id: 'email',

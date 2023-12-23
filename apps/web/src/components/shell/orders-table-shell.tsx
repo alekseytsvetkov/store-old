@@ -16,6 +16,7 @@ import {
   DropdownMenuTrigger,
 } from '@store/ui';
 import { cn } from '@store/ui/cn';
+import type { Order } from '@store/db/types';
 
 // TODO: type later
 // type AwaitedOrder = Pick<Order, 'id' | 'quantity' | 'amount' | 'createdAt'> & {
@@ -25,31 +26,16 @@ import { cn } from '@store/ui/cn';
 // };
 
 interface OrdersTableShellProps {
-  transaction: Promise<{
-    // TODO: type later
-    // items: AwaitedOrder[];
-    items: any[];
-    count: number;
-  }>;
-  limit: number;
+  orders: Order[];
   storeId: string;
   isSearchable?: boolean;
 }
 
-export function OrdersTableShell({
-  transaction,
-  limit,
-  storeId,
-  isSearchable = true,
-}: OrdersTableShellProps) {
-  const { items: data, count } = React.use(transaction);
-
-  const pageCount = Math.ceil(count / limit);
+export function OrdersTableShell({ orders, storeId, isSearchable = true }: OrdersTableShellProps) {
+  // const pageCount = Math.ceil(count / limit);
 
   // Memoize the columns so they don't re-render on every render
-  // TODO: type later
-  // const columns = React.useMemo<ColumnDef<AwaitedOrder, unknown>[]>(
-  const columns = React.useMemo<ColumnDef<any, unknown>[]>(
+  const columns = React.useMemo<ColumnDef<Order, unknown>[]>(
     () => [
       {
         accessorKey: 'id',
@@ -130,26 +116,26 @@ export function OrdersTableShell({
   return (
     <DataTable
       columns={columns}
-      data={data}
-      pageCount={pageCount}
-      searchableColumns={
-        isSearchable
-          ? [
-              {
-                id: 'customer',
-                title: 'customers',
-              },
-            ]
-          : []
-      }
-      filterableColumns={[
-        // @ts-ignore
-        // TODO: type later
-        {
-          id: 'status',
-          title: 'Status',
-        },
-      ]}
+      data={orders}
+      // pageCount={pageCount}
+      // searchableColumns={
+      //   isSearchable
+      //     ? [
+      //         {
+      //           id: 'customer',
+      //           title: 'customers',
+      //         },
+      //       ]
+      //     : []
+      // }
+      // filterableColumns={[
+      //   // @ts-ignore
+      //   // TODO: type later
+      //   {
+      //     id: 'status',
+      //     title: 'Status',
+      //   },
+      // ]}
     />
   );
 }

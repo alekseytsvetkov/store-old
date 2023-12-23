@@ -17,6 +17,7 @@ import {
   DropdownMenuShortcut,
 } from '@store/ui';
 import { DataTable, DataTableColumnHeader } from '../data-table';
+import type { Product } from '@store/db/types';
 
 // TODO: type later
 // type AwaitedProduct = Pick<
@@ -25,27 +26,23 @@ import { DataTable, DataTableColumnHeader } from '../data-table';
 // >;
 
 interface ProductsTableShellProps {
-  transaction: Promise<{
-    // TODO: type later
-    // items: AwaitedProduct[];
-    items: any[];
-    count: number;
-  }>;
-  limit: number;
+  products: Product[];
+  // s
   storeId: string;
 }
 
-export function ProductsTableShell({ transaction, limit, storeId }: ProductsTableShellProps) {
-  const { items: data, count } = React.use(transaction);
-  const pageCount = Math.ceil(count / limit);
+export function ProductsTableShell({
+  products,
+  //count, limit,
+  storeId,
+}: ProductsTableShellProps) {
+  // const pageCount = Math.ceil(count / limit);
 
   const [isPending, startTransition] = React.useTransition();
-  const [selectedRowIds, setSelectedRowIds] = React.useState<number[]>([]);
+  const [selectedRowIds, setSelectedRowIds] = React.useState<string[]>([]);
 
   // Memoize the columns so they don't re-render on every render
-  // TODO: type later
-  // const columns = React.useMemo<ColumnDef<AwaitedProduct, unknown>[]>(
-  const columns = React.useMemo<ColumnDef<any, unknown>[]>(
+  const columns = React.useMemo<ColumnDef<Product, unknown>[]>(
     () => [
       {
         id: 'select',
@@ -55,7 +52,7 @@ export function ProductsTableShell({ transaction, limit, storeId }: ProductsTabl
             onCheckedChange={(value) => {
               table.toggleAllPageRowsSelected(!!value);
               setSelectedRowIds((prev) =>
-                prev.length === data.length ? [] : data.map((row) => row.id),
+                prev.length === products.length ? [] : products.map((row) => row.id),
               );
             }}
             aria-label="Select all"
@@ -166,7 +163,7 @@ export function ProductsTableShell({ transaction, limit, storeId }: ProductsTabl
         ),
       },
     ],
-    [data, isPending, storeId],
+    [products, isPending, storeId],
   );
 
   function deleteSelectedRows() {
@@ -196,8 +193,8 @@ export function ProductsTableShell({ transaction, limit, storeId }: ProductsTabl
   return (
     <DataTable
       columns={columns}
-      data={data}
-      pageCount={pageCount}
+      data={products}
+      // pageCount={pageCount}
       filterableColumns={[
         // @ts-ignore
         // TODO: type later

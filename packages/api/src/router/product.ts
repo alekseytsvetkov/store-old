@@ -51,6 +51,55 @@ export const productRouter = createTRPCRouter({
         nextCursor,
       };
     }),
+  listByStoreId: protectedProcedure
+    .input(
+      z.object({
+        storeId: z.string().uuid(),
+        limit: z.number().min(1).max(100).nullish(),
+        cursor: z.string().nullish(),
+      }),
+    )
+    .query(async ({ input }) => {
+      /**
+       * For pagination docs you can have a look here
+       * @see https://trpc.io/docs/useInfiniteQuery
+       * @see https://www.prisma.io/docs/concepts/components/prisma-client/pagination
+       */
+
+      const limit = input.limit ?? 50;
+      const { cursor, storeId } = input;
+
+      const items = await prisma.product.findMany({
+        // get an extra item at the end which we'll use as next cursor
+        take: limit + 1,
+        where: {
+          storeId,
+        },
+        cursor: cursor
+          ? {
+              id: cursor,
+            }
+          : undefined,
+        orderBy: {
+          createdAt: 'desc',
+        },
+        include: {
+          category: true,
+        },
+      });
+      let nextCursor: typeof cursor | undefined;
+      if (items.length > limit) {
+        // Remove the last item and use it as next cursor
+
+        const nextItem = items.pop()!;
+        nextCursor = nextItem.id;
+      }
+
+      return {
+        items: items.reverse(),
+        nextCursor,
+      };
+    }),
   byId: publicProcedure
     .input(
       z.object({
@@ -79,16 +128,22 @@ export const productRouter = createTRPCRouter({
         id: z.string().uuid().optional(),
         name: z.string().min(1).max(32),
         price: z.number(),
+        storeId: z.string().uuid(),
         categoryId: z.string().uuid(),
         subcategoryId: z.string().uuid(),
       }),
     )
     .mutation(async ({ input }) => {
-      const { name, price, categoryId, subcategoryId } = input;
+      const { name, price, categoryId, subcategoryId, storeId } = input;
       const product = await prisma.product.create({
         data: {
           name,
           price,
+          store: {
+            connect: {
+              id: storeId,
+            },
+          },
           category: {
             connect: {
               id: categoryId,

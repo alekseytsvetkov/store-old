@@ -5,6 +5,7 @@ import {
   OrdersTableShell,
   StoreLayout,
 } from '@/components';
+import { api } from '@/utils';
 import { storeRouter } from '@store/api/router';
 import { createServerSideHelpers } from '@trpc/react-query/server';
 import type { GetStaticPaths, GetStaticPropsContext, InferGetStaticPropsType } from 'next';
@@ -16,7 +17,14 @@ import superjson from 'superjson';
 export default function StoreOrdersPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
   const { t } = useTranslation();
 
-  // const storeId = Number(params.storeId)
+  const {
+    data: orders,
+    isLoading: isOrdersLoading,
+    isError: isOrdersError,
+  } = api.order.listByStoreId.useQuery({
+    storeId: props.id,
+    limit: 10,
+  });
 
   // const { page, per_page, sort, customer, status, from, to } =
   //   ordersSearchParamsSchema.parse(searchParams)
@@ -123,27 +131,14 @@ export default function StoreOrdersPage(props: InferGetStaticPropsType<typeof ge
 
   return (
     <DashboardLayout title={t('store')} description={t('manage_your_store')}>
-      <section className="grid gap-1">
-        <div className="flex space-x-4">
-          <h1 className="flex-1 text-2xl font-bold tracking-tighter md:text-3xl">{t('store')}</h1>
-        </div>
-        <p className="text-muted-foreground max-w-[750px] text-sm sm:text-base">
-          {t('manage_your_store')}
-        </p>
-      </section>
       <StoreLayout storeId={props.id}>
         <div className="space-y-6">
-          <div className="xs:flex-row xs:items-center xs:justify-between flex flex-col gap-4">
+          <div className="flex flex-row items-center justify-between gap-4">
             <h2 className="text-2xl font-bold tracking-tight">Orders</h2>
             <DateRangePicker align="end" />
           </div>
           <React.Suspense fallback={<DataTableSkeleton columnCount={6} />}>
-            {/* TODO: add props later */}
-            {/* @ts-ignore */}
-            <OrdersTableShell
-              // transaction={transaction} limit={limit}
-              storeId={props.id}
-            />
+            {!!orders?.items && <OrdersTableShell orders={orders?.items} storeId={props.id} />}
           </React.Suspense>
         </div>
       </StoreLayout>

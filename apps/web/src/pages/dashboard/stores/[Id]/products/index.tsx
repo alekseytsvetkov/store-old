@@ -6,6 +6,7 @@ import {
   SeedProducts,
   StoreLayout,
 } from '@/components';
+import { api } from '@/utils';
 import { storeRouter } from '@store/api/router';
 import { createServerSideHelpers } from '@trpc/react-query/server';
 import type { GetStaticPaths, GetStaticPropsContext, InferGetStaticPropsType } from 'next';
@@ -17,23 +18,14 @@ import superjson from 'superjson';
 export default function StoreProductsPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
   const { t } = useTranslation();
 
-  // const storeId = Number(params.storeId)
-
-  // // Parse search params using zod schema
-  // const { page, per_page, sort, name, category, from, to } =
-  //   dashboardProductsSearchParamsSchema.parse(searchParams)
-
-  // const store = await db.query.stores.findFirst({
-  //   where: eq(stores.id, storeId),
-  //   columns: {
-  //     id: true,
-  //     name: true,
-  //   },
-  // })
-
-  // if (!store) {
-  //   notFound()
-  // }
+  const {
+    data: products,
+    isLoading: isProductsLoading,
+    isError: isProductsError,
+  } = api.product.listByStoreId.useQuery({
+    storeId: props.id,
+    limit: 10,
+  });
 
   // // Fallback page for invalid page numbers
   // const pageAsNumber = Number(page)
@@ -131,17 +123,9 @@ export default function StoreProductsPage(props: InferGetStaticPropsType<typeof 
 
   return (
     <DashboardLayout title={t('store')} description={t('manage_your_store')}>
-      <section className="grid gap-1">
-        <div className="flex space-x-4">
-          <h1 className="flex-1 text-2xl font-bold tracking-tighter md:text-3xl">{t('store')}</h1>
-        </div>
-        <p className="text-muted-foreground max-w-[750px] text-sm sm:text-base">
-          {t('manage_your_store')}
-        </p>
-      </section>
       <StoreLayout storeId={props.id}>
         <div className="space-y-6">
-          <div className="xs:flex-row xs:items-center xs:justify-between flex flex-col gap-4">
+          <div className="flex flex-row items-center justify-between gap-4">
             <h2 className="text-2xl font-bold tracking-tight">Products</h2>
             <DateRangePicker align="end" />
           </div>
@@ -151,12 +135,9 @@ export default function StoreProductsPage(props: InferGetStaticPropsType<typeof 
               <DataTableSkeleton columnCount={6} isNewRowCreatable={true} isRowsDeletable={true} />
             }
           >
-            {/* TODO: add props later */}
-            {/* @ts-ignore */}
-            <ProductsTableShell
-              // transaction={transaction} limit={limit}
-              storeId={props.id}
-            />
+            {products?.items && (
+              <ProductsTableShell products={products?.items} storeId={props.id} />
+            )}
           </React.Suspense>
         </div>
       </StoreLayout>

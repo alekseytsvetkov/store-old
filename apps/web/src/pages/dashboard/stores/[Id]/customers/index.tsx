@@ -13,11 +13,19 @@ import { useTranslation } from 'react-i18next';
 import superjson from 'superjson';
 import { createServerSideHelpers } from '@trpc/react-query/server';
 import { storeRouter } from '@store/api/router';
+import { api } from '@/utils';
 
 export default function StoreCustomersPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
   const { t } = useTranslation();
 
-  // const storeId = Number(params.storeId)
+  const {
+    data: customers,
+    isLoading: isCustomersLoading,
+    isError: isCustomersError,
+  } = api.user.customersByStoreId.useQuery({
+    storeId: props.id,
+    limit: 10,
+  });
 
   // const { page, per_page, sort, email, from, to } =
   //   customersSearchParamsSchema.parse(searchParams)
@@ -133,14 +141,6 @@ export default function StoreCustomersPage(props: InferGetStaticPropsType<typeof
 
   return (
     <DashboardLayout title={t('store')} description={t('manage_your_store')}>
-      <section className="grid gap-1">
-        <div className="flex space-x-4">
-          <h1 className="flex-1 text-2xl font-bold tracking-tighter md:text-3xl">{t('store')}</h1>
-        </div>
-        <p className="text-muted-foreground max-w-[750px] text-sm sm:text-base">
-          {t('manage_your_store')}
-        </p>
-      </section>
       <StoreLayout storeId={props.id}>
         <div className="space-y-6">
           <div className="xs:flex-row xs:items-center xs:justify-between flex flex-col gap-4">
@@ -148,11 +148,9 @@ export default function StoreCustomersPage(props: InferGetStaticPropsType<typeof
             <DateRangePicker align="end" />
           </div>
           <React.Suspense fallback={<DataTableSkeleton columnCount={5} filterableFieldCount={0} />}>
-            {/* TODO: add props later */}
-            {/* @ts-ignore */}
-            <CustomersTableShell
-            // transaction={transaction} limit={limit} storeId={store.id}
-            />
+            {!!customers?.items && (
+              <CustomersTableShell customers={customers?.items} storeId={props.id} />
+            )}
           </React.Suspense>
         </div>
       </StoreLayout>
