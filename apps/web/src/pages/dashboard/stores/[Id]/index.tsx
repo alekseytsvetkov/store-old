@@ -21,7 +21,6 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'react-i18next';
 import superjson from 'superjson';
 import { createServerSideHelpers } from '@trpc/react-query/server';
-import { api } from '@/utils/api';
 import { storeRouter } from '@store/api/router';
 import { useCallback, useEffect, useMemo, useTransition } from 'react';
 import { Loader2 } from '@store/ui/icons';
@@ -30,8 +29,8 @@ import { storeSchema } from '@/lib/validations';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
-import { catchError } from '@/utils';
 import { useSession } from '@store/auth/react';
+import { api, catchError } from '@/utils';
 
 type Inputs = z.infer<typeof storeSchema>;
 
@@ -124,7 +123,7 @@ export default function UpdateStorePage(props: InferGetStaticPropsType<typeof ge
           {t('manage_your_store')}
         </p>
       </section>
-      <StoreLayout>
+      <StoreLayout storeId={props.id}>
         <div className="space-y-10">
           <Card>
             <CardHeader className="space-y-1">

@@ -1,15 +1,5 @@
 import { DashboardLayout, DateRangePicker, StoreLayout } from '@/components';
-import { formatNumber, formatPrice } from '@/utils';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@store/ui';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@store/ui';
 import type { GetStaticPaths } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'react-i18next';

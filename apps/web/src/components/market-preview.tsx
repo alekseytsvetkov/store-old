@@ -1,7 +1,7 @@
 'use client';
 
 import { Avatar, AvatarImage, AvatarFallback } from '@store/ui';
-import { Star, MoreHorizontal } from '@store/ui/icons';
+import { Star } from '@store/ui/icons';
 
 interface IMarketPreviewProps {
   name: string;

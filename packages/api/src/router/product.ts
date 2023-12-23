@@ -1,12 +1,8 @@
-import { z } from "zod";
+import { z } from 'zod';
 
-import {
-  createTRPCRouter,
-  publicProcedure,
-  protectedProcedure,
-} from "../trpc";
-import { prisma } from "@store/db"
-import { TRPCError } from "@trpc/server";
+import { createTRPCRouter, publicProcedure, protectedProcedure } from '../trpc';
+import { prisma } from '@store/db';
+import { TRPCError } from '@trpc/server';
 
 export const productRouter = createTRPCRouter({
   list: publicProcedure
@@ -39,14 +35,13 @@ export const productRouter = createTRPCRouter({
           createdAt: 'desc',
         },
         include: {
-          category: true
-        }
+          category: true,
+        },
       });
       let nextCursor: typeof cursor | undefined;
       if (items.length > limit) {
         // Remove the last item and use it as next cursor
 
-         
         const nextItem = items.pop()!;
         nextCursor = nextItem.id;
       }
@@ -67,8 +62,8 @@ export const productRouter = createTRPCRouter({
       const product = await prisma.product.findUnique({
         where: { id },
         include: {
-          category: true
-        }
+          category: true,
+        },
       });
       if (!product) {
         throw new TRPCError({
@@ -83,23 +78,25 @@ export const productRouter = createTRPCRouter({
       z.object({
         id: z.string().uuid().optional(),
         name: z.string().min(1).max(32),
+        price: z.number(),
         categoryId: z.string().uuid(),
       }),
     )
     .mutation(async ({ input }) => {
-      const { name, categoryId } = input;
+      const { name, price, categoryId } = input;
       const product = await prisma.product.create({
         data: {
           name,
+          price,
           category: {
             connect: {
-              id: categoryId
-            }
-          }
+              id: categoryId,
+            },
+          },
         },
         include: {
-          category: true
-        }
+          category: true,
+        },
       });
       return product;
     }),
@@ -119,14 +116,14 @@ export const productRouter = createTRPCRouter({
           name,
           category: {
             connect: {
-              id: categoryId
-            }
-          }
+              id: categoryId,
+            },
+          },
         },
         include: {
-          category: true
-        }
-      })
+          category: true,
+        },
+      });
       return product;
     }),
   delete: protectedProcedure
@@ -138,8 +135,8 @@ export const productRouter = createTRPCRouter({
     .mutation(async ({ input }) => {
       const { id } = input;
       const product = await prisma.product.delete({
-        where: { id }
-      })
+        where: { id },
+      });
       return product;
     }),
 });

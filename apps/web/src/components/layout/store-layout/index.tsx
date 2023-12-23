@@ -1,16 +1,13 @@
 import { StoreTabs } from '@/components';
 
-interface StoreLayoutProps {
-  children: React.ReactNode;
+interface IStoreLayoutProps extends React.PropsWithChildren {
+  storeId?: string;
 }
 
-export default function StoreLayout({ children }: StoreLayoutProps) {
+export default function StoreLayout({ children, storeId }: IStoreLayoutProps) {
   return (
     <div className="space-y-8 overflow-auto">
-      <StoreTabs
-        //storeId={storeId}
-        storeId={1}
-      />
+      {storeId && <StoreTabs storeId={storeId} />}
       {children}
     </div>
   );

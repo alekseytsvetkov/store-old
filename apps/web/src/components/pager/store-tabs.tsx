@@ -7,11 +7,11 @@ import { useRouter } from 'next/router';
 import { Separator } from '@store/ui';
 import { useTranslation } from 'react-i18next';
 
-interface StoreTabsProps {
-  storeId: number;
+interface IStoreTabsProps {
+  storeId: string;
 }
 
-export function StoreTabs({ storeId }: StoreTabsProps) {
+export function StoreTabs({ storeId }: IStoreTabsProps) {
   const { t } = useTranslation();
   const router = useRouter();
   const segment = processStorePath(router.asPath);

@@ -4,7 +4,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Link from 'next/link';
 import { Button } from '@store/ui';
 import { useTranslation } from 'react-i18next';
-import { api } from '@/utils/api';
+import { api } from '@/utils';
 import type { Store } from '@store/db/types';
 
 export default function Stores() {

@@ -6,7 +6,7 @@ import { appWithTranslation } from 'next-i18next';
 import { Toaster } from '@store/ui';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import { api } from '@/utils/api';
+import { api } from '@/utils';
 
 import '@/styles/globals.css';
 

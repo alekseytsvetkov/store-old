@@ -1,6 +1,4 @@
 import Head from 'next/head';
-
-import { api } from '@/utils/api';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import type { GetStaticPaths } from 'next';
 

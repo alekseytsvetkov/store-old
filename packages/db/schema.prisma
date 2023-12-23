@@ -173,22 +173,6 @@ model FilterOption {
   @@index([filterId])
 }
 
-model Product {
-  id String @id @default(uuid())
-
-  name        String  @unique
-  description String?
-  image       String?
-
-  categoryId String
-  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([categoryId])
-}
-
 model Store {
   id          String  @id @default(uuid())
   name        String
@@ -202,4 +186,36 @@ model Store {
   updatedAt DateTime @updatedAt
 
   @@index([userId])
+}
+
+model Product {
+  id String @id @default(uuid())
+
+  name        String  @unique
+  description String?
+  image       String?
+
+  price     Decimal
+  inventory Int     @default(0)
+  rating    Int     @default(0)
+
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([categoryId])
+}
+
+model Payment {
+  id String @id @default(uuid())
+
+  createdAt DateTime @default(now())
+}
+
+model Order {
+  id String @id @default(uuid())
+
+  createdAt DateTime @default(now())
 }
