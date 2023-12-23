@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "dotenv -e ../../.env next dev -- -p 3001",
-    "build": "dotenv -e ../../.env next build",
+    "dev": "npx dotenv -e ../../.env next dev -- -p 3001",
+    "build": "npx dotenv -e ../../.env next build",
     "start": "next start",
     "lint": "next lint"
   },
