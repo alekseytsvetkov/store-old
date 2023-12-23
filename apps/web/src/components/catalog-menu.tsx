@@ -9,6 +9,7 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
+import { Button } from '@store/ui';
 
 export const { css, keyframes } = createStitches({
   theme: {},
@@ -190,7 +191,7 @@ const TriggerWithIndicator: React.FC<{ children?: React.ReactNode; disabled?: bo
     <NavigationMenu.Trigger
       className={cn(
         triggerClass().className,
-        'hamburger rounded-lg p-4 duration-300 focus:outline-none ',
+        'hamburger text-primary rounded-lg p-4 duration-300 focus:outline-none',
         isOpen ? 'is-active' : '',
       )}
       disabled={disabled}
@@ -198,23 +199,25 @@ const TriggerWithIndicator: React.FC<{ children?: React.ReactNode; disabled?: bo
       onPointerLeave={(event) => event.preventDefault()}
       onClick={() => setIsOpen((prev) => !prev)}
     >
-      {children}
-      <div className="ml-1">
-        <span className="line mb-2" />
-        <span className="line mt-2" />
-      </div>
-      <motion.div
-        key={isOpen ? 'open' : 'close'}
-        initial={{ opacity: 0 }}
-        // Clicking on link closes the nav
-        onClickCapture={() => setIsOpen(false)}
-        animate={{ opacity: 1 }}
-        className={`bg-background/80 left-0 top-[55px] z-10 flex h-full w-full flex-1 snap-y flex-col gap-5 justify-self-center border-b p-3 backdrop-blur-md md:mt-0 md:hidden md:pb-0 ${
-          isOpen ? 'absolute block w-full' : 'hidden'
-        }`}
-      >
+      <Button variant="outline">
         {children}
-      </motion.div>
+        <div className="ml-4">
+          <span className="line mb-2" />
+          <span className="line mt-2" />
+        </div>
+        <motion.div
+          key={isOpen ? 'open' : 'close'}
+          initial={{ opacity: 0 }}
+          // Clicking on link closes the nav
+          onClickCapture={() => setIsOpen(false)}
+          animate={{ opacity: 1 }}
+          className={`bg-background/80 left-0 top-[55px] z-10 flex h-full w-full flex-1 snap-y flex-col gap-5 justify-self-center border-b p-3 backdrop-blur-md md:mt-0 md:hidden md:pb-0 ${
+            isOpen ? 'absolute block w-full' : 'hidden'
+          }`}
+        >
+          {children}
+        </motion.div>
+      </Button>
     </NavigationMenu.Trigger>
   );
 };

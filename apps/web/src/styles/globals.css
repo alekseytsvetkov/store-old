@@ -387,7 +387,7 @@ main {
 .hamburger .line {
   width: 20px;
   height: 2px;
-  background-color: hsl(var(--muted-foreground));
+  background-color: hsl(var(--primary));
   display: block;
   -webkit-transition: all 0.3s ease-in-out;
   -o-transition: all 0.3s ease-in-out;
