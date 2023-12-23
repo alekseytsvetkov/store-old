@@ -1,8 +1,8 @@
 import * as React from 'react';
 
 import algoliasearch from 'algoliasearch/lite';
-import { useHits, useInstantSearch, useSearchBox } from 'react-instantsearch';
-import { InstantSearchNext } from 'react-instantsearch-nextjs';
+import { useInstantSearch, useHits, useSearchBox } from 'react-instantsearch';
+// import { InstantSearchNext } from 'react-instantsearch-nextjs';
 
 const searchClient = algoliasearch(
   // eslint-disable-next-line @typescript-eslint/dot-notation
@@ -15,29 +15,30 @@ const INDEX_NAME = 'store';
 
 export function SearchProvider({ children }: { children: React.ReactNode }) {
   return (
-    <InstantSearchNext
-      searchClient={{
-        ...searchClient,
-        search(requests) {
-          const isEmptyQuery = requests.every(({ params }) => !params?.query);
-          if (isEmptyQuery) {
-            return Promise.resolve({
-              results: requests.map(
-                () =>
-                  ({
-                    hits: [],
-                  }) as never,
-              ),
-            });
-          }
+    // <InstantSearchNext
+    //   searchClient={{
+    //     ...searchClient,
+    //     search(requests) {
+    //       const isEmptyQuery = requests.every(({ params }) => !params?.query);
+    //       if (isEmptyQuery) {
+    //         return Promise.resolve({
+    //           results: requests.map(
+    //             () =>
+    //               ({
+    //                 hits: [],
+    //               }) as never,
+    //           ),
+    //         });
+    //       }
 
-          return searchClient.search(requests);
-        },
-      }}
-      indexName={INDEX_NAME}
-    >
-      {children}
-    </InstantSearchNext>
+    //       return searchClient.search(requests);
+    //     },
+    //   }}
+    //   indexName={INDEX_NAME}
+    // >
+    //   {children}
+    // </InstantSearchNext>
+    <>{children}</>
   );
 }
 

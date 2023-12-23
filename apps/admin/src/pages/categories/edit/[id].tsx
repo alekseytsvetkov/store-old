@@ -58,17 +58,17 @@ export default function EditCategory(props: InferGetStaticPropsType<typeof getSt
 
   const {
     data: sections,
-    isPending: isSectionsPending,
+    isLoading: isSectionsPending,
     isError: isSectionsError,
   } = api.section.list.useQuery({
     limit: 10,
   });
 
-  const { data, isPending, isError } = api.category.byId.useQuery({
+  const { data, isLoading, isError } = api.category.byId.useQuery({
     id,
   });
 
-  const { mutateAsync, isPending: isUpdatePending } = api.category.update.useMutation({
+  const { mutateAsync, isLoading: isUpdatePending } = api.category.update.useMutation({
     async onSuccess() {
       await utils.category.list.invalidate();
     },
@@ -105,7 +105,7 @@ export default function EditCategory(props: InferGetStaticPropsType<typeof getSt
         sectionId: data.sectionId,
       });
 
-      if (!isPending && !isError) {
+      if (!isLoading && !isError) {
         router.push('/categories');
 
         return toast({
@@ -118,7 +118,7 @@ export default function EditCategory(props: InferGetStaticPropsType<typeof getSt
     }
   }
 
-  return isPending || isSectionsPending ? (
+  return isLoading || isSectionsPending ? (
     <Loader2 className="h-5 w-5 animate-spin" />
   ) : (
     <Form {...form}>
@@ -137,7 +137,7 @@ export default function EditCategory(props: InferGetStaticPropsType<typeof getSt
           </div>
           {isError ? (
             <div>{t('not-found')}</div>
-          ) : isPending ? (
+          ) : isLoading ? (
             <Loader2 className="h-5 w-5 animate-spin" />
           ) : (
             <div className="grid grid-cols-4 gap-6">

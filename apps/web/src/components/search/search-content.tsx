@@ -143,9 +143,7 @@ function RecentSearches({ onClick }: { onClick: OnClick }) {
   if (results.length === 0) {
     return (
       <div className="flex h-full flex-grow flex-col justify-between">
-        <p className="my-8 flex items-center justify-center">
-          No recent searches
-        </p>
+        <p className="my-8 flex items-center justify-center">No recent searches</p>
       </div>
     );
   }
@@ -182,9 +180,7 @@ function RecentSearches({ onClick }: { onClick: OnClick }) {
 function Footer() {
   return (
     <footer className="flex h-[60px] items-center justify-end gap-2 border-t p-4">
-      <p
-        className="text-foreground/60 flex select-none items-center justify-center text-sm"
-      >
+      <p className="text-foreground/60 flex select-none items-center justify-center text-sm">
         Powered by
       </p>
       <a

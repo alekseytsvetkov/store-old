@@ -36,7 +36,7 @@ export default function AddStoreForm({ userId }: AddStoreFormProps) {
 
   const utils = api.useUtils();
 
-  const { mutateAsync: createStore, isPending: isCreatePending } = api.store.create.useMutation({
+  const { mutateAsync: createStore, isLoading: isCreatePending } = api.store.create.useMutation({
     async onSuccess() {
       await utils.store.list.invalidate();
       router.push('/dashboard/stores');

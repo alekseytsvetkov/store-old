@@ -12,7 +12,7 @@ export default function Stores() {
 
   const {
     data: stores,
-    isPending: isStoresPending,
+    isLoading: isStoresPending,
     isError: isStoresError,
   } = api.store.list.useQuery({
     limit: 10,

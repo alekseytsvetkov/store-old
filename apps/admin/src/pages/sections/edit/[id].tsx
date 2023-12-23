@@ -58,11 +58,11 @@ export default function EditSection(props: InferGetStaticPropsType<typeof getSta
 
   const { id } = props;
 
-  const { data, isPending, isError } = api.section.byId.useQuery({
+  const { data, isLoading, isError } = api.section.byId.useQuery({
     id,
   });
 
-  const { mutateAsync, isPending: isUpdatePending } = api.section.update.useMutation({
+  const { mutateAsync, isLoading: isUpdatePending } = api.section.update.useMutation({
     async onSuccess() {
       await utils.section.list.invalidate();
     },
@@ -96,7 +96,7 @@ export default function EditSection(props: InferGetStaticPropsType<typeof getSta
         shortName: data.shortName,
       });
 
-      if (!isPending && !isError) {
+      if (!isLoading && !isError) {
         router.push('/sections');
 
         return toast({
@@ -126,7 +126,7 @@ export default function EditSection(props: InferGetStaticPropsType<typeof getSta
           </div>
           {isError ? (
             <div>{t('not-found')}</div>
-          ) : isPending ? (
+          ) : isLoading ? (
             <Loader2 className="h-5 w-5 animate-spin" />
           ) : (
             <div className="grid grid-cols-4 gap-6">

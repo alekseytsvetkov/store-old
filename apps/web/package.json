@@ -22,7 +22,7 @@
     "@store/ui": "workspace:*",
     "@tanstack/react-query": "^4.35.3",
     "@tanstack/react-query-devtools": "^4.35.3",
-    "@tanstack/react-query-next-experimental": "^4.35.3",
+    "@tanstack/react-query-next-experimental": "^5.14.2",
     "@trpc/client": "^10.44.1",
     "@trpc/next": "^10.44.1",
     "@trpc/react-query": "^10.44.1",
@@ -38,8 +38,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-i18next": "^14.0.0",
-    "react-instantsearch": "^7.5.0",
-    "react-instantsearch-nextjs": "^0.1.7",
+    "react-instantsearch": "^7.3.0",
+    "react-instantsearch-nextjs": "^0.1.5",
     "superjson": "2.2.1"
   },
   "devDependencies": {

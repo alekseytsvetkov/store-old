@@ -56,7 +56,7 @@ export default function NewSection() {
     limit: 10,
   });
 
-  const { mutateAsync, isError, isPending } = api.category.create.useMutation({
+  const { mutateAsync, isError, isLoading } = api.category.create.useMutation({
     async onSuccess() {
       await utils.category.list.invalidate();
     },
@@ -85,7 +85,7 @@ export default function NewSection() {
         sectionId: data.sectionId,
       });
 
-      if (!isPending && !isError) {
+      if (!isLoading && !isError) {
         router.push('/categories');
 
         return toast({
@@ -164,7 +164,7 @@ export default function NewSection() {
               </Card>
               <div className="col-span-4 flex justify-end">
                 <Button variant="outline" type="submit">
-                  {!isPending ? t('add') : <Loader2 className="h-5 w-5 animate-spin" />}
+                  {!isLoading ? t('add') : <Loader2 className="h-5 w-5 animate-spin" />}
                 </Button>
               </div>
             </div>

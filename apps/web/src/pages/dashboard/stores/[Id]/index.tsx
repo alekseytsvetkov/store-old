@@ -44,7 +44,7 @@ export default function UpdateStorePage(props: InferGetStaticPropsType<typeof ge
 
   const {
     data: store,
-    isPending,
+    isLoading,
     isError,
   } = api.store.byId.useQuery({
     id: props.id,
@@ -52,7 +52,7 @@ export default function UpdateStorePage(props: InferGetStaticPropsType<typeof ge
 
   const utils = api.useUtils();
 
-  const { mutateAsync: deleteStoreMutation, isPending: isDeletePending } =
+  const { mutateAsync: deleteStoreMutation, isLoading: isDeletePending } =
     api.store.delete.useMutation({
       async onSuccess() {
         await utils.store.list.invalidate();
@@ -60,7 +60,7 @@ export default function UpdateStorePage(props: InferGetStaticPropsType<typeof ge
       },
     });
 
-  const { mutateAsync: updateStoreMutation, isPending: isUpdatePending } =
+  const { mutateAsync: updateStoreMutation, isLoading: isUpdatePending } =
     api.store.update.useMutation({
       async onSuccess() {
         await utils.store.list.invalidate();

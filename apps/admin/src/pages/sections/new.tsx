@@ -54,7 +54,7 @@ export default function NewSection() {
 
   const utils = api.useUtils();
 
-  const { mutateAsync, isError, isPending, error } = api.section.create.useMutation({
+  const { mutateAsync, isError, isLoading, error } = api.section.create.useMutation({
     async onSuccess() {
       await utils.section.list.invalidate();
     },
@@ -78,7 +78,7 @@ export default function NewSection() {
         shortName: data.shortName,
       });
 
-      if (!isPending && !isError) {
+      if (!isLoading && !isError) {
         router.push('/sections');
 
         return toast({
@@ -141,7 +141,7 @@ export default function NewSection() {
               </Card>
               <div className="col-span-4 flex justify-end">
                 <Button variant="outline" type="submit">
-                  {!isPending ? t('add') : <Loader2 className="h-5 w-5 animate-spin" />}
+                  {!isLoading ? t('add') : <Loader2 className="h-5 w-5 animate-spin" />}
                 </Button>
               </div>
             </div>

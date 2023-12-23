@@ -98,7 +98,7 @@ export const sectionsColumns: ColumnDef<Section>[] = [
 
       const section = sectionSchema.parse(row.original);
 
-      const { mutateAsync, isError, isPending } = api.section.delete.useMutation({
+      const { mutateAsync, isError, isLoading } = api.section.delete.useMutation({
         async onSuccess() {
           await utils.section.list.invalidate();
         },
@@ -119,7 +119,7 @@ export const sectionsColumns: ColumnDef<Section>[] = [
         router.reload(); // TODO: idc why invalidate not working
         const result = await mutateAsync({ id: section.id });
 
-        if (result && !isError && !isPending) {
+        if (result && !isError && !isLoading) {
           toast({
             title: 'Поздравляем!',
             description: `Вы успешно удалили секцию: ${section.name}`,
@@ -188,7 +188,7 @@ export const categoriesColumns: ColumnDef<Category>[] = [
 
       const category = categorySchema.parse(row.original);
 
-      const { mutateAsync, isError, isPending } = api.category.delete.useMutation({
+      const { mutateAsync, isError, isLoading } = api.category.delete.useMutation({
         async onSuccess() {
           await utils.category.list.invalidate();
         },
@@ -209,7 +209,7 @@ export const categoriesColumns: ColumnDef<Category>[] = [
         router.reload(); // TODO: idc why invalidate not working
         const result = await mutateAsync({ id: category.id });
 
-        if (result && !isError && !isPending) {
+        if (result && !isError && !isLoading) {
           toast({
             title: 'Поздравляем!',
             description: `Вы успешно удалили категорию: ${category.name}`,

@@ -23,7 +23,7 @@
     "@store/ui": "workspace:*",
     "@tanstack/react-query": "^4.35.3",
     "@tanstack/react-query-devtools": "^4.35.3",
-    "@tanstack/react-query-next-experimental": "^4.35.3",
+    "@tanstack/react-query-next-experimental": "^5.14.2",
     "@trpc/client": "^10.44.1",
     "@trpc/next": "^10.44.1",
     "@trpc/react-query": "^10.44.1",

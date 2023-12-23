@@ -7,7 +7,7 @@ import Image from 'next/image';
 export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
   const router = useRouter();
 
-  const { data, isPending, isError } = api.section.list.useQuery({
+  const { data, isLoading, isError } = api.section.list.useQuery({
     limit: 10,
   });
 
@@ -25,7 +25,7 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
       <div className="space-y-4 py-4">
         <div className="px-3 py-2">
           <div className="space-y-1">
-            {!isPending &&
+            {!isLoading &&
               !isError &&
               data?.items &&
               PATHS.map(

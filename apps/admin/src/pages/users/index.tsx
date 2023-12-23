@@ -9,7 +9,7 @@ import { Loader2 } from '@store/ui/icons';
 export default function Users() {
   const { t } = useTranslation('common');
 
-  const { data, isPending, status } = api.user.list.useQuery({
+  const { data, isLoading, status } = api.user.list.useQuery({
     limit: 10,
   });
 
@@ -21,7 +21,7 @@ export default function Users() {
         </div>
       </div>
       <Separator className="my-4" />
-      {status === 'pending' || isPending ? (
+      {status === 'loading' || isLoading ? (
         <Loader2 className="h-5 w-5 animate-spin" />
       ) : data?.items ? (
         <DataTable data={data.items} columns={usersColumns} />

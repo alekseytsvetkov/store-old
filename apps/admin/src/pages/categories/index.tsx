@@ -10,7 +10,7 @@ import Link from 'next/link';
 export default function Categories() {
   const { t } = useTranslation('common');
 
-  const { data, isPending, status } = api.category.list.useQuery({
+  const { data, isLoading, status } = api.category.list.useQuery({
     limit: 10,
   });
 
@@ -27,7 +27,7 @@ export default function Categories() {
         </Link>
       </div>
       <Separator className="my-4" />
-      {status === 'pending' || isPending ? (
+      {status === 'loading' || isLoading ? (
         <Loader2 className="h-5 w-5 animate-spin" />
       ) : data?.items ? (
         <DataTable data={data.items} columns={categoriesColumns} />
