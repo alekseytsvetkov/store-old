@@ -10,17 +10,23 @@ import { Button } from '@store/ui';
 import type { Store } from '@store/db/types';
 
 import { api } from '@/utils';
+import _ from 'lodash';
+import { useMemo } from 'react';
 
 export default function Stores() {
   const { t } = useTranslation();
 
-  const {
-    data: stores,
-    isLoading: isStoresPending,
-    isError: isStoresError,
-  } = api.store.list.useQuery({
-    limit: 10,
-  });
+  const { isFetching, isError, data } = api.store.list.useInfiniteQuery(
+    {
+      limit: 10,
+    },
+    {
+      getNextPageParam: (lastPage) => lastPage.nextCursor,
+      // initialCursor: 1, // <-- optional you can pass an initialCursor
+    },
+  );
+
+  const stores = useMemo(() => data?.pages.flat()[0], [data?.pages]);
 
   return (
     <>
@@ -41,9 +47,9 @@ export default function Stores() {
         }
       >
         <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {(isStoresPending || isStoresError) &&
+          {(isFetching || isError) &&
             Array.from({ length: 3 }).map((_, i) => <StoreCardSkeleton key={i} />)}
-          {!isStoresPending &&
+          {!isFetching &&
             stores?.items.map((store: Store) => (
               <StoreCard key={store.id} store={store} href={`/dashboard/stores/${store.id}`} />
             ))}
