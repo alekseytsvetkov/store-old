@@ -41,6 +41,8 @@ export default function UpdateStorePage(props: InferGetStaticPropsType<typeof ge
   const [isDeletePendingTransition, startDeleteTransition] = useTransition();
   const { data: session } = useSession();
 
+  console.log({props})
+
   const {
     data: store,
     isLoading,
@@ -199,9 +201,8 @@ export async function getStaticProps(
     ctx: {},
     transformer: superjson, // optional - adds superjson serialization
   });
-  const id = context.params?.id as string;
-  // prefetch `post.byId`
-  await helpers.byId.prefetch({ id });
+  const id = context.params?.id || null;
+  id && await helpers.byId.prefetch({ id });
 
   return {
     props: {
